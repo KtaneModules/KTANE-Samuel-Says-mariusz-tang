@@ -1,0 +1,4 @@
+Manual link: https://docs.google.com/document/d/1iS-9shm8s8xhhmEYfrF_jrZ_7_7lMVHYgHwQkwhVTUE/edit.
+
+Want to use flashing colourful morse sequence to obtain new colourful morse sequence to input.
+Each stage gives you a symbol to use for conditions in future stages (maybe like modifiers?).
