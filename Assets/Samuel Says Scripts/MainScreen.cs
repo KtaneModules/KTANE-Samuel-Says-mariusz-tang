@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +9,11 @@ public class MainScreen : MonoBehaviour {
 
     private Color[] _colourList = new Color[] { Color.red, Color.yellow, Color.green, Color.blue };
 
-	void Awake() {
+    void Awake() {
         GetComponent<MeshRenderer>().enabled = false;
     }
 
-    public void ShowColour(SamColour colour) {
+    public void DisplayColour(SamColour colour) {
         _displayMaterial.color = _colourList[(int)colour];
         GetComponent<MeshRenderer>().enabled = true;
     }
