@@ -1,2 +1,38 @@
 Manual link: https://docs.google.com/document/d/1iS-9shm8s8xhhmEYfrF_jrZ_7_7lMVHYgHwQkwhVTUE/edit.
 
+Conditions:
+
+RED:
+- display sequence is .-.
+- red appeared in every displayed sequence so far
+- number of dashes in modified sequence equal to indicator count
+- module on the bomb with "red" in the name (word or part of one)
+- otherwise
+
+YELLOW:
+- display sequence is -.--
+- stage number equal to battery count
+- simon shouts present
+- more than one yellow in display sequence
+- otherwise
+
+GREEN:
+- display sequence is --.
+- *this* green in position two in display sequence
+- this is the first green so far
+- number of dots in modified sequence equal to distinct port types
+- otherwise
+
+BLUE:
+- display sequence is -...
+- *any* blue in position three in display sequence
+- simon sends present
+- every colour appears in sequence display OR modified sequence
+- otherwise
+
+Glitched		- Everything looks normal. Press the small screen to reveal two colours to swap with each other.
+Stutter		- Each symbol flashes several times before moving to the next (all symbols different). Use the different numbers to somehow modify the sequence.
+Virus		- No colours (all purple). Use submissions so far to decide colour sequence.
+Unstable		- One of the symbols alternates between being a dash and a dot. Go through the rules with both cases and combine the results (need to decide how)
+Overclocked	- No pause between flashes. Sometimes the "first" colour will flicker. The symbols have been shifted right (but not the colours).
+Cracked		- 
