@@ -7,45 +7,66 @@ RED:
 - red appeared in every displayed sequence so far
 - number of dashes in modified sequence equal to indicator count
 - module on the bomb with "red" in the name (word or part of one)
-- otherwise
+- otherwise.
 
 YELLOW:
 - display sequence is -.--
 - stage number equal to battery count
-- simon shouts present
+- simon shouts or simon sends present
 - more than one yellow in display sequence
-- otherwise
+- otherwise.
 
 GREEN:
 - display sequence is --.
 - *this* green in position two in display sequence
 - this is the first green so far
 - number of dots in modified sequence equal to distinct port types
-- otherwise
+- otherwise.
 
 BLUE:
 - display sequence is -...
 - *any* blue in position three in display sequence
-- simon sends present
+- display sequence does not form a valid morse letter << Can put letter-related rules after after this condition.
 - every colour appears in sequence display OR modified sequence
-- otherwise
+- otherwise.
 
-Glitched		- Everything looks normal. Press the small screen to reveal two colours to swap with each other.
-Stutter		- Each symbol flashes several times before moving to the next (all symbols different). Use the different numbers to somehow modify the sequence.
-Virus		- No colours (all purple). Use submissions so far to decide colour sequence.
+
+Quirks:
+
+Glitched		- Buttons press themselves. Use button sequence to determine the position in the sequence to submit (instead of edgework)
+Stutter		- Each symbol flashes several times before moving to the next (all symbols different). Use the different numbers to somehow modify the sequence
+Virus		- No colours (all purple). Use submissions so far to decide colour sequence
 Unstable		- One of the symbols alternates between being a dash and a dot. Go through the rules with both cases and combine the results (need to decide how)
-Overclocked	- No pause between flashes. Sometimes the "first" colour will flicker. The symbols have been shifted right (but not the colours).
-Cracked		- 
-Burnt		- Blue -> Green -> Yellow -> Red -> Orange. There will be at least one orange.
+Overclocked	- No pause between flashes. Sometimes the "first" colour will flicker. The symbols have been shifted right (but not the colours)
+Discoloured	- Small screen goes gray (or some other colour). Blue -> Green -> Yellow -> Red -> Blue
+Stuck		- One button is pushed in. Use this as an extra colour to use in the rules. Whether dot or dash is decided by edgework/stage number etc.
 
-Glitched: Buttons press themselves.
-Stuck button.
 
-kuro talk:
-also we dont rly have a use for the gray button rn
-ig that can be mute
-yeah thats fine
-and we wont have symbols for the modifications since we have visual cues
-the screen will just display a happy in stage one and during stage submission
-and some other less happy face when modifications take place
-but wont be important for solve.
+Grey Button:
+
+- Mute button
+- On strike, this button exits recovery mode
+- This is the break button (press between letters in stage 5).
+
+
+Small Screen:
+- Show non-important emoticon probably
+- Indicate discoloured quirk
+- Press this screen instead if need to press stuck button.
+- Indicate when button held long enough for a dash. Indicate also with an audio cue.
+
+
+Stages 1-4:
+- Use conditions to submit one symbol and colour
+- Use quirk to modify display sequence
+
+
+Stage 5:
+- Use previous submissions to modify the display sequence
+- Use all displayed quirks to modify the sequence
+- Submit nato spelling of letter with a colour sequence.
+
+
+Submission method:
+- Hold for long enough to get a dash
+- Release early for a dot
