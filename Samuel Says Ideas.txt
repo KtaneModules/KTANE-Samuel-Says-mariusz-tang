@@ -36,3 +36,16 @@ Virus		- No colours (all purple). Use submissions so far to decide colour sequen
 Unstable		- One of the symbols alternates between being a dash and a dot. Go through the rules with both cases and combine the results (need to decide how)
 Overclocked	- No pause between flashes. Sometimes the "first" colour will flicker. The symbols have been shifted right (but not the colours).
 Cracked		- 
+Burnt		- Blue -> Green -> Yellow -> Red -> Orange. There will be at least one orange.
+
+Glitched: Buttons press themselves.
+Stuck button.
+
+kuro talk:
+also we dont rly have a use for the gray button rn
+ig that can be mute
+yeah thats fine
+and we wont have symbols for the modifications since we have visual cues
+the screen will just display a happy in stage one and during stage submission
+and some other less happy face when modifications take place
+but wont be important for solve.
