@@ -7,7 +7,12 @@ public class MainScreen : MonoBehaviour {
 
     [SerializeField] private Material _displayMaterial;
 
-    private Color[] _colourList = new Color[] { Color.red, Color.yellow, Color.green, Color.blue };
+    private Color[] _colourList = new Color[] {
+        new Color(225f / 255f, 0, 0),
+        new Color(225f / 255f, 225f / 255f, 0),
+        new Color(0, 225f / 255f, 0),
+        new Color(0, 0, 225f / 255f)
+    };
 
     void Awake() {
         GetComponent<MeshRenderer>().enabled = false;

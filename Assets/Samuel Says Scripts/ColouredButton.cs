@@ -15,29 +15,11 @@ public class ColouredButton : MonoBehaviour {
     private bool _isBeingHeld = false;
     private bool _isMoving = false;
 
-    public SamColour Colour { get;
-        private set;
-    }
-    public bool Lit {
-        set {
-            _light.enabled = value;
-        }
-    }
+    public SamColour Colour { get; private set; }
 
     void Awake() {
         SetButtonColourFromName();
         _light.enabled = false;
-
-        _buttonCover.GetComponent<KMSelectable>().OnInteract += delegate () {
-            _isBeingHeld = true;
-            StartCoroutine(PushAnimation());
-            return false;
-        };
-
-        _buttonCover.GetComponent<KMSelectable>().OnInteractEnded += delegate () {
-            _isBeingHeld = false;
-            StartCoroutine(ReleaseAnimation());
-        };
     }
 
     private void SetButtonColourFromName() {
@@ -64,7 +46,19 @@ public class ColouredButton : MonoBehaviour {
         Colour = (SamColour)colourIndex;
     }
 
-    private IEnumerator PushAnimation() {
+    public void PlayHoldAnimation() {
+        _isBeingHeld = true;
+        _light.enabled = true;
+        StartCoroutine(HoldAnimation());
+    }
+
+    public void PlayReleaseAnimation() {
+        _isBeingHeld = false;
+        _light.enabled = false;
+        StartCoroutine(ReleaseAnimation());
+    }
+
+    private IEnumerator HoldAnimation() {
         float elapsedTime = 0;
         float transitionProgress = 0;
         Vector3 oldPos = _buttonCover.transform.localPosition;
@@ -110,7 +104,7 @@ public class ColouredButton : MonoBehaviour {
 
         _isMoving = false;
         if (_isBeingHeld) {
-            StartCoroutine(PushAnimation());
+            StartCoroutine(HoldAnimation());
         }
     }
 
