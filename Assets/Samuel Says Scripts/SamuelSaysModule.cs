@@ -3,22 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KModkit;
-using System.CodeDom;
 using Rnd = UnityEngine.Random;
 
 public class SamuelSaysModule : MonoBehaviour {
 
-    public KMBombInfo Bomb;
-    public KMAudio Audio;
-    public KMBombModule Module;
-
-    public KMSelectable SubmitButton;
-    public ColouredButton[] Buttons;
-    public MainScreen Screen;
-    public AudioSource Beep;
-    public TextMesh LetterDisplay;
-
-    private const float SingleTimeUnit = 0.2f;
+    // Remove when not needed.
     private const string ExampleMorseSequence = "-..-";
     private readonly SamColour[] ExampleColourSequence = new SamColour[] {
         SamColour.Red,
@@ -27,11 +16,59 @@ public class SamuelSaysModule : MonoBehaviour {
         SamColour.Blue
     };
 
-    private Coroutine DisplaySequence;
+    public KMBombInfo Bomb;
+    public KMAudio Audio;
+    public KMBombModule Module;
+
+    public KMSelectable SubmitButton;
+    public ColouredButton[] Buttons;
+    public MainScreen Screen;
+    public MiniScreen SmallDisplay;
+    public AudioSource Beep;
 
     private static int _moduleIdCounter = 1;
     private int _moduleId;
     private bool _moduleSolved = false;
+
+    private const float SingleTimeUnit = 0.2f;
+
+    private readonly string[] HappyFaces = new string[] {
+        ":)",
+        ": )",
+        ":-)",
+        "=)",
+        "= )",
+        "=-)",
+        ":]" ,
+        ": ]",
+        ":-]",
+        "=]",
+        "= ]",
+        "=-]"
+    };
+    private readonly string[] AngryFaces = new string[] {
+        ">:(",
+        ">:[",
+        ">:<",
+        ":'(",
+        ">:x",
+        ":|",
+        ">:|"
+    };
+    private readonly string[] DeviousFaces = new string[] {
+        ">:)",
+        ">:]",
+        ">8)",
+        ">8]"
+    };
+    private readonly string[] ConfusedFaces = new string[] {
+        ":s",
+        ":o",
+        ":0",
+        ":O"
+    };
+
+    private Coroutine DisplaySequence;
 
     private bool _playingButtonDance = false;
     private bool _muted = false;
@@ -57,7 +94,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
         button.PlayHoldAnimation();
         StopFlashingDisplaySequence();
-        LetterDisplay.text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Rnd.Range(0, 26)].ToString();
+        SmallDisplay.DisplayLetter("ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Rnd.Range(0, 26)]);
     }
 
     private void ButtonRelease(ColouredButton button) {
@@ -67,13 +104,17 @@ public class SamuelSaysModule : MonoBehaviour {
 
         button.PlayReleaseAnimation();
         DisplaySequence = StartCoroutine(PlayDisplaySequence(ExampleMorseSequence, ExampleColourSequence));
-        LetterDisplay.text = "";
+        SmallDisplay.ClearScreen();
     }
 
     private void SubmitPress() {
         _muted = !_muted;
         Beep.volume = _muted ? 0 : 1;
         StartCoroutine(PlayButtonDance());
+    }
+
+    private void Strike() {
+
     }
 
     private IEnumerator PlayDisplaySequence(string morse, SamColour[] colours) {

@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 23100138659974258}
   - component: {fileID: 102676468563522882}
   m_Layer: 0
-  m_Name: Letter Display
+  m_Name: Emoticon Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -377,6 +377,7 @@ GameObject:
   - component: {fileID: 33164082239366866}
   - component: {fileID: 23598162666037988}
   - component: {fileID: 114232878385943160}
+  - component: {fileID: 114723610282330506}
   m_Layer: 0
   m_Name: Symbol Display
   m_TagString: Untagged
@@ -414,6 +415,23 @@ GameObject:
   - component: {fileID: 114696114014571128}
   m_Layer: 0
   m_Name: Highlight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1470973059595496
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4582418470085068}
+  - component: {fileID: 23081234047665382}
+  - component: {fileID: 102392141771743346}
+  m_Layer: 0
+  m_Name: Letter Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -791,6 +809,7 @@ Transform:
   m_LocalScale: {x: 0.04, y: -0.00037, z: 0.04}
   m_Children:
   - {fileID: 4060463082301838}
+  - {fileID: 4582418470085068}
   - {fileID: 4607909941338824}
   m_Father: {fileID: 4296694286840164}
   m_RootOrder: 2
@@ -1114,12 +1133,12 @@ Transform:
   m_Father: {fileID: 4031729833787824}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4607909941338824
+--- !u!4 &4582418470085068
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1216742350253976}
+  m_GameObject: {fileID: 1470973059595496}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -4.4, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: -1}
@@ -1127,6 +1146,19 @@ Transform:
   m_Father: {fileID: 4086997552271920}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!4 &4607909941338824
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1216742350253976}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0.055, y: -4.4, z: 0.007}
+  m_LocalScale: {x: 1, y: 1.0000004, z: -1}
+  m_Children: []
+  m_Father: {fileID: 4086997552271920}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
 --- !u!4 &4610016995550712
 Transform:
   m_ObjectHideFlags: 1
@@ -1291,6 +1323,40 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!23 &23081234047665382
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1470973059595496}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 5efb7fd6a4af6824bb1e8ac11fbc165d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!23 &23100138659974258
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -1305,7 +1371,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 5efb7fd6a4af6824bb1e8ac11fbc165d, type: 2}
+  - {fileID: 2100000, guid: a54c878b9a7a13f4c987be1e5f150485, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2122,13 +2188,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!102 &102676468563522882
+--- !u!102 &102392141771743346
 TextMesh:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1216742350253976}
+  m_GameObject: {fileID: 1470973059595496}
   m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 0.05
@@ -2143,6 +2209,27 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4288782753
+--- !u!102 &102676468563522882
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1216742350253976}
+  m_Text: '>:)'
+  m_OffsetZ: 0
+  m_CharacterSize: 0.03
+  m_LineSpacing: 1
+  m_Anchor: 4
+  m_Alignment: 1
+  m_TabSize: 4
+  m_FontSize: 180
+  m_FontStyle: 1
+  m_RichText: 1
+  m_Font: {fileID: 12800000, guid: 239fc15527a26394bba5aae1028bcc4e, type: 3}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294901888
 --- !u!108 &108201685910029606
 Light:
   m_ObjectHideFlags: 1
@@ -2700,7 +2787,7 @@ MonoBehaviour:
   - {fileID: 114882727982538250}
   Screen: {fileID: 114929381958917374}
   Beep: {fileID: 82705111944256706}
-  LetterDisplay: {fileID: 102676468563522882}
+  LetterDisplay: {fileID: 102392141771743346}
 --- !u!114 &114640789583254048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2753,6 +2840,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1, y: 1, z: 1}
   OutlineAmount: 0
+--- !u!114 &114723610282330506
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1336832538965474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e8b123ef479314fb851c0669cb4609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LetterDisplay: {fileID: 102392141771743346}
+  EmoticonDisplay: {fileID: 102676468563522882}
 --- !u!114 &114727817107576578
 MonoBehaviour:
   m_ObjectHideFlags: 1
