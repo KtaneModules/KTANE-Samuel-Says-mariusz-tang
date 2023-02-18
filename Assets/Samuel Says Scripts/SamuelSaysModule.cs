@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using KModkit;
 using Rnd = UnityEngine.Random;
+using System.Linq;
 
 public class SamuelSaysModule : MonoBehaviour {
 
@@ -30,7 +31,9 @@ public class SamuelSaysModule : MonoBehaviour {
     private int _moduleId;
     private bool _moduleSolved = false;
 
-    private const float SingleTimeUnit = 0.2f;
+    private const float SingleMorseUnit = 0.2f;
+    private const float EmoticonFlashTime = 0.3f;
+    private const int EmoticonFlashCount = 3;
 
     private readonly string[] HappyFaces = new string[] {
         ":)",
@@ -46,22 +49,27 @@ public class SamuelSaysModule : MonoBehaviour {
         "= ]",
         "=-]"
     };
-    private readonly string[] AngryFaces = new string[] {
+    private readonly string[] HackedFaces = new string[] {
         ">:(",
         ">:[",
         ">:<",
         ":'(",
         ">:x",
         ":|",
-        ">:|"
+        ">:|",
+        ":s",
+        ":o",
+        ":0",
+        ":O"
     };
-    private readonly string[] DeviousFaces = new string[] {
-        ">:)",
-        ">:]",
-        ">8)",
-        ">8]"
-    };
-    private readonly string[] ConfusedFaces = new string[] {
+    private readonly string[] StrikeFaces = new string[] {
+        ">:(",
+        ">:[",
+        ">:<",
+        ":'(",
+        ">:x",
+        ":|",
+        ">:|",
         ":s",
         ":o",
         ":0",
@@ -111,10 +119,32 @@ public class SamuelSaysModule : MonoBehaviour {
         _muted = !_muted;
         Beep.volume = _muted ? 0 : 1;
         StartCoroutine(PlayButtonDance());
+        StartCoroutine(PlayEmoticonFlashAnimation(HappyFaces[Rnd.Range(0, HappyFaces.Length)], Color.green));
     }
 
     private void Strike() {
+        StartCoroutine(PlayEmoticonFlashAnimation(StrikeFaces[Rnd.Range(0, StrikeFaces.Length)], Color.red));
+        Module.HandleStrike();
+    }
 
+    private IEnumerator PlayEmoticonFlashAnimation(string faceText, Color colour) {
+        float elapsedTime;
+
+        for (int i = 0; i < EmoticonFlashCount; i++) {
+            elapsedTime = 0;
+            SmallDisplay.DisplayEmoticon(faceText, colour);
+            while (elapsedTime < EmoticonFlashTime) {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            elapsedTime = 0;
+            SmallDisplay.ClearScreen();
+            while (elapsedTime < EmoticonFlashTime) {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+        }
     }
 
     private IEnumerator PlayDisplaySequence(string morse, SamColour[] colours) {
@@ -131,7 +161,7 @@ public class SamuelSaysModule : MonoBehaviour {
             }
 
             elapsedTime = 0;
-            symbolFlashTime = (morse[i] == '.') ? SingleTimeUnit : 3 * SingleTimeUnit;
+            symbolFlashTime = (morse[i] == '.') ? SingleMorseUnit : 3 * SingleMorseUnit;
             Screen.DisplayColour(colours[i]);
             Beep.Play();
 
@@ -144,14 +174,14 @@ public class SamuelSaysModule : MonoBehaviour {
             Screen.Disable();
             Beep.Stop();
 
-            while (elapsedTime / SingleTimeUnit < 1) {
+            while (elapsedTime / SingleMorseUnit < 1) {
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
         }
 
         elapsedTime = 0;
-        while (elapsedTime / (2 * SingleTimeUnit) < 1) {
+        while (elapsedTime / (2 * SingleMorseUnit) < 1) {
             elapsedTime += Time.deltaTime;
             yield return null;
         }
