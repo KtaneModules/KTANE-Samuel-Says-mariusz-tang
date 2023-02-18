@@ -259,30 +259,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 102676468563522882, guid: c9d960ef6b357a448afc322f4955d080,
-        type: 2}
-      propertyPath: m_Text
-      value: :|
-      objectReference: {fileID: 0}
-    - target: {fileID: 102676468563522882, guid: c9d960ef6b357a448afc322f4955d080,
-        type: 2}
-      propertyPath: m_Color.rgba
-      value: 4294901888
-      objectReference: {fileID: 0}
-    - target: {fileID: 114611740915653834, guid: c9d960ef6b357a448afc322f4955d080,
-        type: 2}
-      propertyPath: SmallDisplay
-      value: 
-      objectReference: {fileID: 2013407091}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9d960ef6b357a448afc322f4955d080, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &2013407091 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114723610282330506, guid: c9d960ef6b357a448afc322f4955d080,
-    type: 2}
-  m_PrefabInternal: {fileID: 2013407090}
-  m_Script: {fileID: 11500000, guid: c5e8b123ef479314fb851c0669cb4609, type: 3}
 --- !u!1 &2105743102
 GameObject:
   m_ObjectHideFlags: 0

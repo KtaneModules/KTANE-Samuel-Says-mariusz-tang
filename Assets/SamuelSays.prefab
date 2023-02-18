@@ -2216,7 +2216,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1216742350253976}
-  m_Text: '>:)'
+  m_Text: ': )'
   m_OffsetZ: 0
   m_CharacterSize: 0.03
   m_LineSpacing: 1
@@ -2229,7 +2229,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 239fc15527a26394bba5aae1028bcc4e, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4294901888
+    rgba: 4278255360
 --- !u!108 &108201685910029606
 Light:
   m_ObjectHideFlags: 1
@@ -2786,8 +2786,8 @@ MonoBehaviour:
   - {fileID: 114339398665043590}
   - {fileID: 114882727982538250}
   Screen: {fileID: 114929381958917374}
+  SmallDisplay: {fileID: 114723610282330506}
   Beep: {fileID: 82705111944256706}
-  LetterDisplay: {fileID: 102392141771743346}
 --- !u!114 &114640789583254048
 MonoBehaviour:
   m_ObjectHideFlags: 1
