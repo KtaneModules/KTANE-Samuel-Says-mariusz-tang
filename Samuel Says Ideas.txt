@@ -52,13 +52,13 @@ Grey Button:
 Small Screen:
 - Show non-important emoticon probably
 - Indicate discoloured quirk
-- Press this screen instead if need to press stuck button.
+- Press this screen instead if need to press stuck button
 - Indicate when button held long enough for a dash. Indicate also with an audio cue.
 
 
 Stages 1-4:
 - Use conditions to submit one symbol and colour
-- Use quirk to modify display sequence
+- Use quirk to modify display sequence.
 
 
 Stage 5:
@@ -69,4 +69,9 @@ Stage 5:
 
 Submission method:
 - Hold for long enough to get a dash
-- Release early for a dot
+- Release early for a dot.
+
+
+Striking:
+- Stages 1-4: strike on button release
+- Stage 5: strike pressing break button with invalid/incorrect submission.

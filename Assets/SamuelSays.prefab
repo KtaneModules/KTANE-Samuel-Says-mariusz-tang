@@ -2142,7 +2142,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: e06af2f206b7c7d47b828207e0229d90, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4288782753
 --- !u!108 &108201685910029606
 Light:
   m_ObjectHideFlags: 1
@@ -2700,6 +2700,7 @@ MonoBehaviour:
   - {fileID: 114882727982538250}
   Screen: {fileID: 114929381958917374}
   Beep: {fileID: 82705111944256706}
+  LetterDisplay: {fileID: 102676468563522882}
 --- !u!114 &114640789583254048
 MonoBehaviour:
   m_ObjectHideFlags: 1
