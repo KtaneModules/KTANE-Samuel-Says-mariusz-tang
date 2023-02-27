@@ -12,21 +12,12 @@ public class SamuelSaysModule : MonoBehaviour {
     // Add play display sequence to MainScreen.cs.
     // Add button dance.
 
-    // Remove when not needed.
-    private const string ExampleMorseSequence = "-..-";
-    private readonly SamColour[] ExampleColourSequence = new SamColour[] {
-        SamColour.Red,
-        SamColour.Green,
-        SamColour.Yellow,
-        SamColour.Blue
-    };
-
     public KMBombInfo Bomb;
     public KMAudio Audio;
     public KMBombModule Module;
 
     public KMSelectable SubmitButton;
-    public ColouredButton[] Buttons;
+    //public ColouredButton[] Buttons;
     public MainScreen Screen;
     public MiniScreen SmallDisplay;
 
@@ -88,22 +79,22 @@ public class SamuelSaysModule : MonoBehaviour {
         _moduleId = _moduleIdCounter++;
     }
 
-    void Start() {
-        foreach (ColouredButton button in Buttons) {
-            button.GetComponentInChildren<KMSelectable>().OnInteract += delegate () { ButtonHold(button); return false; };
-            button.GetComponentInChildren<KMSelectable>().OnInteractEnded += delegate () { ButtonRelease(button); };
-        }
+    //void Start() {
+    //    foreach (ColouredButton button in Buttons) {
+    //        button.GetComponentInChildren<KMSelectable>().OnInteract += delegate () { ButtonHold(button); return false; };
+    //        button.GetComponentInChildren<KMSelectable>().OnInteractEnded += delegate () { ButtonRelease(button); };
+    //    }
 
-        SubmitButton.OnInteract += delegate () { SubmitPress(); return false; };
-    }
+    //    SubmitButton.OnInteract += delegate () { SubmitPress(); return false; };
+    //}
 
-    private void ButtonHold(ColouredButton button) {
-        button.PlayPressAnimation();
-    }
+    //private void ButtonHold(ColouredButton button) {
+    //    button.PlayPressAnimation();
+    //}
 
-    private void ButtonRelease(ColouredButton button) {
-        button.PlayReleaseAnimation();
-    }
+    //private void ButtonRelease(ColouredButton button) {
+    //    button.PlayReleaseAnimation();
+    //}
 
     private void SubmitPress() {
 

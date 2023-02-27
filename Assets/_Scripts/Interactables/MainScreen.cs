@@ -18,10 +18,10 @@ public class MainScreen : MonoBehaviour {
         GetComponent<MeshRenderer>().enabled = false;
     }
 
-    public void DisplayColour(SamColour colour) {
-        _displayMaterial.color = _colourList[(int)colour];
-        GetComponent<MeshRenderer>().enabled = true;
-    }
+    //public void DisplayColour(SamColour colour) {
+    //    _displayMaterial.color = _colourList[(int)colour];
+    //    GetComponent<MeshRenderer>().enabled = true;
+    //}
 
     public void Disable() {
         GetComponent<MeshRenderer>().enabled = false;

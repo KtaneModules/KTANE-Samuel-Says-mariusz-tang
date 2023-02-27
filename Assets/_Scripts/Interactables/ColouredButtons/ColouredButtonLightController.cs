@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class ButtonLightController : MonoBehaviour {
+public class ColouredButtonLightController : MonoBehaviour {
+
     [SerializeField] private Light _light;
 
     public void SetLightActive() {
