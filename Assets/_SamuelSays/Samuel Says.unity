@@ -322,7 +322,7 @@ Transform:
   - {fileID: 1053096742}
   - {fileID: 1136970375}
   m_Father: {fileID: 444772931}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &112594199
 Animator:
@@ -533,7 +533,7 @@ Transform:
   - {fileID: 1817745596}
   - {fileID: 534602481}
   m_Father: {fileID: 444772931}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &172605772
 Animator:
@@ -600,7 +600,7 @@ Transform:
   - {fileID: 1391713427}
   - {fileID: 123478947}
   m_Father: {fileID: 444772931}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &262115501
 Animator:
@@ -649,7 +649,7 @@ GameObject:
   - component: {fileID: 279620474}
   - component: {fileID: 279620473}
   m_Layer: 0
-  m_Name: CoverB
+  m_Name: Cover B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -763,7 +763,7 @@ GameObject:
   - component: {fileID: 337460258}
   - component: {fileID: 337460257}
   m_Layer: 0
-  m_Name: CoverC
+  m_Name: Cover C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1002,16 +1002,17 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 444772930}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00086361985, y: 0.012207031, z: -0.0573}
+  m_LocalPosition: {x: -0.00086361985, y: -0.006856002, z: -0.0573}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2141760481}
   - {fileID: 1396841267}
   - {fileID: 172605771}
   - {fileID: 112594198}
   - {fileID: 262115500}
   - {fileID: 1536477593}
   m_Father: {fileID: 1171348653}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &464944190
 GameObject:
@@ -1170,7 +1171,7 @@ GameObject:
   - component: {fileID: 586948089}
   - component: {fileID: 586948092}
   m_Layer: 0
-  m_Name: CoverA
+  m_Name: Cover A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1370,7 +1371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 801837195}
   m_Layer: 0
-  m_Name: MainScreen
+  m_Name: Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1859,15 +1860,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1171348652}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.019063033, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2141760481}
   - {fileID: 444772931}
-  - {fileID: 1859785828}
-  m_Father: {fileID: 1320179853}
-  m_RootOrder: 3
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1187456593
 Prefab:
@@ -2034,7 +2033,7 @@ Transform:
   - {fileID: 25197790}
   - {fileID: 1891099218}
   - {fileID: 801837195}
-  - {fileID: 1171348653}
+  - {fileID: 1859785828}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2138,7 +2137,7 @@ Transform:
   m_LocalScale: {x: 0.1455202, y: 0.0050183563, z: 0.037417807}
   m_Children: []
   m_Father: {fileID: 444772931}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1396841268
 MonoBehaviour:
@@ -2411,7 +2410,7 @@ Transform:
   - {fileID: 888999214}
   - {fileID: 1846981667}
   m_Father: {fileID: 444772931}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1536477594
 Animator:
@@ -2937,7 +2936,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1859785828}
   m_Layer: 0
-  m_Name: SubmitButton
+  m_Name: Submit Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2956,8 +2955,8 @@ Transform:
   m_Children:
   - {fileID: 434243188}
   - {fileID: 910092733}
-  m_Father: {fileID: 1171348653}
-  m_RootOrder: 2
+  m_Father: {fileID: 1320179853}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1890079033
 GameObject:
@@ -3171,7 +3170,7 @@ GameObject:
   - component: {fileID: 1993631185}
   - component: {fileID: 1993631184}
   m_Layer: 0
-  m_Name: CoverD
+  m_Name: Cover D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3540,11 +3539,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2141760480}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1171348653}
+  m_Father: {fileID: 444772931}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2141760482
@@ -3555,9 +3554,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2141760480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0edf2ed65df74994aa0ade257a6917c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 14eb4b9aa16a0d54d980dbbc2b7ee29f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _module: {fileID: 1320179848}
   _buttons: []
-  _submitButton: {fileID: 434243187}

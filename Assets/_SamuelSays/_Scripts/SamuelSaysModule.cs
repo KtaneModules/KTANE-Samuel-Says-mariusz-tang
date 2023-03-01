@@ -16,10 +16,6 @@ public class SamuelSaysModule : MonoBehaviour {
     [HideInInspector] public KMAudio Audio;
     [HideInInspector] public KMBombModule Module;
 
-    public KMSelectable SubmitButton;
-    public MainScreen Screen;
-    public MiniScreen SmallDisplay;
-
     private static int _moduleIdCounter = 1;
     private int _moduleId;
     private bool _moduleSolved = false;
@@ -69,8 +65,20 @@ public class SamuelSaysModule : MonoBehaviour {
         ":O"
     };
 
+    private State _state;
+    private ButtonManager _buttonManager;
+
     void Awake() {
         _moduleId = _moduleIdCounter++;
+
+        Bomb = GetComponent<KMBombInfo>();
+        Audio = GetComponent<KMAudio>();
+        Module = GetComponent<KMBombModule>();
+        _buttonManager = GetComponentInChildren<ButtonManager>();
+    }
+
+    public void ChangeState(State newState) {
+        _state = newState;
     }
 
 }

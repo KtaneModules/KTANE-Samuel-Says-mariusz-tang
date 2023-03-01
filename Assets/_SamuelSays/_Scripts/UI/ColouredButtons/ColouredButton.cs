@@ -6,22 +6,22 @@ using UnityEngine;
 public class ColouredButton : MonoBehaviour {
 
 	[SerializeField] private ButtonColour _colour;
-    [SerializeField] private ColouredButtonManager _controller;
 
     [SerializeField] private MeshRenderer _buttonBacking;
 	[SerializeField] private MeshRenderer _buttonCover;
 	[SerializeField] private Light _light;
 
     private Animator _animator;
+    private KMSelectable _selectable;
 
 	public ButtonColour Colour { get { return _colour; } }
+    public KMSelectable Selectable { get { return _selectable; } }
 
 	void Awake() {
         _animator = GetComponent<Animator>();
+        _selectable = GetComponentInChildren<KMSelectable>();
 
         SetColour();
-        GetComponentInChildren<KMSelectable>().OnInteract += delegate () { _controller.HandlePress(this); return false; };
-        GetComponentInChildren<KMSelectable>().OnInteractEnded += delegate () { _controller.HandleRelease(this); };
     }
 
     private void SetColour() {
