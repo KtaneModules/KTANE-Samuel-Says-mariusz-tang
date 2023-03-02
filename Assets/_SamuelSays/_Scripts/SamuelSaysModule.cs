@@ -27,6 +27,7 @@ public class SamuelSaysModule : MonoBehaviour {
     private const float SingleMorseUnit = 0.2f;
     private const float EmoticonFlashTime = 0.3f;
     private const int EmoticonFlashCount = 3;
+    private const string DotDash = "•ー";
 
     private readonly string[] HappyFaces = new string[] {
         ":)",
@@ -79,6 +80,7 @@ public class SamuelSaysModule : MonoBehaviour {
         Bomb = GetComponent<KMBombInfo>();
         Audio = GetComponent<KMAudio>();
         Module = GetComponent<KMBombModule>();
+        _state = new TestState(this);
     }
 
     void Start() {
@@ -86,7 +88,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
         foreach (ColouredButton button in _buttons) {
             button.Selectable.OnInteract += delegate () { HandlePress(button); return false; };
-            button.Selectable.OnInteractEnded += delegate () { HandleRelease(); };
+            button.Selectable.OnInteractEnded += delegate () { HandleRelease(button); };
             button.SetColour((ButtonColour)count++);
         }
     }
@@ -99,7 +101,7 @@ public class SamuelSaysModule : MonoBehaviour {
         StartCoroutine(_state.HandlePress(button));
     }
 
-    private void HandleRelease() {
-        StartCoroutine(_state.HandleRelease());
+    private void HandleRelease(ColouredButton button) {
+        StartCoroutine(_state.HandleRelease(button));
     }
 }

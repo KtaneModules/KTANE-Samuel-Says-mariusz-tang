@@ -1,5 +1,14 @@
 Manual link: https://docs.google.com/document/d/1iS-9shm8s8xhhmEYfrF_jrZ_7_7lMVHYgHwQkwhVTUE/edit.
 
+STATES:
+PreFinalStage
+FinalStage
+Transitioning
+Solved
+
+
+
+
 Conditions:
 
 RED:

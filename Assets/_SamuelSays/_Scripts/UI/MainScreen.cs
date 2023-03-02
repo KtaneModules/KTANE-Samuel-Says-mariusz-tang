@@ -7,15 +7,21 @@ public class MainScreen : MonoBehaviour {
 
     [SerializeField] private Material _displayMaterial;
 
+    private const float ColourBrightness = 0.9f;
+
     private Color[] _colourList = new Color[] {
-        new Color(225f / 255f, 0, 0),
-        new Color(225f / 255f, 225f / 255f, 0),
-        new Color(0, 225f / 255f, 0),
-        new Color(0, 0, 225f / 255f)
+        Color.red * ColourBrightness,
+        Color.yellow * ColourBrightness,
+        Color.green * ColourBrightness,
+        Color.blue * ColourBrightness
     };
 
+    private MeshRenderer _colourDisplay;
+    private Coroutine _displaySequence;
+
     void Awake() {
-        GetComponent<MeshRenderer>().enabled = false;
+        _colourDisplay = GetComponent<MeshRenderer>();
+        _colourDisplay.enabled = false;
     }
 
     //public void DisplayColour(SamColour colour) {

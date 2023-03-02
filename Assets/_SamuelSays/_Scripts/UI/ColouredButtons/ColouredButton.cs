@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class ColouredButton : MonoBehaviour {
@@ -33,8 +31,8 @@ public class ColouredButton : MonoBehaviour {
         _colour = colour;
         int index = (int)_colour;
 
-        _buttonBacking.material.color = Colours[index] * new Color(88f / 255f, 88f / 255f, 88f / 255f);
-        _buttonCover.material.color = Colours[index] * new Color(88f / 255f, 88f / 255f, 88f / 255f, 0.75f);
+        _buttonBacking.material.color = Colours[index] * 88f / 255f;
+        _buttonCover.material.color = Colours[index] * new Color(1, 1, 1, 0.75f) * 88f / 255f;
         _light.color = Colours[index];
     }
 

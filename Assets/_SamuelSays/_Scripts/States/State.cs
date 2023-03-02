@@ -14,7 +14,7 @@ public abstract class State {
         yield return null;
     }
 
-    public virtual IEnumerator HandleRelease() {
+    public virtual IEnumerator HandleRelease(ColouredButton button) {
         yield return null;
     }
 
