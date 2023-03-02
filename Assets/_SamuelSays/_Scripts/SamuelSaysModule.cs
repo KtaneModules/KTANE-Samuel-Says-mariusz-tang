@@ -12,6 +12,9 @@ public class SamuelSaysModule : MonoBehaviour {
     // Add play display sequence to MainScreen.cs.
     // Add button dance.
 
+    [SerializeField] private ColouredButton[] _buttons;
+    [SerializeField] private KMSelectable _submitButton;
+
     [HideInInspector] public KMBombInfo Bomb;
     [HideInInspector] public KMAudio Audio;
     [HideInInspector] public KMBombModule Module;
@@ -20,6 +23,7 @@ public class SamuelSaysModule : MonoBehaviour {
     private int _moduleId;
     private bool _moduleSolved = false;
 
+    // These need to be moved to their relevant classes.
     private const float SingleMorseUnit = 0.2f;
     private const float EmoticonFlashTime = 0.3f;
     private const int EmoticonFlashCount = 3;
@@ -66,7 +70,8 @@ public class SamuelSaysModule : MonoBehaviour {
     };
 
     private State _state;
-    private ButtonManager _buttonManager;
+
+    public ColouredButton[] Buttons { get { return _buttons; } }
 
     void Awake() {
         _moduleId = _moduleIdCounter++;
@@ -74,11 +79,27 @@ public class SamuelSaysModule : MonoBehaviour {
         Bomb = GetComponent<KMBombInfo>();
         Audio = GetComponent<KMAudio>();
         Module = GetComponent<KMBombModule>();
-        _buttonManager = GetComponentInChildren<ButtonManager>();
+    }
+
+    void Start() {
+        int count = 0;
+
+        foreach (ColouredButton button in _buttons) {
+            button.Selectable.OnInteract += delegate () { HandlePress(button); return false; };
+            button.Selectable.OnInteractEnded += delegate () { HandleRelease(); };
+            button.SetColour((ButtonColour)count++);
+        }
     }
 
     public void ChangeState(State newState) {
         _state = newState;
     }
 
+    private void HandlePress(ColouredButton button) {
+        StartCoroutine(_state.HandlePress(button));
+    }
+
+    private void HandleRelease() {
+        StartCoroutine(_state.HandleRelease());
+    }
 }

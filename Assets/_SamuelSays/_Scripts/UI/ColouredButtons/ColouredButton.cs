@@ -5,8 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class ColouredButton : MonoBehaviour {
 
-	[SerializeField] private ButtonColour _colour;
-
     [SerializeField] private MeshRenderer _buttonBacking;
 	[SerializeField] private MeshRenderer _buttonCover;
 	[SerializeField] private Light _light;
@@ -14,24 +12,26 @@ public class ColouredButton : MonoBehaviour {
     private Animator _animator;
     private KMSelectable _selectable;
 
-	public ButtonColour Colour { get { return _colour; } }
+    private ButtonColour _colour;
+
+    public ButtonColour Colour { get { return _colour; } }
     public KMSelectable Selectable { get { return _selectable; } }
 
 	void Awake() {
         _animator = GetComponent<Animator>();
         _selectable = GetComponentInChildren<KMSelectable>();
-
-        SetColour();
     }
 
-    private void SetColour() {
-        int index = (int)_colour;
+    public void SetColour(ButtonColour colour) {
         Color[] Colours = new Color[] {
             Color.red,
             Color.yellow,
             Color.green,
             Color.blue
         };
+
+        _colour = colour;
+        int index = (int)_colour;
 
         _buttonBacking.material.color = Colours[index] * new Color(88f / 255f, 88f / 255f, 88f / 255f);
         _buttonCover.material.color = Colours[index] * new Color(88f / 255f, 88f / 255f, 88f / 255f, 0.75f);

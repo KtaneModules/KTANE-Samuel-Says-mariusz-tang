@@ -10,7 +10,11 @@ public abstract class State {
         _module = module;
     }
 
-    public virtual IEnumerator HandlePress(ButtonColour pressedColour) {
+    public virtual IEnumerator HandlePress(ColouredButton button) {
+        yield return null;
+    }
+
+    public virtual IEnumerator HandleRelease() {
         yield return null;
     }
 

@@ -352,8 +352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f149213621d1d4b8c62579348ee3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colour: 1
-  _controller: {fileID: 2141760482}
   _buttonBacking: {fileID: 1665366788}
   _buttonCover: {fileID: 279620475}
   _light: {fileID: 1053096743}
@@ -563,8 +561,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f149213621d1d4b8c62579348ee3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colour: 0
-  _controller: {fileID: 2141760482}
   _buttonBacking: {fileID: 788567436}
   _buttonCover: {fileID: 586948093}
   _light: {fileID: 1817745597}
@@ -630,8 +626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f149213621d1d4b8c62579348ee3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colour: 2
-  _controller: {fileID: 2141760482}
   _buttonBacking: {fileID: 1773727504}
   _buttonCover: {fileID: 337460259}
   _light: {fileID: 1391713428}
@@ -1011,7 +1005,7 @@ Transform:
   - {fileID: 262115500}
   - {fileID: 1536477593}
   m_Father: {fileID: 1171348653}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &464944190
 GameObject:
@@ -1863,7 +1857,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2141760481}
   - {fileID: 444772931}
   - {fileID: 1859785828}
   m_Father: {fileID: 1320179853}
@@ -1944,12 +1937,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c4c7f980883114ba5ce811a9038d1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buttons:
+  - {fileID: 172605773}
+  - {fileID: 112594200}
+  - {fileID: 262115502}
+  - {fileID: 1536477595}
+  _submitButton: {fileID: 434243187}
   Bomb: {fileID: 1320179851}
   Audio: {fileID: 1320179852}
   Module: {fileID: 1320179850}
-  SubmitButton: {fileID: 434243187}
-  Screen: {fileID: 1481127925}
-  SmallDisplay: {fileID: 1891099217}
 --- !u!114 &1320179849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2441,8 +2437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f149213621d1d4b8c62579348ee3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colour: 3
-  _controller: {fileID: 2141760482}
   _buttonBacking: {fileID: 16308740}
   _buttonCover: {fileID: 1993631186}
   _light: {fileID: 888999215}
@@ -2957,7 +2951,7 @@ Transform:
   - {fileID: 434243188}
   - {fileID: 910092733}
   m_Father: {fileID: 1171348653}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1890079033
 GameObject:
@@ -3518,46 +3512,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2141760480
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2141760481}
-  - component: {fileID: 2141760482}
-  m_Layer: 0
-  m_Name: ButtonManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2141760481
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2141760480}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1171348653}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2141760482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2141760480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0edf2ed65df74994aa0ade257a6917c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _module: {fileID: 1320179848}
-  _buttons: []
-  _submitButton: {fileID: 434243187}
