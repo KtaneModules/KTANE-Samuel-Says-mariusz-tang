@@ -111,4 +111,9 @@ public class SamuelSaysModule : MonoBehaviour {
     private void HandleRelease(ColouredButton button) {
         StartCoroutine(_state.HandleRelease(button));
     }
+
+    public void Strike(string loggingMessage) {
+        _logging.Log(loggingMessage);
+        Module.HandleStrike();
+    }
 }
