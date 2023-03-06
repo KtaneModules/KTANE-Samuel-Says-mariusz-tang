@@ -2313,6 +2313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayMaterial: {fileID: 2100000, guid: bb8395c22f22ad248a1a4f4012246966, type: 2}
+  _beep: {fileID: 2089245062}
 --- !u!114 &1481127926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2614,7 +2615,7 @@ TextMesh:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1700275815}
-  m_Text: "\u2022"
+  m_Text: "\xDC"
   m_OffsetZ: 0
   m_CharacterSize: 0.05
   m_LineSpacing: 1

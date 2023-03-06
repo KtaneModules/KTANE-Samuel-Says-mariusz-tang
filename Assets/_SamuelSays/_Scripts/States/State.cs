@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class State {
 
-    private SamuelSaysModule _module;
+    protected SamuelSaysModule _module;
 
     protected State(SamuelSaysModule module) {
         _module = module;

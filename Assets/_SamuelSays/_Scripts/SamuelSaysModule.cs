@@ -71,12 +71,17 @@ public class SamuelSaysModule : MonoBehaviour {
         ":O"
     };
 
+    private MainScreen _screen;
+
     private Logger _logging;
     private State _state;
     private List<ColouredSymbol[]> _displayedSequences;
+    private SamuelSequenceHandler _sequenceGenerator;
 
     public ColouredButton[] Buttons { get { return _buttons; } }
     public List<ColouredSymbol[]> DisplayedSequences { get { return _displayedSequences; } }
+    public SamuelSequenceHandler SequenceGenerator { get { return _sequenceGenerator; } }
+    public MainScreen Screen { get { return _screen; } }
 
     void Awake() {
         _moduleId = _moduleIdCounter++;
@@ -85,7 +90,8 @@ public class SamuelSaysModule : MonoBehaviour {
         Audio = GetComponent<KMAudio>();
         Module = GetComponent<KMBombModule>();
         _logging = GetComponent<Logger>();
-        _state = new TestState(this);
+        _screen = GetComponentInChildren<MainScreen>();
+        _sequenceGenerator = new SamuelSequenceHandler(this);
     }
 
     void Start() {
@@ -98,6 +104,7 @@ public class SamuelSaysModule : MonoBehaviour {
         }
 
         _logging.AssignModule(Module.ModuleDisplayName, _moduleId);
+        _state = new TestState(this);
     }
 
     public void ChangeState(State newState) {
