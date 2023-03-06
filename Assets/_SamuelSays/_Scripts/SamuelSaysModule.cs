@@ -23,6 +23,7 @@ public class SamuelSaysModule : MonoBehaviour {
     private int _moduleId;
     private bool _moduleSolved = false;
 
+
     // These need to be moved to their relevant classes.
     private const float SingleMorseUnit = 0.2f;
     private const float EmoticonFlashTime = 0.3f;
@@ -70,9 +71,12 @@ public class SamuelSaysModule : MonoBehaviour {
         ":O"
     };
 
+    private Logger _logging;
     private State _state;
+    private List<ColouredSymbol[]> _displayedSequences;
 
     public ColouredButton[] Buttons { get { return _buttons; } }
+    public List<ColouredSymbol[]> DisplayedSequences { get { return _displayedSequences; } }
 
     void Awake() {
         _moduleId = _moduleIdCounter++;
@@ -80,6 +84,7 @@ public class SamuelSaysModule : MonoBehaviour {
         Bomb = GetComponent<KMBombInfo>();
         Audio = GetComponent<KMAudio>();
         Module = GetComponent<KMBombModule>();
+        _logging = GetComponent<Logger>();
         _state = new TestState(this);
     }
 
@@ -91,6 +96,8 @@ public class SamuelSaysModule : MonoBehaviour {
             button.Selectable.OnInteractEnded += delegate () { HandleRelease(button); };
             button.SetColour((ButtonColour)count++);
         }
+
+        _logging.AssignModule(Module.ModuleDisplayName, _moduleId);
     }
 
     public void ChangeState(State newState) {

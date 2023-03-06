@@ -1033,7 +1033,7 @@ TextMesh:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 464944190}
-  m_Text: ': )'
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 0.03
   m_LineSpacing: 1
@@ -2605,7 +2605,7 @@ TextMesh:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1700275815}
-  m_Text: 
+  m_Text: "\u2022"
   m_OffsetZ: 0
   m_CharacterSize: 0.05
   m_LineSpacing: 1
