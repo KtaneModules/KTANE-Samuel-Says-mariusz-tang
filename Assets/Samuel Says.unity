@@ -1918,6 +1918,7 @@ GameObject:
   - component: {fileID: 1320179850}
   - component: {fileID: 1320179849}
   - component: {fileID: 1320179848}
+  - component: {fileID: 1320179854}
   m_Layer: 0
   m_Name: SamuelSays
   m_TagString: Untagged
@@ -1961,19 +1962,16 @@ MonoBehaviour:
   Parent: {fileID: 1320179849}
   Children:
   - {fileID: 434243187}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 586948089}
   - {fileID: 279620474}
   - {fileID: 337460258}
   - {fileID: 1993631185}
   IsPassThrough: 0
-  ChildRowLength: 4
+  ChildRowLength: 5
   Highlight: {fileID: 2007838175}
   SelectableColliders: []
   DefaultSelectableIndex: 0
-  AllowSelectionWrapX: 0
+  AllowSelectionWrapX: 1
   AllowSelectionWrapY: 0
   ForceSelectionHighlight: 0
   ForceInteractionHighlight: 0
@@ -2034,6 +2032,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1320179854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1320179847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f07cc6cd7b310409f6a8b77ac89328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1391713426
 GameObject:
   m_ObjectHideFlags: 0

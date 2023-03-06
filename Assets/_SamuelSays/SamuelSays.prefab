@@ -519,7 +519,6 @@ GameObject:
   - component: {fileID: 23786492258097616}
   - component: {fileID: 114066880698302498}
   - component: {fileID: 114242814411878664}
-  - component: {fileID: 114934233406093046}
   m_Layer: 0
   m_Name: D Cover
   m_TagString: Untagged
@@ -2822,12 +2821,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c4c7f980883114ba5ce811a9038d1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buttons: []
+  _submitButton: {fileID: 0}
   Bomb: {fileID: 114779977778156522}
   Audio: {fileID: 114091714463591674}
   Module: {fileID: 114504487643367590}
-  SubmitButton: {fileID: 114005992999567316}
-  Screen: {fileID: 114929381958917374}
-  SmallDisplay: {fileID: 114723610282330506}
 --- !u!114 &114640789583254048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3016,15 +3014,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayMaterial: {fileID: 2100000, guid: bb8395c22f22ad248a1a4f4012246966, type: 2}
---- !u!114 &114934233406093046
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1716591160397018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc1b73c1790186c4c9825bd978d0feeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _light: {fileID: 108201685910029606}
