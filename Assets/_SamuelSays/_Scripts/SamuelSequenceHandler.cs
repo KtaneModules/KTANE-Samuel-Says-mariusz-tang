@@ -8,6 +8,7 @@ using System.Linq;
 
 public class SamuelSequenceHandler {
 
+    // ! Hi hello there kuro in vs this is kuro in vscode! :)))
     private const int SEQUENCE_LENGTH = 4;
     private SamuelSaysModule _module;
 
