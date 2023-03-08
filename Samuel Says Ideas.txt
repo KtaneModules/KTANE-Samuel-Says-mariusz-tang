@@ -42,10 +42,10 @@ BLUE:
 
 Quirks:
 
-Glitched		- Buttons press themselves. Use button sequence to determine the position in the sequence to submit (instead of edgework)
+Glitched	- Buttons press themselves. Use button sequence to determine the position in the sequence to submit (instead of edgework)
 Stutter		- Each symbol flashes several times before moving to the next (all symbols different). Use the different numbers to somehow modify the sequence
 Virus		- No colours (all purple). Use submissions so far to decide colour sequence
-Unstable		- One of the symbols alternates between being a dash and a dot. Go through the rules with both cases and combine the results (need to decide how)
+Unstable	- One of the symbols alternates between being a dash and a dot. Go through the rules with both cases and combine the results (need to decide how)
 Overclocked	- No pause between flashes. Sometimes the "first" colour will flicker. The symbols have been shifted right (but not the colours)
 Discoloured	- Small screen goes gray (or some other colour). Blue -> Green -> Yellow -> Red -> Blue
 Stuck		- One button is pushed in. Use this as an extra colour to use in the rules. Whether dot or dash is decided by edgework/stage number etc.
