@@ -4,8 +4,8 @@
 public class ColouredButton : MonoBehaviour {
 
     [SerializeField] private MeshRenderer _buttonBacking;
-	[SerializeField] private MeshRenderer _buttonCover;
-	[SerializeField] private Light _light;
+    [SerializeField] private MeshRenderer _buttonCover;
+    [SerializeField] private Light _light;
 
     private Animator _animator;
     private KMSelectable _selectable;
@@ -15,7 +15,7 @@ public class ColouredButton : MonoBehaviour {
     public ButtonColour Colour { get { return _colour; } }
     public KMSelectable Selectable { get { return _selectable; } }
 
-	void Awake() {
+    void Awake() {
         _animator = GetComponent<Animator>();
         _selectable = GetComponentInChildren<KMSelectable>();
     }
@@ -37,12 +37,12 @@ public class ColouredButton : MonoBehaviour {
     }
 
     public void PlayPressAnimation() {
-		_animator.SetBool("IsPressed", true);
-	}
+        _animator.SetBool("IsPressed", true);
+    }
 
-	public void PlayReleaseAnimation() {
-		_animator.SetBool("IsPressed", false);
-	}
+    public void PlayReleaseAnimation() {
+        _animator.SetBool("IsPressed", false);
+    }
 
     // Animator event.
     public void SetLightState(int state) {
