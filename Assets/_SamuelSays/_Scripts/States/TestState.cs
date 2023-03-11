@@ -7,12 +7,11 @@ using UnityEngine;
 
 public class TestState : State {
 
-    public TestState(SamuelSaysModule module) : base(module) {
-        StartSequence();
-    }
+    public TestState(SamuelSaysModule module) : base(module) { }
 
-    private void StartSequence() {
+    public override IEnumerator OnStateEnter() {
         _module.Screen.PlaySequence(new List<ColouredSymbol[]> { _module.SequenceGenerator.GenerateRandomSequence(), _module.SequenceGenerator.GenerateRandomSequence() });
+        yield return null;
     }
 
     public override IEnumerator HandlePress(ColouredButton button) {

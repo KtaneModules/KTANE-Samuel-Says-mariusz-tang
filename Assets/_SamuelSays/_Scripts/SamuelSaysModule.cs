@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using KModkit;
-using Rnd = UnityEngine.Random;
 using System.Linq;
+using KModkit;
+using UnityEngine;
+using Rnd = UnityEngine.Random;
 
 public class SamuelSaysModule : MonoBehaviour {
 
@@ -83,7 +83,7 @@ public class SamuelSaysModule : MonoBehaviour {
     public SamuelSequenceHandler SequenceGenerator { get { return _sequenceGenerator; } }
     public MainScreen Screen { get { return _screen; } }
 
-    void Awake() {
+    private void Awake() {
         _moduleId = _moduleIdCounter++;
 
         Bomb = GetComponent<KMBombInfo>();
@@ -94,7 +94,7 @@ public class SamuelSaysModule : MonoBehaviour {
         _sequenceGenerator = new SamuelSequenceHandler(this);
     }
 
-    void Start() {
+    private void Start() {
         int count = 0;
 
         foreach (ColouredButton button in _buttons) {
@@ -109,6 +109,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
     public void ChangeState(State newState) {
         _state = newState;
+        StartCoroutine(_state.OnStateEnter());
     }
 
     private void HandlePress(ColouredButton button) {

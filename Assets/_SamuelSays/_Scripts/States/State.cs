@@ -4,10 +4,15 @@ using UnityEngine;
 
 public abstract class State {
 
-    protected SamuelSaysModule _module;
+    protected readonly SamuelSaysModule _module;
 
     protected State(SamuelSaysModule module) {
         _module = module;
+        _module.StartCoroutine(OnStateEnter());
+    }
+
+    public virtual IEnumerator OnStateEnter() {
+        yield return null;
     }
 
     public virtual IEnumerator HandlePress(ColouredButton button) {
