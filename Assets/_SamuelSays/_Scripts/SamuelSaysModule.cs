@@ -8,6 +8,10 @@ using Rnd = UnityEngine.Random;
 
 public class SamuelSaysModule : MonoBehaviour {
 
+    // TODO: Implement LeftToRightAnimation.
+    // TODO: Implement small screen functionality (MiniScreen).
+    // TODO: Implement input system.
+
     // Add emote flash sequence to MiniScreen.cs.
     // Add play display sequence to MainScreen.cs.
     // Add button dance.
