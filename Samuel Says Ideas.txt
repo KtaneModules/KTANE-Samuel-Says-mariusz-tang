@@ -6,9 +6,6 @@ FinalStage
 Transitioning
 Solved
 
-
-
-
 Conditions:
 
 RED:
