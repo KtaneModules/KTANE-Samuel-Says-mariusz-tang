@@ -27,16 +27,6 @@ public class TestState : State {
         yield return null;
     }
 
-    public override IEnumerator HandleMiniScreenPress() {
-        _module.SymbolDisplay.DisplayLetter('Ü');
-        yield return null;
-    }
-
-    public override IEnumerator HandleMiniScreenRelease() {
-        _module.SymbolDisplay.DisplayColour(Color.white);
-        yield return null;
-    }
-
     public override IEnumerator HandleSubmitPress() {
         _module.Screen.StopSequence();
         _module.SymbolDisplay.ClearScreen();

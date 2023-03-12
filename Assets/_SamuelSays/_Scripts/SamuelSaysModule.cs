@@ -18,15 +18,15 @@ public class SamuelSaysModule : MonoBehaviour {
     // TODO: Beta-testing.
     // TODO: Complete(?).
 
-    // ! I am gonna go sleep now, but I think that (^^) is an accurate roadmap of whats gonna happen with Samuel :)
+    // ! These need to be moved to their relevant classes.
 
-    // Add emote flash sequence to MiniScreen.cs.
-    // Add play display sequence to MainScreen.cs.
-    // Add button dance.
+    private const float SingleMorseUnit = 0.2f;
+    private const float EmoticonFlashTime = 0.3f;
+    private const int EmoticonFlashCount = 3;
+    private const string DotDash = "•ー";
 
     [SerializeField] private ColouredButton[] _buttons;
     [SerializeField] private KMSelectable _submitButton;
-    [SerializeField] private KMSelectable _miniScreenButton;
 
     [HideInInspector] public KMBombInfo Bomb;
     [HideInInspector] public KMAudio Audio;
@@ -36,14 +36,7 @@ public class SamuelSaysModule : MonoBehaviour {
     private int _moduleId;
     private bool _moduleSolved = false;
 
-
-    // These need to be moved to their relevant classes.
-    private const float SingleMorseUnit = 0.2f;
-    private const float EmoticonFlashTime = 0.3f;
-    private const int EmoticonFlashCount = 3;
-    private const string DotDash = "•ー";
-
-    private readonly string[] HappyFaces = new string[] {
+    private readonly string[] _happyFaces = new string[] {
         ":)",
         ": )",
         ":-)",
@@ -57,7 +50,7 @@ public class SamuelSaysModule : MonoBehaviour {
         "= ]",
         "=-]"
     };
-    private readonly string[] HackedFaces = new string[] {
+    private readonly string[] _hackedFaces = new string[] {
         ">:(",
         ">:[",
         ">:<",
@@ -70,7 +63,7 @@ public class SamuelSaysModule : MonoBehaviour {
         ":0",
         ":O"
     };
-    private readonly string[] StrikeFaces = new string[] {
+    private readonly string[] _strikeFaces = new string[] {
         ">:(",
         ">:[",
         ">:<",
@@ -83,20 +76,14 @@ public class SamuelSaysModule : MonoBehaviour {
         ":0",
         ":O"
     };
-
-    private MainScreen _screen;
-    private MiniScreen _symbolDisplay;
-
     private Logger _logging;
     private State _state;
-    private List<ColouredSymbol[]> _displayedSequences;
-    private SamuelSequenceHandler _sequenceGenerator;
 
     public ColouredButton[] Buttons { get { return _buttons; } }
-    public List<ColouredSymbol[]> DisplayedSequences { get { return _displayedSequences; } }
-    public SamuelSequenceHandler SequenceGenerator { get { return _sequenceGenerator; } }
-    public MainScreen Screen { get { return _screen; } }
-    public MiniScreen SymbolDisplay { get { return _symbolDisplay; } }
+    public List<ColouredSymbol[]> DisplayedSequences { get; private set; }
+    public SamuelSequenceHandler SequenceGenerator { get; private set; }
+    public MainScreen Screen { get; private set; }
+    public MiniScreen SymbolDisplay { get; private set; }
 
     private void Awake() {
         _moduleId = _moduleIdCounter++;
@@ -105,9 +92,9 @@ public class SamuelSaysModule : MonoBehaviour {
         Audio = GetComponent<KMAudio>();
         Module = GetComponent<KMBombModule>();
         _logging = GetComponent<Logger>();
-        _screen = GetComponentInChildren<MainScreen>();
-        _symbolDisplay = GetComponentInChildren<MiniScreen>();
-        _sequenceGenerator = new SamuelSequenceHandler(this);
+        Screen = GetComponentInChildren<MainScreen>();
+        SymbolDisplay = GetComponentInChildren<MiniScreen>();
+        SequenceGenerator = new SamuelSequenceHandler(this);
     }
 
     private void Start() {
@@ -126,8 +113,6 @@ public class SamuelSaysModule : MonoBehaviour {
         }
 
         _submitButton.OnInteract += delegate () { StartCoroutine(_state.HandleSubmitPress()); return false; };
-        _miniScreenButton.OnInteract += delegate () { StartCoroutine(_state.HandleMiniScreenPress()); return false; };
-        _miniScreenButton.OnInteractEnded += delegate () { StartCoroutine(_state.HandleMiniScreenRelease()); };
     }
 
     public void ChangeState(State newState) {

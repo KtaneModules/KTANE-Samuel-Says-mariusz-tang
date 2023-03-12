@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class MainScreen : MonoBehaviour {
 
+    private const float MorseTimeUnit = 0.2f;
+    private const float ColourBrightness = 0.9f;
+
     [SerializeField] private Material _displayMaterial;
     [SerializeField] private AudioSource _beep;
-
-    private const float COLOUR_BRIGHTNESS = 0.9f;
-    private const float MORSE_TIME_UNIT = 0.2f;
 
     private readonly Color[] _colourList = new Color[] {
         Color.red,
@@ -17,9 +17,8 @@ public class MainScreen : MonoBehaviour {
         Color.green,
         Color.blue
     };
-
-    private MeshRenderer _colourDisplay;
     private Coroutine _displaySequence;
+    private MeshRenderer _colourDisplay;
 
     private void Awake() {
         _colourDisplay = GetComponent<MeshRenderer>();
@@ -35,7 +34,7 @@ public class MainScreen : MonoBehaviour {
     }
 
     private void DisplayColour(ButtonColour colour) {
-        _displayMaterial.color = _colourList[(int)colour] * COLOUR_BRIGHTNESS;
+        _displayMaterial.color = _colourList[(int)colour] * ColourBrightness;
         _colourDisplay.enabled = true;
         _beep.Play();
     }
@@ -69,20 +68,20 @@ public class MainScreen : MonoBehaviour {
             DisplayColour(symbol.Colour);
 
             // Wait for waitTime seconds.
-            waitTime = MORSE_TIME_UNIT * flashLength;
+            waitTime = MorseTimeUnit * flashLength;
             for (elapsedTime = 0; elapsedTime < waitTime; elapsedTime += Time.deltaTime) {
                 yield return null;
             }
 
             StopDisplayingColour();
 
-            waitTime = MORSE_TIME_UNIT;
+            waitTime = MorseTimeUnit;
             for (elapsedTime = 0; elapsedTime < waitTime; elapsedTime += Time.deltaTime) {
                 yield return null;
             }
         }
 
-        waitTime = 2 * MORSE_TIME_UNIT;
+        waitTime = 2 * MorseTimeUnit;
         for (elapsedTime = 0; elapsedTime < waitTime; elapsedTime += Time.deltaTime) {
             yield return null;
         }
