@@ -26,4 +26,12 @@ public abstract class State {
     public virtual IEnumerator HandleSubmitPress() {
         yield return null;
     }
+
+    public virtual IEnumerator HandleMiniScreenPress() {
+        yield return null;
+    }
+
+    public virtual IEnumerator HandleMiniScreenRelease() {
+        yield return null;
+    }
 }

@@ -11,7 +11,7 @@ public class MainScreen : MonoBehaviour {
     private const float COLOUR_BRIGHTNESS = 0.9f;
     private const float MORSE_TIME_UNIT = 0.2f;
 
-    private Color[] _colourList = new Color[] {
+    private readonly Color[] _colourList = new Color[] {
         Color.red,
         Color.yellow,
         Color.green,
@@ -21,14 +21,14 @@ public class MainScreen : MonoBehaviour {
     private MeshRenderer _colourDisplay;
     private Coroutine _displaySequence;
 
-    void Awake() {
+    private void Awake() {
         _colourDisplay = GetComponent<MeshRenderer>();
         _colourDisplay.enabled = false;
     }
 
     public void SetMute(bool enableMute) {
         _beep.volume = 1;
-        
+
         if (enableMute) {
             _beep.volume = 0;
         }

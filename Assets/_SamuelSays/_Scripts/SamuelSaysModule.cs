@@ -8,9 +8,17 @@ using Rnd = UnityEngine.Random;
 
 public class SamuelSaysModule : MonoBehaviour {
 
-    // TODO: Implement LeftToRightAnimation.
-    // TODO: Implement small screen functionality (MiniScreen).
     // TODO: Implement input system.
+    // TODO: Implement sequence generation and processing.
+    // TODO: Add quirks.
+    // TODO: Deal with stage 5.
+    // TODO: Test everything.
+    // TODO: Make manual.
+    // TODO: Add TP.
+    // TODO: Beta-testing.
+    // TODO: Complete(?).
+
+    // ! I am gonna go sleep now, but I think that (^^) is an accurate roadmap of whats gonna happen with Samuel :)
 
     // Add emote flash sequence to MiniScreen.cs.
     // Add play display sequence to MainScreen.cs.
@@ -18,6 +26,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
     [SerializeField] private ColouredButton[] _buttons;
     [SerializeField] private KMSelectable _submitButton;
+    [SerializeField] private KMSelectable _miniScreenButton;
 
     [HideInInspector] public KMBombInfo Bomb;
     [HideInInspector] public KMAudio Audio;
@@ -76,6 +85,7 @@ public class SamuelSaysModule : MonoBehaviour {
     };
 
     private MainScreen _screen;
+    private MiniScreen _symbolDisplay;
 
     private Logger _logging;
     private State _state;
@@ -86,6 +96,7 @@ public class SamuelSaysModule : MonoBehaviour {
     public List<ColouredSymbol[]> DisplayedSequences { get { return _displayedSequences; } }
     public SamuelSequenceHandler SequenceGenerator { get { return _sequenceGenerator; } }
     public MainScreen Screen { get { return _screen; } }
+    public MiniScreen SymbolDisplay { get { return _symbolDisplay; } }
 
     private void Awake() {
         _moduleId = _moduleIdCounter++;
@@ -95,33 +106,33 @@ public class SamuelSaysModule : MonoBehaviour {
         Module = GetComponent<KMBombModule>();
         _logging = GetComponent<Logger>();
         _screen = GetComponentInChildren<MainScreen>();
+        _symbolDisplay = GetComponentInChildren<MiniScreen>();
         _sequenceGenerator = new SamuelSequenceHandler(this);
     }
 
     private void Start() {
+        AssignInputHandlers();
+        _logging.AssignModule(Module.ModuleDisplayName, _moduleId);
+        _state = new TestState(this);
+    }
+
+    private void AssignInputHandlers() {
         int count = 0;
 
         foreach (ColouredButton button in _buttons) {
-            button.Selectable.OnInteract += delegate () { HandlePress(button); return false; };
-            button.Selectable.OnInteractEnded += delegate () { HandleRelease(button); };
+            button.Selectable.OnInteract += delegate () { StartCoroutine(_state.HandlePress(button)); return false; };
+            button.Selectable.OnInteractEnded += delegate () { StartCoroutine(_state.HandleRelease(button)); };
             button.SetColour((ButtonColour)count++);
         }
 
-        _logging.AssignModule(Module.ModuleDisplayName, _moduleId);
-        _state = new TestState(this);
+        _submitButton.OnInteract += delegate () { StartCoroutine(_state.HandleSubmitPress()); return false; };
+        _miniScreenButton.OnInteract += delegate () { StartCoroutine(_state.HandleMiniScreenPress()); return false; };
+        _miniScreenButton.OnInteractEnded += delegate () { StartCoroutine(_state.HandleMiniScreenRelease()); };
     }
 
     public void ChangeState(State newState) {
         _state = newState;
         StartCoroutine(_state.OnStateEnter());
-    }
-
-    private void HandlePress(ColouredButton button) {
-        StartCoroutine(_state.HandlePress(button));
-    }
-
-    private void HandleRelease(ColouredButton button) {
-        StartCoroutine(_state.HandleRelease(button));
     }
 
     public void Strike(string loggingMessage) {

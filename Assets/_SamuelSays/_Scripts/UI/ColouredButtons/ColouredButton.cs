@@ -15,7 +15,7 @@ public class ColouredButton : MonoBehaviour {
     public ButtonColour Colour { get { return _colour; } }
     public KMSelectable Selectable { get { return _selectable; } }
 
-    void Awake() {
+    private void Awake() {
         _animator = GetComponent<Animator>();
         _selectable = GetComponentInChildren<KMSelectable>();
     }
@@ -32,7 +32,7 @@ public class ColouredButton : MonoBehaviour {
         int index = (int)_colour;
 
         _buttonBacking.material.color = Colours[index] * 88f / 255f;
-        _buttonCover.material.color = Colours[index] * new Color(1, 1, 1, 0.75f) * 88f / 255f;
+        _buttonCover.material.color = Colours[index] * 88f / 255f;
         _light.color = Colours[index];
     }
 
