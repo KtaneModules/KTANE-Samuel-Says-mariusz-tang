@@ -44,11 +44,15 @@ public class MainScreen : MonoBehaviour {
         _beep.Stop();
     }
 
-    public void PlaySequence(List<ColouredSymbol[]> sequences) {
+    public void PlaySequence(ColouredSymbol[] sequence) {
+        PlaySequences(new List<ColouredSymbol[]>() { sequence });
+    }
+
+    public void PlaySequences(List<ColouredSymbol[]> sequences) {
         if (_displaySequence != null) {
             StopCoroutine(_displaySequence);
         }
-        _displaySequence = StartCoroutine(DisplaySequence(sequences));
+        _displaySequence = StartCoroutine(DisplaySequences(sequences));
     }
 
     public void StopSequence() {
@@ -58,7 +62,7 @@ public class MainScreen : MonoBehaviour {
         StopDisplayingColour();
     }
 
-    private IEnumerator DisplaySequence(List<ColouredSymbol[]> sequences) {
+    private IEnumerator DisplaySequences(List<ColouredSymbol[]> sequences) {
         ColouredSymbol[] currentSequence = sequences[0];
         float elapsedTime;
         float waitTime;
@@ -89,6 +93,6 @@ public class MainScreen : MonoBehaviour {
         yield return null;
         sequences.Add(sequences[0]);
         sequences.RemoveAt(0);
-        _displaySequence = StartCoroutine(DisplaySequence(sequences));
+        _displaySequence = StartCoroutine(DisplaySequences(sequences));
     }
 }

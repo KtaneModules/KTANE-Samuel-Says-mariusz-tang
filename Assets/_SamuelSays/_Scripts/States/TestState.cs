@@ -10,7 +10,6 @@ public class TestState : State {
     public TestState(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator OnStateEnter() {
-        _module.Screen.PlaySequence(new List<ColouredSymbol[]> { _module.SequenceGenerator.GenerateRandomSequence(), _module.SequenceGenerator.GenerateRandomSequence() });
         _module.SymbolDisplay.DisplayColour(Color.white);
         yield return null;
     }

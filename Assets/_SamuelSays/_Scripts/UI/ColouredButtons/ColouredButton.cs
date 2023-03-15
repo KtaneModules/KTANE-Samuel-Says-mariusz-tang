@@ -46,6 +46,6 @@ public class ColouredButton : MonoBehaviour {
 
     // Animator event.
     public void SetLightState(int state) {
-        _light.enabled = (state == 1);
+        _light.enabled = state == 1;
     }
 }

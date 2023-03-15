@@ -8,7 +8,6 @@ using Rnd = UnityEngine.Random;
 
 public class SamuelSaysModule : MonoBehaviour {
 
-    // TODO: Implement input system.
     // TODO: Implement sequence generation and processing.
     // TODO: Add quirks.
     // TODO: Deal with stage 5.
@@ -17,14 +16,7 @@ public class SamuelSaysModule : MonoBehaviour {
     // TODO: Add TP.
     // TODO: Beta-testing.
     // TODO: Complete(?).
-
-    // ! These need to be moved to their relevant classes.
-
-    private const float SingleMorseUnit = 0.2f;
-    private const float EmoticonFlashTime = 0.3f;
-    private const int EmoticonFlashCount = 3;
-    private const string DotDash = "•ー";
-
+    
     [SerializeField] private ColouredButton[] _buttons;
     [SerializeField] private KMSelectable _submitButton;
 
@@ -34,56 +26,59 @@ public class SamuelSaysModule : MonoBehaviour {
 
     private static int _moduleIdCounter = 1;
     private int _moduleId;
-    private bool _moduleSolved = false;
 
-    private readonly string[] _happyFaces = new string[] {
-        ":)",
-        ": )",
-        ":-)",
-        "=)",
-        "= )",
-        "=-)",
-        ":]" ,
-        ": ]",
-        ":-]",
-        "=]",
-        "= ]",
-        "=-]"
-    };
-    private readonly string[] _hackedFaces = new string[] {
-        ">:(",
-        ">:[",
-        ">:<",
-        ":'(",
-        ">:x",
-        ":|",
-        ">:|",
-        ":s",
-        ":o",
-        ":0",
-        ":O"
-    };
-    private readonly string[] _strikeFaces = new string[] {
-        ">:(",
-        ">:[",
-        ">:<",
-        ":'(",
-        ">:x",
-        ":|",
-        ">:|",
-        ":s",
-        ":o",
-        ":0",
-        ":O"
-    };
+    // ! Move to relevant class.
+    // private readonly string[] _happyFaces = new string[] {
+    //     ":)",
+    //     ": )",
+    //     ":-)",
+    //     "=)",
+    //     "= )",
+    //     "=-)",
+    //     ":]" ,
+    //     ": ]",
+    //     ":-]",
+    //     "=]",
+    //     "= ]",
+    //     "=-]"
+    // };
+    // private readonly string[] _hackedFaces = new string[] {
+    //     ">:(",
+    //     ">:[",
+    //     ">:<",
+    //     ":'(",
+    //     ">:x",
+    //     ":|",
+    //     ">:|",
+    //     ":s",
+    //     ":o",
+    //     ":0",
+    //     ":O"
+    // };
+    // private readonly string[] _strikeFaces = new string[] {
+    //     ">:(",
+    //     ">:[",
+    //     ">:<",
+    //     ":'(",
+    //     ">:x",
+    //     ":|",
+    //     ">:|",
+    //     ":s",
+    //     ":o",
+    //     ":0",
+    //     ":O"
+    // };
+
+    private SamuelSequenceHandler _sequenceGenerator;
     private Logger _logging;
     private State _state;
 
     public ColouredButton[] Buttons { get { return _buttons; } }
-    public List<ColouredSymbol[]> DisplayedSequences { get; private set; }
-    public SamuelSequenceHandler SequenceGenerator { get; private set; }
     public MainScreen Screen { get; private set; }
     public MiniScreen SymbolDisplay { get; private set; }
+
+    public Stack<ColouredSymbol[]> DisplayedSequences { get; private set; }
+    public int StageNumber { get; private set; }
 
     private void Awake() {
         _moduleId = _moduleIdCounter++;
@@ -94,13 +89,17 @@ public class SamuelSaysModule : MonoBehaviour {
         _logging = GetComponent<Logger>();
         Screen = GetComponentInChildren<MainScreen>();
         SymbolDisplay = GetComponentInChildren<MiniScreen>();
-        SequenceGenerator = new SamuelSequenceHandler(this);
+        _sequenceGenerator = new SamuelSequenceHandler(this);
+        DisplayedSequences = new Stack<ColouredSymbol[]>();
     }
 
     private void Start() {
         AssignInputHandlers();
         _logging.AssignModule(Module.ModuleDisplayName, _moduleId);
-        _state = new TestState(this);
+
+        StageNumber = 0;
+        AdvanceStage();
+        _state = new RegularStage(this);
     }
 
     private void AssignInputHandlers() {
@@ -123,5 +122,14 @@ public class SamuelSaysModule : MonoBehaviour {
     public void Strike(string loggingMessage) {
         _logging.Log(loggingMessage);
         Module.HandleStrike();
+    }
+
+    public void Log(string formattedString) {
+        _logging.Log(formattedString);
+    }
+
+    public void AdvanceStage() {
+        DisplayedSequences.Push(_sequenceGenerator.GenerateRandomSequence());
+        StageNumber++;
     }
 }

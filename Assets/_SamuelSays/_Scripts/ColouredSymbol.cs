@@ -29,4 +29,11 @@ public class ColouredSymbol {
     public void SetColour(ButtonColour colour) {
         _colour = colour;
     }
+
+    public override string ToString() {
+        if (_symbol == '.') {
+            return _colour.ToString() + " dit";
+        }
+        return _colour.ToString() + " dah";
+    }
 }
