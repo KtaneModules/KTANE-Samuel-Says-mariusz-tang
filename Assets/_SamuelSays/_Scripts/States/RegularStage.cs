@@ -6,47 +6,33 @@ using UnityEngine;
 
 public class RegularStage : State {
 
-    private static int _stagesLogged;
-
     private ButtonColour _heldButtonColour;
-    private Coroutine _trackingHoldTime;
     private float _timeHeld;
+    private bool _isHolding;
 
     private ColouredSymbol[] _currentDisplaySequence;
-    private List<ColouredSymbol> _submittedSequence = new List<ColouredSymbol>();
 
     public RegularStage(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator OnStateEnter() {
-        _currentDisplaySequence = _module.DisplayedSequences.Peek();
+        _currentDisplaySequence = _module.DisplayedSequences[0];
         _module.Screen.PlaySequence(_currentDisplaySequence);
-
-        if (_stagesLogged != _module.StageNumber) {
-            DoStageLogging();
-        }
-
         yield return null;
-    }
-
-    private void DoStageLogging() {
-        string sequenceAsString = string.Join(", ", _module.DisplayedSequences.Peek().Select(c => c.ToString()).ToArray());
-        _module.Log("Stage " + _module.StageNumber + ":");
-        _module.Log("Displayed sequence is " + sequenceAsString + ".");
-        _module.Log("Expected sequence is " + sequenceAsString + ".");
-        _stagesLogged = _module.StageNumber;
     }
 
     public override IEnumerator HandlePress(ColouredButton button) {
         button.PlayPressAnimation();
         _heldButtonColour = button.Colour;
         _timeHeld = 0;
-        _trackingHoldTime = _module.StartCoroutine(TrackHoldTime());
+        _module.StartCoroutine(TrackHoldTime());
         _module.SymbolDisplay.DisplayLetter('•');
         yield return null;
     }
 
     private IEnumerator TrackHoldTime() {
-        while (true) {
+        _isHolding = true;
+
+        while (_isHolding) {
             _timeHeld += Time.deltaTime;
 
             if (_timeHeld >= 0.5f) {
@@ -57,20 +43,31 @@ public class RegularStage : State {
     }
 
     public override IEnumerator HandleRelease(ColouredButton button) {
-        _module.StopCoroutine(_trackingHoldTime);
+        _isHolding = false;
         button.PlayReleaseAnimation();
         _module.SymbolDisplay.ClearScreen();
 
         char inputtedSymbol = _timeHeld >= 0.5f ? '-' : '.';
-        _submittedSequence.Add(new ColouredSymbol(_heldButtonColour, inputtedSymbol));
+        var submittedSymbol = new ColouredSymbol(_heldButtonColour, inputtedSymbol);
+
+        CheckSubmission(submittedSymbol);
 
         yield return null;
     }
 
+    private void CheckSubmission(ColouredSymbol submittedSymbol) {
+        if (submittedSymbol.Equals(_module.ExpectedSubmission)) {
+            _module.Log("Correct submission!");
+            _module.AdvanceStage();
+            _module.ChangeState(new RegularStage(_module));
+        }
+        else {
+            _module.Strike("Incorrected submitted a " + submittedSymbol.ToString() + "! Strike!");
+        }
+    }
+
     public override IEnumerator HandleSubmitPress() {
-        string sequenceAsString = string.Join(", ", _submittedSequence.Select(c => c.ToString()).ToArray());
-        _module.Log("Inputted " + sequenceAsString + ".");
-        _submittedSequence.Clear();
+        _module.Log("Submitted a ");
         yield return null;
     }
 }

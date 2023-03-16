@@ -8,7 +8,7 @@ using Rnd = UnityEngine.Random;
 
 public class SamuelSaysModule : MonoBehaviour {
 
-    // TODO: Implement sequence generation and processing.
+    // TODO: Implement sequence processing.
     // TODO: Add quirks.
     // TODO: Deal with stage 5.
     // TODO: Test everything.
@@ -16,7 +16,7 @@ public class SamuelSaysModule : MonoBehaviour {
     // TODO: Add TP.
     // TODO: Beta-testing.
     // TODO: Complete(?).
-    
+
     [SerializeField] private ColouredButton[] _buttons;
     [SerializeField] private KMSelectable _submitButton;
 
@@ -70,14 +70,14 @@ public class SamuelSaysModule : MonoBehaviour {
     // };
 
     private SamuelSequenceHandler _sequenceGenerator;
-    private Logger _logging;
     private State _state;
 
     public ColouredButton[] Buttons { get { return _buttons; } }
     public MainScreen Screen { get; private set; }
     public MiniScreen SymbolDisplay { get; private set; }
 
-    public Stack<ColouredSymbol[]> DisplayedSequences { get; private set; }
+    public List<ColouredSymbol[]> DisplayedSequences { get; private set; }
+    public ColouredSymbol ExpectedSubmission { get; private set; }
     public int StageNumber { get; private set; }
 
     private void Awake() {
@@ -86,16 +86,16 @@ public class SamuelSaysModule : MonoBehaviour {
         Bomb = GetComponent<KMBombInfo>();
         Audio = GetComponent<KMAudio>();
         Module = GetComponent<KMBombModule>();
-        _logging = GetComponent<Logger>();
         Screen = GetComponentInChildren<MainScreen>();
         SymbolDisplay = GetComponentInChildren<MiniScreen>();
         _sequenceGenerator = new SamuelSequenceHandler(this);
-        DisplayedSequences = new Stack<ColouredSymbol[]>();
+        DisplayedSequences = new List<ColouredSymbol[]>();
     }
 
     private void Start() {
         AssignInputHandlers();
-        _logging.AssignModule(Module.ModuleDisplayName, _moduleId);
+
+        Log("Samuel says hi!");
 
         StageNumber = 0;
         AdvanceStage();
@@ -120,16 +120,37 @@ public class SamuelSaysModule : MonoBehaviour {
     }
 
     public void Strike(string loggingMessage) {
-        _logging.Log(loggingMessage);
+        Log(loggingMessage);
         Module.HandleStrike();
     }
 
     public void Log(string formattedString) {
-        _logging.Log(formattedString);
+        Debug.LogFormat("[Samuel Says #{0}] {1}", _moduleId, formattedString);
     }
 
     public void AdvanceStage() {
-        DisplayedSequences.Push(_sequenceGenerator.GenerateRandomSequence());
+        ColouredSymbol[] newDisplaySequence = _sequenceGenerator.GenerateRandomSequence();
+        DisplayedSequences.Add(newDisplaySequence);
+        ExpectedSubmission = newDisplaySequence[0];
         StageNumber++;
+
+        string sequenceAsString = string.Join(", ", newDisplaySequence.Select(c => c.ToString()).ToArray());
+        Log("=================================================");
+        Log("Stage " + StageNumber + ":");
+        Log("Displayed sequence is " + sequenceAsString + ".");
+        Log("Expected sequence is " + ExpectedSubmission.ToString() + ".");
+    }
+
+#pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"Use !{0} 0-8 in reading order to select/deselect cubes. Use !{0} s1/2/3 to press stage lights. " +
+                                                    "Use !{0} screen to press the screen button. Chain commands together with spaces.";
+#pragma warning restore 414
+
+    IEnumerator ProcessTwitchCommand(string command) {
+        yield return null;
+    }
+
+    IEnumerator TwitchHandleForcedSolve() {
+        yield return null;
     }
 }
