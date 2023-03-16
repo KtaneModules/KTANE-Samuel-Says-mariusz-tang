@@ -69,7 +69,8 @@ public class SamuelSaysModule : MonoBehaviour {
     //     ":O"
     // };
 
-    private SamuelSequenceHandler _sequenceGenerator;
+    private SamuelSequenceGenerator _sequenceGenerator;
+    private SamuelSequenceModifier _sequenceModifier;
     private State _state;
 
     public ColouredButton[] Buttons { get { return _buttons; } }
@@ -88,7 +89,8 @@ public class SamuelSaysModule : MonoBehaviour {
         Module = GetComponent<KMBombModule>();
         Screen = GetComponentInChildren<MainScreen>();
         SymbolDisplay = GetComponentInChildren<MiniScreen>();
-        _sequenceGenerator = new SamuelSequenceHandler(this);
+        _sequenceGenerator = new SamuelSequenceGenerator();
+        _sequenceModifier = new SamuelSequenceModifier(this);
         DisplayedSequences = new List<ColouredSymbol[]>();
     }
 
@@ -129,7 +131,7 @@ public class SamuelSaysModule : MonoBehaviour {
     }
 
     public void AdvanceStage() {
-        ColouredSymbol[] newDisplaySequence = _sequenceGenerator.GenerateRandomSequence();
+        ColouredSymbol[] newDisplaySequence = _sequenceGenerator.GenerateRandomSequence(4);
         DisplayedSequences.Add(newDisplaySequence);
         ExpectedSubmission = newDisplaySequence[0];
         StageNumber++;
