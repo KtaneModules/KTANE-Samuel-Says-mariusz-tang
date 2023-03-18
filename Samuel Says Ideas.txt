@@ -76,7 +76,7 @@ Stage 5:
 Submission method:
 - Hold for long enough to get a dash
 - Release early for a dot.
-
+- batteries, ports, indicators, modules mod sequence length.
 
 Striking:
 - Stages 1-4: strike on button release
