@@ -2,39 +2,32 @@
 
 public class ColouredSymbol : IEquatable<ColouredSymbol> {
 
-    private ButtonColour _colour;
-    private char _symbol;
-
-    public ButtonColour Colour { get { return _colour; } }
-    public char Symbol { get { return _symbol; } }
+    public ButtonColour Colour { get; set; }
+    public char Symbol { get; set; }
 
     public ColouredSymbol(ButtonColour colour, char symbol) {
         if ((symbol != '.') && (symbol != '-')) {
             throw new ArgumentException("Symbol must be either a dit '.' or a dah '-'.");
         }
 
-        _colour = colour;
-        _symbol = symbol;
+        Colour = colour;
+        Symbol = symbol;
     }
 
     public void ToggleSymbol() {
-        if (_symbol == '.') {
-            _symbol = '-';
+        if (Symbol == '.') {
+            Symbol = '-';
         }
         else {
-            _symbol = '.';
+            Symbol = '.';
         }
-    }
-
-    public void SetColour(ButtonColour colour) {
-        _colour = colour;
     }
 
     public override string ToString() {
-        if (_symbol == '.') {
-            return _colour.ToString() + " dit";
+        if (Symbol == '.') {
+            return Colour.ToString() + " dit";
         }
-        return _colour.ToString() + " dah";
+        return Colour.ToString() + " dah";
     }
 
     public bool Equals(ColouredSymbol other) {

@@ -39,7 +39,8 @@ public class SamuelSequenceModifier {
     private bool _redHasNotFailedToAppear = true;
     private bool _greenHasAppearedBefore = false;
 
-    private int _indicatorCount;
+    private int _litIndicatorCount;
+    private int _unlitIndicatorCount;
     private int _batteryCount;
     private int _uniquePortTypeCount;
     private int _totalPorts;
@@ -63,7 +64,8 @@ public class SamuelSequenceModifier {
         _moduleWithRedInName = moduleNames.Any(modName => modName.ToLower().Contains("red"));
         _shoutsOrSendsPresent = moduleNames.Contains("Simon Shouts") || moduleNames.Contains("Simon Sends");
 
-        _indicatorCount = bomb.GetIndicators().Count();
+        _litIndicatorCount = bomb.GetOnIndicators().Count();
+        _unlitIndicatorCount = bomb.GetOffIndicators().Count();
         _batteryCount = bomb.GetBatteryCount();
         _uniquePortTypeCount = bomb.CountUniquePorts();
         _totalPorts = bomb.GetPorts().Count();
@@ -102,19 +104,47 @@ public class SamuelSequenceModifier {
 
     private void ModifyWithRed() {
         if (_displayedSymbols == ".-.") {
-
+            foreach (ColouredSymbol symbol in _modifiedSequences.Peek()) {
+                symbol.ToggleSymbol();
+            }
         }
         else if (_redHasNotFailedToAppear) {
-
+            foreach (ColouredSymbol symbol in _modifiedSequences.Peek()) {
+                symbol.Colour = ButtonColour.Red;
+            }
         }
-        else if (_displayedSequence.Where(symbol => symbol.Symbol == '-').Count() == _indicatorCount) {
+        else if (_displayedSequence.Where(symbol => symbol.Symbol == '-').Count() == _litIndicatorCount + _unlitIndicatorCount) {
+            // Shift right by lit indicators - unlit indicators.
+            int sequenceLength = _displayedSequence.Length;
+            int rightShiftOffset = _litIndicatorCount - _unlitIndicatorCount;
+            ColouredSymbol[] unshiftedList = _modifiedSequences.Peek().ToArray();
+            var shiftedList = new ColouredSymbol[unshiftedList.Length];
 
+            for (int i = 0; i < sequenceLength; i++) {
+                shiftedList[(i + rightShiftOffset) % sequenceLength] = unshiftedList[i];
+            }
+
+            _modifiedSequences.Push(shiftedList);
         }
         else if (_moduleWithRedInName) {
-
+            // Swap reds with blues, and greens with yellows.
+            foreach (ColouredSymbol symbol in _modifiedSequences.Peek()) {
+                if (symbol.Colour == ButtonColour.Red) {
+                    symbol.Colour = ButtonColour.Blue;
+                }
+                else if (symbol.Colour == ButtonColour.Yellow) {
+                    symbol.Colour = ButtonColour.Green;
+                }
+                else if (symbol.Colour == ButtonColour.Green) {
+                    symbol.Colour = ButtonColour.Yellow;
+                }
+                else if (symbol.Colour == ButtonColour.Blue) {
+                    symbol.Colour = ButtonColour.Red;
+                }
+            }
         }
         else {
-
+            // ! Here next.
         }
     }
 
@@ -168,7 +198,7 @@ public class SamuelSequenceModifier {
 
         }
         else {
-            
+
         }
     }
 
@@ -179,6 +209,7 @@ public class SamuelSequenceModifier {
             return true;
         }
 
+        // Ik this is inefficient but it's never gonna happen more than four times at a time so whatever.
         if (_modifiedSequences.Any()) {
             ButtonColour[] modifiedSequenceColours = _modifiedSequences.Peek().Select(symbol => symbol.Colour).ToArray();
             if (modifiedSequenceColours.Count() == 4 && modifiedSequenceColours.Distinct().Count() == 4) {
