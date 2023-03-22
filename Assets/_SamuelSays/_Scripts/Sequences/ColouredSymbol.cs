@@ -33,4 +33,8 @@ public class ColouredSymbol : IEquatable<ColouredSymbol> {
     public bool Equals(ColouredSymbol other) {
         return (Symbol == other.Symbol) && (Colour == other.Colour);
     }
+
+    public ColouredSymbol Copy() {
+        return new ColouredSymbol(Colour, Symbol);
+    }
 }

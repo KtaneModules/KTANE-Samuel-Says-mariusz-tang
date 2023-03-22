@@ -8,6 +8,8 @@ using Rnd = UnityEngine.Random;
 
 public class SamuelSequenceModifier {
 
+    // ! Probably rewrite this stuff to work better.
+
     // Only need 3/4 symbols long.
     private readonly string[] MorseLetters = new string[] {
         "-...",
@@ -50,6 +52,7 @@ public class SamuelSequenceModifier {
     private Stack<ColouredSymbol[]> _modifiedSequences;
     private string _displayedSymbols;
     private List<ButtonColour> _displayedColours;
+    private ColouredSymbol _removedSymbol;
 
     public SamuelSequenceModifier(SamuelSaysModule module) {
         _module = module;
@@ -92,6 +95,7 @@ public class SamuelSequenceModifier {
     }
 
     private void ModifySequence(ButtonColour currentSymbolColour) {
+        // Duplicate the modified sequence so far for further modification.
         _modifiedSequences.Push(_modifiedSequences.Peek());
 
         switch (currentSymbolColour) {
@@ -115,7 +119,7 @@ public class SamuelSequenceModifier {
         }
         else if (_displayedSequence.Where(symbol => symbol.Symbol == '-').Count() == _litIndicatorCount + _unlitIndicatorCount) {
             // Shift right by lit indicators - unlit indicators.
-            int sequenceLength = _displayedSequence.Length;
+            int sequenceLength = _modifiedSequences.Peek().Length;
             int rightShiftOffset = _litIndicatorCount - _unlitIndicatorCount;
             ColouredSymbol[] unshiftedList = _modifiedSequences.Peek().ToArray();
             var shiftedList = new ColouredSymbol[unshiftedList.Length];
@@ -144,7 +148,11 @@ public class SamuelSequenceModifier {
             }
         }
         else {
-            // ! Here next.
+            ColouredSymbol[] currentList = _modifiedSequences.Peek();
+            currentList[0] = currentList[2].Copy();
+            if (currentList.Length == 4) {
+                currentList[1] = currentList[3].Copy();
+            }
         }
     }
 
@@ -153,16 +161,33 @@ public class SamuelSequenceModifier {
 
         }
         else if (_module.StageNumber == _batteryCount) {
+            ColouredSymbol[] currentSequence = _modifiedSequences.Pop();
+            int length = _displayedSymbols.Length;
+            int n = length - (_batteryCount % length);
 
+            if (_removedSymbol != null) {
+                _removedSymbol = currentSequence[n - 1];
+                _modifiedSequences.Push(currentSequence.Where((symb, index) => index != n - 1).ToArray());
+            }
+            else {
+                List<ColouredSymbol> currentSequenceList = currentSequence.ToList();
+                currentSequenceList.Insert(n - 1, _removedSymbol);
+                _modifiedSequences.Push(currentSequenceList.ToArray());
+            }
         }
         else if (_shoutsOrSendsPresent) {
-
+            _modifiedSequences.Peek()[0].Colour = ButtonColour.Yellow;
+            _modifiedSequences.Peek()[1].Colour = ButtonColour.Yellow;
         }
         else if (_displayedColours.Where(col => col == ButtonColour.Yellow).Count() > 1) {
-
+            for (int i = 0; i < _modifiedSequences.Peek().Length; i++) {
+                if (i != 2) {
+                    _modifiedSequences.Peek()[i].Colour = ButtonColour.Blue;
+                }
+            }
         }
         else {
-
+            
         }
     }
 
