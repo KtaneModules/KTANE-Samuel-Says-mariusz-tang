@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class ColouredSymbol {
+public class ColouredSymbol : IEquatable<ColouredSymbol> {
 
     public ButtonColour Colour { get; set; }
     public char Symbol { get; set; }
@@ -19,5 +19,9 @@ public class ColouredSymbol {
             return Colour.ToString() + " dit";
         }
         return Colour.ToString() + " dah";
+    }
+
+    public bool Equals(ColouredSymbol other) {
+        return (Symbol == other.Symbol) && (Colour == other.Colour);
     }
 }

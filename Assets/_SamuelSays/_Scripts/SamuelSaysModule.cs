@@ -8,7 +8,6 @@ using Rnd = UnityEngine.Random;
 
 public class SamuelSaysModule : MonoBehaviour {
 
-    // TODO: Implement sequence processing.
     // TODO: Add quirks.
     // TODO: Deal with stage 5.
     // TODO: Test everything.
@@ -77,7 +76,7 @@ public class SamuelSaysModule : MonoBehaviour {
     public MainScreen Screen { get; private set; }
     public MiniScreen SymbolDisplay { get; private set; }
 
-    public List<ColouredSymbol[]> DisplayedSequences { get; private set; }
+    public ColouredSymbol[] DisplayedSequence { get; private set; }
     public ColouredSymbol ExpectedSubmission { get; private set; }
     public int StageNumber { get; private set; }
 
@@ -91,7 +90,6 @@ public class SamuelSaysModule : MonoBehaviour {
         SymbolDisplay = GetComponentInChildren<MiniScreen>();
         _sequenceGenerator = new SamuelSequenceGenerator();
         _sequenceModifier = new SamuelSequenceModifier(this);
-        DisplayedSequences = new List<ColouredSymbol[]>();
     }
 
     private void Start() {
@@ -131,12 +129,11 @@ public class SamuelSaysModule : MonoBehaviour {
     }
 
     public void AdvanceStage() {
-        ColouredSymbol[] newDisplaySequence = _sequenceGenerator.GenerateRandomSequence(4);
-        DisplayedSequences.Add(newDisplaySequence);
-        ExpectedSubmission = newDisplaySequence[0];
         StageNumber++;
+        DisplayedSequence = _sequenceGenerator.GenerateRandomSequence(3 + Rnd.Range(0, 2));
+        ExpectedSubmission = _sequenceModifier.GetExpectedSubmission(DisplayedSequence);
 
-        string sequenceAsString = string.Join(", ", newDisplaySequence.Select(c => c.ToString()).ToArray());
+        string sequenceAsString = string.Join(", ", DisplayedSequence.Select(c => c.ToString()).ToArray());
         Log("=================================================");
         Log("Stage " + StageNumber + ":");
         Log("Displayed sequence is " + sequenceAsString + ".");

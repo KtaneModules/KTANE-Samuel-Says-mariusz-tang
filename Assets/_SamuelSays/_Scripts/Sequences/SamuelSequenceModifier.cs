@@ -82,7 +82,7 @@ public class SamuelSequenceModifier {
     public ColouredSymbol GetExpectedSubmission(ColouredSymbol[] displayedSequence) {
         DeconstructDisplayedSequence(displayedSequence);
         _modifiedSymbols = _displayedSymbols;
-        _modifiedColours = _displayedColours;
+        _modifiedColours = _displayedColours.ToList();
 
         foreach (ButtonColour colour in _displayedColours) {
             ModifySequence(colour);
@@ -157,11 +157,11 @@ public class SamuelSequenceModifier {
         }
         else if (!_redHasFailedToAppearInDisplay) {
             // Make all symbols red.
-            int currentLength = _displayedColours.Count();
+            int currentLength = _modifiedColours.Count();
 
-            _displayedColours.Clear();
+            _modifiedColours.Clear();
             for (int i = 0; i < currentLength; i++) {
-                _displayedColours.Add(ButtonColour.Red);
+                _modifiedColours.Add(ButtonColour.Red);
             }
         }
         else if (_modifiedSymbols.Count(symbol => symbol == '-') == _litIndicatorCount + _unlitIndicatorCount) {

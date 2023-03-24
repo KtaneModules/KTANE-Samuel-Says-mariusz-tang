@@ -15,7 +15,7 @@ public class RegularStage : State {
     public RegularStage(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator OnStateEnter() {
-        _currentDisplaySequence = _module.DisplayedSequences[0];
+        _currentDisplaySequence = _module.DisplayedSequence;
         _module.Screen.PlaySequence(_currentDisplaySequence);
         yield return null;
     }
@@ -62,7 +62,7 @@ public class RegularStage : State {
             _module.ChangeState(new RegularStage(_module));
         }
         else {
-            _module.Strike("Incorrected submitted a " + submittedSymbol.ToString() + "! Strike!");
+            _module.Strike("Incorrectly submitted a " + submittedSymbol.ToString() + "! Strike!");
         }
     }
 
