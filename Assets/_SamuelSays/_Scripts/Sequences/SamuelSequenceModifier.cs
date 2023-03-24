@@ -32,8 +32,6 @@ public class SamuelSequenceModifier {
         {25, "--.."}
     };
 
-
-
     private SamuelSaysModule _module;
 
     // Permament values.
@@ -91,17 +89,8 @@ public class SamuelSequenceModifier {
         }
 
         ColouredSymbol[] modifiedSequence = ConstructModifiedSequence(_modifiedSymbols, _modifiedColours);
-        int quantityToUse;
 
-        switch (_module.StageNumber) {
-            case 1: quantityToUse = _batteryCount; break;
-            case 2: quantityToUse = _totalPorts; break;
-            case 3: quantityToUse = _litIndicatorCount + _unlitIndicatorCount; break;
-            case 4: quantityToUse = _moduleCount; break;
-            default: throw new ArgumentOutOfRangeException("WTF STAGE NUMBER ARE WE ON :(");
-        }
-
-        return modifiedSequence[quantityToUse % modifiedSequence.Length];
+        return modifiedSequence[GetCorrectPosition()];
     }
 
     private void DeconstructDisplayedSequence(ColouredSymbol[] sequence) {
@@ -225,7 +214,16 @@ public class SamuelSequenceModifier {
             _modifiedColours.Reverse();
         }
         else if (_module.StageNumber == _batteryCount) {
-            // ! Implement when can be bothered.
+            if (_modifiedSymbols.Length == 4) {
+                int n = 4 - (_batteryCount % 4);
+                _modifiedColours.RemoveAt(n - 1);
+                _modifiedSymbols.Remove(startIndex: n - 1, count: 1);
+            }
+            else {
+                int m = _serialNumberDigitSum % 10 % 3;
+                _modifiedColours.Insert(m - 1, ButtonColour.Yellow);
+                _modifiedSymbols.Insert(m - 1, "-");
+            }
         }
         else if (_shoutsOrSendsPresent) {
             _modifiedColours[0] = ButtonColour.Yellow;
@@ -329,15 +327,34 @@ public class SamuelSequenceModifier {
             }
             _modifiedSymbols = MorseLetters[tryNumber];
         }
-        // else if (AllColoursAppear()) {
-
-        // }
-        else {
-
+        else if (!AllColoursAppear()) {
+            // Set positions 1 and 2 to blue, and the rest to red.
+            for (int i = 0; i < _modifiedColours.Count(); i++) {
+                if (i < 2) {
+                    _modifiedColours[i] = ButtonColour.Blue;
+                }
+                else {
+                    _modifiedColours[i] = ButtonColour.Red;
+                }
+            }
         }
     }
 
+    private bool AllColoursAppear() {
+        return _displayedColours.Concat(_modifiedColours).Distinct().Count() == 4;
+    }
+
     private int GetCorrectPosition() {
-        throw new NotImplementedException();
+        int quantityToUse;
+
+        switch (_module.StageNumber) {
+            case 1: quantityToUse = _batteryCount; break;
+            case 2: quantityToUse = _totalPorts; break;
+            case 3: quantityToUse = _litIndicatorCount + _unlitIndicatorCount; break;
+            case 4: quantityToUse = _moduleCount; break;
+            default: throw new ArgumentOutOfRangeException("WTF STAGE NUMBER ARE WE ON :(");
+        }
+
+        return quantityToUse % _modifiedSymbols.Length;
     }
 }
