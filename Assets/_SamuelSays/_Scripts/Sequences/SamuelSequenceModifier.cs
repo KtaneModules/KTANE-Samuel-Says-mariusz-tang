@@ -9,46 +9,49 @@ using Rnd = UnityEngine.Random;
 public class SamuelSequenceModifier {
 
     // Only need 3/4 symbols long.
-    private readonly string[] MorseLetters = new string[] {
-        "-...",
-        "-.-.",
-        "-..",
-        "..-.",
-        "--.",
-        "....",
-        ".---",
-        "-.-",
-        ".-..",
-        "---",
-        ".--.",
-        "--.-",
-        ".-.",
-        "...",
-        "..-",
-        "...-",
-        ".--",
-        "-..-",
-        "-.--",
-        "--.."
+    private readonly Dictionary<int, string> MorseLetters = new Dictionary<int, string>() {
+        {1, "-..."},
+        {2, "-.-."},
+        {3, "-.."},
+        {5, "..-."},
+        {6, "--."},
+        {7, "...."},
+        {9, ".---"},
+        {10, "-.-"},
+        {11, ".-.."},
+        {14, "---"},
+        {15, ".--."},
+        {16, "--.-"},
+        {17, ".-."},
+        {18, "..."},
+        {19, "..-"},
+        {21, "...-"},
+        {22, ".--"},
+        {23, "-..-"},
+        {24, "-.--"},
+        {25, "--.."}
     };
+
+
 
     private SamuelSaysModule _module;
 
     // Permament values.
     private bool _moduleWithRedInName;
     private bool _shoutsOrSendsPresent;
+    private int _batteryCount;
+    private int _totalPorts;
+    private int _uniquePortTypeCount;
     private int _litIndicatorCount;
     private int _unlitIndicatorCount;
-    private int _batteryCount;
-    private int _uniquePortTypeCount;
-    private int _totalPorts;
+    private int _serialNumberDigitSum;
     private int _moduleCount;
 
     // Variable values.
-    private bool _redHasFailedToAppearInDisplay = false;
+    private bool _blueHasBeenInPositionThreeThisStage = false;
     private bool _greenHasAppearedBefore = false;
-    private bool _blueHasBeenInPositionThree = false;
     private bool _moreThanOneYellowInCurrentDisplay = false;
+    private bool _redHasFailedToAppearInDisplay = false;
 
     private string _displayedSymbols;
     private List<ButtonColour> _displayedColours = new List<ButtonColour>();
@@ -69,12 +72,12 @@ public class SamuelSequenceModifier {
 
         _moduleWithRedInName = moduleNames.Any(modName => modName.ToLower().Contains("red"));
         _shoutsOrSendsPresent = moduleNames.Contains("Simon Shouts") || moduleNames.Contains("Simon Sends");
-
+        _batteryCount = bomb.GetBatteryCount();
+        _totalPorts = bomb.GetPorts().Count();
+        _uniquePortTypeCount = bomb.CountUniquePorts();
         _litIndicatorCount = bomb.GetOnIndicators().Count();
         _unlitIndicatorCount = bomb.GetOffIndicators().Count();
-        _batteryCount = bomb.GetBatteryCount();
-        _uniquePortTypeCount = bomb.CountUniquePorts();
-        _totalPorts = bomb.GetPorts().Count();
+        _serialNumberDigitSum = bomb.GetSerialNumberNumbers().Sum();
         _moduleCount = bomb.GetModuleNames().Count();
     }
 
@@ -115,6 +118,8 @@ public class SamuelSequenceModifier {
         }
 
         _moreThanOneYellowInCurrentDisplay = _displayedColours.Count(colour => colour == ButtonColour.Yellow) >= 2;
+        _blueHasBeenInPositionThreeThisStage = false;
+
     }
 
     private ColouredSymbol[] ConstructModifiedSequence(string symbols, List<ButtonColour> colours) {
@@ -132,17 +137,17 @@ public class SamuelSequenceModifier {
     }
 
     private void ModifySequence(ButtonColour currentSymbolColour) {
+        if (!_blueHasBeenInPositionThreeThisStage) {
+            if (_modifiedColours.Count() >= 3 && _modifiedColours[2] == ButtonColour.Blue) {
+                _blueHasBeenInPositionThreeThisStage = true;
+            }
+        }
+
         switch (currentSymbolColour) {
             case ButtonColour.Red: ModifyWithRed(); break;
             case ButtonColour.Yellow: ModifyWithYellow(); break;
             case ButtonColour.Green: ModifyWithGreen(); break;
             case ButtonColour.Blue: ModifyWithBlue(); break;
-        }
-
-        if (!_blueHasBeenInPositionThree) {
-            if (_modifiedColours.Count() >= 3 && _modifiedColours[2] == ButtonColour.Blue) {
-                _blueHasBeenInPositionThree = true;
-            }
         }
     }
 
@@ -153,10 +158,10 @@ public class SamuelSequenceModifier {
 
             for (int i = 0; i < _modifiedSymbols.Length; i++) {
                 if (_modifiedSymbols[i] == '.') {
-                    newSymbols += '-';
+                    newSymbols += "-";
                 }
                 else {
-                    newSymbols += '.';
+                    newSymbols += ".";
                 }
             }
             _modifiedSymbols = newSymbols;
@@ -235,37 +240,94 @@ public class SamuelSequenceModifier {
             }
         }
         else {
+            // Shift colours right twice.
+            int rightShiftCount = 2;
+            int length = _modifiedColours.Count();
+            var newColours = new List<ButtonColour>();
 
+            for (int start = length - (rightShiftCount % length), offset = 0; offset < length; offset++) {
+                newColours.Add(_modifiedColours[(start + offset) % length]);
+            }
+            _modifiedColours = newColours;
         }
     }
 
     private void ModifyWithGreen() {
         if (_displayedSymbols == "--.") {
-
+            // Make dashes green THEN change dots to dashes.
+            for (int i = 0; i < _modifiedSymbols.Length; i++) {
+                if (_modifiedSymbols[i] == '-') {
+                    _modifiedColours[i] = ButtonColour.Green;
+                }
+                else {
+                    _modifiedSymbols.Remove(startIndex: i, count: 0);
+                    _modifiedSymbols.Insert(startIndex: i, value: "-");
+                }
+            }
         }
         else if (_displayedColours[1] == ButtonColour.Green) {
-
+            _modifiedColours.Clear();
+            _modifiedColours.Add(ButtonColour.Red);
+            _modifiedColours.Add(ButtonColour.Blue);
+            _modifiedColours.Add(ButtonColour.Yellow);
+            if (_modifiedSymbols.Length == 4) {
+                _modifiedColours.Add(ButtonColour.Green);
+            }
         }
         else if (!_greenHasAppearedBefore) {
             _greenHasAppearedBefore = true;
+            for (int i = 0; i < _modifiedColours.Count(); i++) {
+                if (i == 0) {
+                    _modifiedColours[i] = ButtonColour.Green;
+                }
+                else {
+                    _modifiedColours[i] = ButtonColour.Red;
+                }
+            }
         }
-        else if (_displayedSymbols.Where(character => character == '.').Count() == _uniquePortTypeCount) {
-
+        else if (_modifiedSymbols.Count(symbol => symbol == '.') == _uniquePortTypeCount) {
+            // Move all dots to the front.
+            _modifiedSymbols = new string('.', _uniquePortTypeCount);
+            while (_modifiedSymbols.Length < _modifiedColours.Count()) {
+                _modifiedSymbols += "-";
+            }
         }
         else {
-
+            // Remove position 2 and add a green dot to the end.
+            _modifiedSymbols.Remove(startIndex: 1, count: 1);
+            _modifiedSymbols += ".";
+            _modifiedColours.RemoveAt(1);
+            _modifiedColours.Add(ButtonColour.Green);
         }
     }
 
     private void ModifyWithBlue() {
         if (_displayedSymbols == "-...") {
-
+            _modifiedSymbols.Reverse();
         }
-        // else if (_modifiedSequences.Any(seq => seq[2].Colour == ButtonColour.Blue)) {
+        else if (_blueHasBeenInPositionThreeThisStage) {
+            // Shift right once.
+            int rightShiftCount = 1;
+            int length = _modifiedSymbols.Length;
+            string newSymbols = string.Empty;
+            var newColours = new List<ButtonColour>();
 
-        // }
-        else if (!MorseLetters.Contains(_displayedSymbols)) {
-
+            for (int start = length - (rightShiftCount % length), offset = 0; offset < length; offset++) {
+                newSymbols += _modifiedSymbols[(start + offset) % length];
+                newColours.Add(_modifiedColours[(start + offset) % length]);
+            }
+            _modifiedSymbols = newSymbols;
+            _modifiedColours = newColours;
+        }
+        else if (!MorseLetters.ContainsValue(_displayedSymbols)) {
+            // Find the first letter, starting from sum of serial digits with a morse representation of
+            // the same length as that of the sequence.
+            int tryNumber = _serialNumberDigitSum % 26;
+            while (!MorseLetters.ContainsKey(tryNumber) || MorseLetters[tryNumber].Length != _modifiedSymbols.Length) {
+                tryNumber++;
+                tryNumber %= 26;
+            }
+            _modifiedSymbols = MorseLetters[tryNumber];
         }
         // else if (AllColoursAppear()) {
 
