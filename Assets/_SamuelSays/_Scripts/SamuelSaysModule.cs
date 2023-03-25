@@ -99,7 +99,6 @@ public class SamuelSaysModule : MonoBehaviour {
 
         StageNumber = 0;
         AdvanceStage();
-        _state = new RegularStage(this);
     }
 
     private void AssignInputHandlers() {
@@ -138,6 +137,8 @@ public class SamuelSaysModule : MonoBehaviour {
         Log("Stage " + StageNumber + ":");
         Log("Displayed sequence is " + sequenceAsString + ".");
         Log("Expected sequence is " + ExpectedSubmission.ToString() + ".");
+
+        ChangeState(new RegularStage(this));
     }
 
 #pragma warning disable 414

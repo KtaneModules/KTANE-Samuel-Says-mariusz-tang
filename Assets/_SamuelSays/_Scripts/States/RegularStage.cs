@@ -59,7 +59,6 @@ public class RegularStage : State {
         if (submittedSymbol.Equals(_module.ExpectedSubmission)) {
             _module.Log("Correct submission!");
             _module.AdvanceStage();
-            _module.ChangeState(new RegularStage(_module));
         }
         else {
             _module.Strike("Incorrectly submitted a " + submittedSymbol.ToString() + "! Strike!");

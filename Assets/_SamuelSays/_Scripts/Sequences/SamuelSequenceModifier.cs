@@ -57,8 +57,6 @@ public class SamuelSequenceModifier {
     private string _modifiedSymbols;
     private List<ButtonColour> _modifiedColours = new List<ButtonColour>();
 
-    private ColouredSymbol _removedSymbol;
-
     public SamuelSequenceModifier(SamuelSaysModule module) {
         _module = module;
         SetPermanentValues();
@@ -138,6 +136,9 @@ public class SamuelSequenceModifier {
             case ButtonColour.Green: ModifyWithGreen(); break;
             case ButtonColour.Blue: ModifyWithBlue(); break;
         }
+
+        Debug.Log("Done " + currentSymbolColour);
+        Debug.Log(_modifiedSymbols.Length + " " + _modifiedColours.Count());
     }
 
     private void ModifyWithRed() {
@@ -194,14 +195,14 @@ public class SamuelSequenceModifier {
         else {
             // Replace position 1 with position 3.
             _modifiedSymbols.Insert(startIndex: 1, value: _modifiedSymbols[2].ToString());
-            _modifiedSymbols.Remove(startIndex: 0, count: 1);
+            _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 0, count: 1);
             _modifiedColours.Insert(index: 1, item: _modifiedColours[2]);
             _modifiedColours.RemoveAt(0);
 
             if (_modifiedSymbols.Length == 4) {
                 // Replace position 2 with position 4.
                 _modifiedSymbols.Insert(startIndex: 2, value: _modifiedSymbols[3].ToString());
-                _modifiedSymbols.Remove(startIndex: 1, count: 1);
+                _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 1, count: 1);
                 _modifiedColours.Insert(index: 2, item: _modifiedColours[3]);
                 _modifiedColours.RemoveAt(1);
             }
@@ -217,7 +218,7 @@ public class SamuelSequenceModifier {
             if (_modifiedSymbols.Length == 4) {
                 int n = 4 - (_batteryCount % 4);
                 _modifiedColours.RemoveAt(n - 1);
-                _modifiedSymbols.Remove(startIndex: n - 1, count: 1);
+                _modifiedSymbols = _modifiedSymbols.Remove(startIndex: n - 1, count: 1);
             }
             else {
                 int m = _serialNumberDigitSum % 10 % 3;
@@ -258,7 +259,7 @@ public class SamuelSequenceModifier {
                     _modifiedColours[i] = ButtonColour.Green;
                 }
                 else {
-                    _modifiedSymbols.Remove(startIndex: i, count: 0);
+                    _modifiedSymbols = _modifiedSymbols.Remove(startIndex: i, count: 0);
                     _modifiedSymbols.Insert(startIndex: i, value: "-");
                 }
             }
@@ -292,7 +293,7 @@ public class SamuelSequenceModifier {
         }
         else {
             // Remove position 2 and add a green dot to the end.
-            _modifiedSymbols.Remove(startIndex: 1, count: 1);
+            _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 1, count: 1);
             _modifiedSymbols += ".";
             _modifiedColours.RemoveAt(1);
             _modifiedColours.Add(ButtonColour.Green);
