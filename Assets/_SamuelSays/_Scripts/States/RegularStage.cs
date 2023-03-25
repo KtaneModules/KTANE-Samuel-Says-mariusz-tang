@@ -64,9 +64,4 @@ public class RegularStage : State {
             _module.Strike("Incorrectly submitted a " + submittedSymbol.ToString() + "! Strike!");
         }
     }
-
-    public override IEnumerator HandleSubmitPress() {
-        _module.Log("Submitted a ");
-        yield return null;
-    }
 }

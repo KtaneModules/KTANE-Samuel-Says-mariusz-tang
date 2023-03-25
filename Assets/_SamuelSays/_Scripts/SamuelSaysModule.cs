@@ -41,19 +41,6 @@ public class SamuelSaysModule : MonoBehaviour {
     //     "= ]",
     //     "=-]"
     // };
-    // private readonly string[] _hackedFaces = new string[] {
-    //     ">:(",
-    //     ">:[",
-    //     ">:<",
-    //     ":'(",
-    //     ">:x",
-    //     ":|",
-    //     ">:|",
-    //     ":s",
-    //     ":o",
-    //     ":0",
-    //     ":O"
-    // };
     // private readonly string[] _strikeFaces = new string[] {
     //     ">:(",
     //     ">:[",

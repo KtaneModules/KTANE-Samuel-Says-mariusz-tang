@@ -194,14 +194,14 @@ public class SamuelSequenceModifier {
         }
         else {
             // Replace position 1 with position 3.
-            _modifiedSymbols.Insert(startIndex: 1, value: _modifiedSymbols[2].ToString());
+            _modifiedSymbols = _modifiedSymbols.Insert(startIndex: 1, value: _modifiedSymbols[2].ToString());
             _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 0, count: 1);
             _modifiedColours.Insert(index: 1, item: _modifiedColours[2]);
             _modifiedColours.RemoveAt(0);
 
             if (_modifiedSymbols.Length == 4) {
                 // Replace position 2 with position 4.
-                _modifiedSymbols.Insert(startIndex: 2, value: _modifiedSymbols[3].ToString());
+                _modifiedSymbols = _modifiedSymbols.Insert(startIndex: 2, value: _modifiedSymbols[3].ToString());
                 _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 1, count: 1);
                 _modifiedColours.Insert(index: 2, item: _modifiedColours[3]);
                 _modifiedColours.RemoveAt(1);
@@ -223,7 +223,7 @@ public class SamuelSequenceModifier {
             else {
                 int m = _serialNumberDigitSum % 10 % 3;
                 _modifiedColours.Insert(m - 1, ButtonColour.Yellow);
-                _modifiedSymbols.Insert(m - 1, "-");
+                _modifiedSymbols = _modifiedSymbols.Insert(m - 1, "-");
             }
         }
         else if (_shoutsOrSendsPresent) {
@@ -260,7 +260,7 @@ public class SamuelSequenceModifier {
                 }
                 else {
                     _modifiedSymbols = _modifiedSymbols.Remove(startIndex: i, count: 0);
-                    _modifiedSymbols.Insert(startIndex: i, value: "-");
+                    _modifiedSymbols = _modifiedSymbols.Insert(startIndex: i, value: "-");
                 }
             }
         }

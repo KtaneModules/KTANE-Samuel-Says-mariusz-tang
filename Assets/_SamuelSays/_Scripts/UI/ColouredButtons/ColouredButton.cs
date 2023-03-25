@@ -36,6 +36,15 @@ public class ColouredButton : MonoBehaviour {
         _light.color = Colours[index];
     }
 
+    public void SetVirusColourActive() {
+        _buttonBacking.material.color = Color.magenta * 88f / 255f;
+        _buttonCover.material.color = Color.magenta * 88f / 255f;
+    }
+
+    public void SetVirusColourInactive() {
+        SetColour(Colour);
+    }
+
     public void PlayPressAnimation() {
         _animator.SetBool("IsPressed", true);
     }

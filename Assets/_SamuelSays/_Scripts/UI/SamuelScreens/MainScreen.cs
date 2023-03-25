@@ -25,12 +25,9 @@ public class MainScreen : MonoBehaviour {
         _colourDisplay.enabled = false;
     }
 
-    public void SetMute(bool enableMute) {
-        _beep.volume = 1;
-
-        if (enableMute) {
-            _beep.volume = 0;
-        }
+    public void ToggleMute() {
+        // Toggle between 0 and 1.
+        _beep.volume = 1 - Math.Abs(_beep.volume);
     }
 
     private void DisplayColour(ButtonColour colour) {
