@@ -10,7 +10,6 @@ public abstract class State {
 
     protected State(SamuelSaysModule module) {
         _module = module;
-        _module.StartCoroutine(OnStateEnter());
     }
 
     public virtual IEnumerator OnStateEnter() {

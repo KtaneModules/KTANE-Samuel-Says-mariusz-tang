@@ -8,7 +8,7 @@ public class MainScreen : MonoBehaviour {
     private const float MorseTimeUnit = 0.2f;
     private const float ColourBrightness = 0.9f;
 
-    [SerializeField] private Material _displayMaterial;
+    [SerializeField] private MeshRenderer _display;
     [SerializeField] private AudioSource _beep;
 
     private readonly Color[] _colourList = new Color[] {
@@ -18,11 +18,9 @@ public class MainScreen : MonoBehaviour {
         Color.blue
     };
     private Coroutine _displaySequence;
-    private MeshRenderer _colourDisplay;
 
     private void Awake() {
-        _colourDisplay = GetComponent<MeshRenderer>();
-        _colourDisplay.enabled = false;
+        _display.enabled = false;
     }
 
     public void ToggleMute() {
@@ -31,13 +29,13 @@ public class MainScreen : MonoBehaviour {
     }
 
     private void DisplayColour(ButtonColour colour) {
-        _displayMaterial.color = _colourList[(int)colour] * ColourBrightness;
-        _colourDisplay.enabled = true;
+        _display.enabled = true;
+        _display.material.color = _colourList[(int)colour] * ColourBrightness;
         _beep.Play();
     }
 
     private void StopDisplayingColour() {
-        _colourDisplay.enabled = false;
+        _display.enabled = false;
         _beep.Stop();
     }
 

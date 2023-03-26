@@ -75,11 +75,11 @@ public class SamuelSaysModule : MonoBehaviour {
         Module = GetComponent<KMBombModule>();
         Screen = GetComponentInChildren<MainScreen>();
         SymbolDisplay = GetComponentInChildren<MiniScreen>();
-        _sequenceGenerator = new SamuelSequenceGenerator();
-        _sequenceModifier = new SamuelSequenceModifier(this);
     }
 
     private void Start() {
+        _sequenceGenerator = new SamuelSequenceGenerator();
+        _sequenceModifier = new SamuelSequenceModifier(this);
         AssignInputHandlers();
 
         Log("Samuel says hi!");
@@ -116,16 +116,29 @@ public class SamuelSaysModule : MonoBehaviour {
 
     public void AdvanceStage() {
         StageNumber++;
+
+        if (StageNumber == 5) {
+            Module.HandlePass();
+            return;
+        }
+
         DisplayedSequence = _sequenceGenerator.GenerateRandomSequence(3 + Rnd.Range(0, 2));
         ExpectedSubmission = _sequenceModifier.GetExpectedSubmission(DisplayedSequence);
 
+        if (StageNumber == 2) {
+            ChangeState(new VirusQuirk(this));
+            return;
+        }
+
+        ChangeState(new RegularStage(this));
+    }
+
+    public void DoStageLogging() {
         string sequenceAsString = string.Join(", ", DisplayedSequence.Select(c => c.ToString()).ToArray());
         Log("=================================================");
         Log("Stage " + StageNumber + ":");
         Log("Displayed sequence is " + sequenceAsString + ".");
         Log("Expected sequence is " + ExpectedSubmission.ToString() + ".");
-
-        ChangeState(new RegularStage(this));
     }
 
 #pragma warning disable 414

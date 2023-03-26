@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 4607909941338824}
   - component: {fileID: 23100138659974258}
   - component: {fileID: 102676468563522882}
+  - component: {fileID: 114314685324780710}
   m_Layer: 0
   m_Name: Emoticon Display
   m_TagString: Untagged
@@ -414,6 +415,7 @@ GameObject:
   - component: {fileID: 4582418470085068}
   - component: {fileID: 23081234047665382}
   - component: {fileID: 102392141771743346}
+  - component: {fileID: 114033064966977970}
   m_Layer: 0
   m_Name: Letter Display
   m_TagString: Untagged
@@ -2728,6 +2730,19 @@ MonoBehaviour:
   AllowSelectionWrapY: 0
   ForceSelectionHighlight: 0
   ForceInteractionHighlight: 0
+--- !u!114 &114033064966977970
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1470973059595496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1005838349, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShaderNames:
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114035893759831830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2877,7 +2892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - KT/Mobile/DiffuseTint
+  - Unlit/Color
 --- !u!114 &114257734256358274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2940,6 +2955,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - Standard
+--- !u!114 &114314685324780710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1216742350253976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1005838349, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShaderNames:
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114350943654554436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3254,7 +3282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883447486b13e6441bdf0645f6b6d163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayMaterial: {fileID: 2100000, guid: bb8395c22f22ad248a1a4f4012246966, type: 2}
+  _display: {fileID: 23637675979976174}
   _beep: {fileID: 82705111944256706}
 --- !u!114 &114946448312463772
 MonoBehaviour:

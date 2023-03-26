@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class RegularStage : State {
 
+    private const float DashTime = 0.3f;
+
     private ButtonColour _heldButtonColour;
     private float _timeHeld;
     private bool _isHolding;
@@ -17,6 +19,7 @@ public class RegularStage : State {
     public override IEnumerator OnStateEnter() {
         _currentDisplaySequence = _module.DisplayedSequence;
         _module.Screen.PlaySequence(_currentDisplaySequence);
+        _module.DoStageLogging();
         yield return null;
     }
 
@@ -35,7 +38,7 @@ public class RegularStage : State {
         while (_isHolding) {
             _timeHeld += Time.deltaTime;
 
-            if (_timeHeld >= 0.5f) {
+            if (_timeHeld >= DashTime) {
                 _module.SymbolDisplay.DisplayLetter('ー');
             }
             yield return null;
@@ -47,7 +50,7 @@ public class RegularStage : State {
         button.PlayReleaseAnimation();
         _module.SymbolDisplay.ClearScreen();
 
-        char inputtedSymbol = _timeHeld >= 0.5f ? '-' : '.';
+        char inputtedSymbol = _timeHeld >= DashTime ? '-' : '.';
         var submittedSymbol = new ColouredSymbol(_heldButtonColour, inputtedSymbol);
 
         CheckSubmission(submittedSymbol);

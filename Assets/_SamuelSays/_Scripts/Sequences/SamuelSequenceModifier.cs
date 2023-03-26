@@ -136,9 +136,6 @@ public class SamuelSequenceModifier {
             case ButtonColour.Green: ModifyWithGreen(); break;
             case ButtonColour.Blue: ModifyWithBlue(); break;
         }
-
-        Debug.Log("Done " + currentSymbolColour);
-        Debug.Log(_modifiedSymbols.Length + " " + _modifiedColours.Count());
     }
 
     private void ModifyWithRed() {
