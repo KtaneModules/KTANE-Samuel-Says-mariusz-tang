@@ -219,8 +219,8 @@ public class SamuelSequenceModifier {
             }
             else {
                 int m = _serialNumberDigitSum % 10 % 3;
-                _modifiedColours.Insert(m - 1, ButtonColour.Yellow);
-                _modifiedSymbols = _modifiedSymbols.Insert(m - 1, "-");
+                _modifiedColours.Insert(m, ButtonColour.Yellow);
+                _modifiedSymbols = _modifiedSymbols.Insert(m, "-");
             }
         }
         else if (_shoutsOrSendsPresent) {
