@@ -92,12 +92,12 @@ public class SamuelSaysModule : MonoBehaviour {
         int count = 0;
 
         foreach (ColouredButton button in _buttons) {
-            button.Selectable.OnInteract += delegate () { StartCoroutine(_state.HandlePress(button)); return false; };
-            button.Selectable.OnInteractEnded += delegate () { StartCoroutine(_state.HandleRelease(button)); };
+            button.Selectable.OnInteract += delegate() { StartCoroutine(_state.HandlePress(button)); return false; };
+            button.Selectable.OnInteractEnded += delegate() { StartCoroutine(_state.HandleRelease(button)); };
             button.SetColour((ButtonColour)count++);
         }
 
-        _submitButton.OnInteract += delegate () { StartCoroutine(_state.HandleSubmitPress()); return false; };
+        _submitButton.OnInteract += delegate() { StartCoroutine(_state.HandleSubmitPress()); return false; };
     }
 
     public void ChangeState(State newState) {

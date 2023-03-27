@@ -51,15 +51,28 @@ public class SamuelSequenceModifier {
     private bool _moreThanOneYellowInCurrentDisplay = false;
     private bool _redHasFailedToAppearInDisplay = false;
 
-    private string _displayedSymbols;
-    private List<ButtonColour> _displayedColours = new List<ButtonColour>();
+    private Func<bool>[] _redConditions;
+    private Func<bool>[] _yellowConditions;
+    private Func<bool>[] _greenConditions;
+    private Func<bool>[] _blueConditions;
 
+    private Action[] _redActions;
+    private Action[] _yellowActions;
+    private Action[] _greenActions;
+    private Action[] _blueActions;
+
+    private Dictionary<ButtonColour, ButtonColour> _redAction4ColourSwaps;
+
+    private string _displayedSymbols;
     private string _modifiedSymbols;
+    private List<ButtonColour> _displayedColours = new List<ButtonColour>();
     private List<ButtonColour> _modifiedColours = new List<ButtonColour>();
 
     public SamuelSequenceModifier(SamuelSaysModule module) {
         _module = module;
         SetPermanentValues();
+        SetConditions();
+        SetActions();
     }
 
     private void SetPermanentValues() {
@@ -75,6 +88,109 @@ public class SamuelSequenceModifier {
         _unlitIndicatorCount = bomb.GetOffIndicators().Count();
         _serialNumberDigitSum = bomb.GetSerialNumberNumbers().Sum();
         _moduleCount = bomb.GetModuleNames().Count();
+    }
+
+    private void SetConditions() {
+        _redConditions = new Func<bool>[] {
+            delegate() {return _displayedSymbols == ".-.";},
+            delegate() {return !_redHasFailedToAppearInDisplay;},
+            delegate() {return _modifiedSymbols.Count(symbol => symbol == '-') == _litIndicatorCount + _unlitIndicatorCount;},
+            delegate() {return _moduleWithRedInName;},
+            delegate() {return true;}
+        };
+
+        _yellowConditions = new Func<bool>[] {
+            delegate() {return _displayedSymbols == "-.--";},
+            delegate() {return _module.StageNumber == _batteryCount;},
+            delegate() {return _shoutsOrSendsPresent;},
+            delegate() {return _moreThanOneYellowInCurrentDisplay;},
+            delegate() {return true;}
+        };
+
+        _greenConditions = new Func<bool>[] {
+            delegate() {return _displayedSymbols == "--.";},
+            delegate() {return _displayedColours[1] == ButtonColour.Green;},
+            delegate() {return !_greenHasAppearedBefore;},
+            delegate() {return _modifiedSymbols.Count(symbol => symbol == '.') == _uniquePortTypeCount;},
+            delegate() {return true;}
+        };
+
+        _blueConditions = new Func<bool>[] {
+            delegate() {return _displayedSymbols == "-...";},
+            delegate() {return _blueHasBeenInPositionThreeThisStage;},
+            delegate() {return !MorseLetters.ContainsValue(_displayedSymbols);},
+            delegate() {return !AllColoursAppear();},
+            delegate() {return true;}
+        };
+    }
+
+    private void SetActions() {
+        _redAction4ColourSwaps = new Dictionary<ButtonColour, ButtonColour>() {
+            {ButtonColour.Red, ButtonColour.Blue},
+            {ButtonColour.Blue, ButtonColour.Red},
+            {ButtonColour.Yellow, ButtonColour.Green},
+            {ButtonColour.Green, ButtonColour.Yellow}
+        };
+
+        _redActions = new Action[] {
+            delegate() {
+                _modifiedSymbols = _modifiedSymbols.Replace('-', '1').Replace('.', '-').Replace('1', '.');
+            },
+            delegate() {
+                _modifiedColours = _modifiedColours.Select(colour => ButtonColour.Red).ToList();
+            },
+            delegate() {
+                int shiftIndex = _litIndicatorCount - _unlitIndicatorCount;
+                _modifiedSymbols = ShiftRight(_modifiedSymbols, shiftIndex);
+                _modifiedColours = ShiftRight<ButtonColour>(_modifiedColours, shiftIndex);
+            },
+            delegate() {
+                _modifiedColours = _modifiedColours.Select(colour => _redAction4ColourSwaps[colour]).ToList();
+            },
+            delegate() {
+                _modifiedSymbols = _modifiedSymbols.Remove(0, 1).Insert(0, _modifiedSymbols[1].ToString());
+                _modifiedColours.RemoveAt(0);
+                _modifiedColours.Insert(0, _modifiedColours[1]);
+                if (_modifiedSymbols.Length == 4) {
+                    _modifiedSymbols = _modifiedSymbols.Remove(1, 1).Insert(0, _modifiedSymbols[2].ToString());
+                    _modifiedColours.RemoveAt(1);
+                    _modifiedColours.Insert(1, _modifiedColours[2]);
+                }
+            }
+        };
+
+        _yellowActions = new Action[] {
+
+        };
+
+        _greenActions = new Action[] {
+
+        };
+
+        _blueActions = new Action[] {
+
+        };
+    }
+
+    private string ShiftRight(string text, int offset) {
+        offset %= text.Length;
+        if (offset == 0) {
+            return text;
+        }
+
+        return text.Substring(text.Length - offset) + text.Substring(0, text.Length - offset);
+    }
+
+    private List<T> ShiftRight<T>(List<T> list, int offset) {
+        int length = list.Count();
+        int startIndex = (length - offset % length) % length;
+        var shiftedList = new List<T>();
+
+        for (int i = 0; i < length; i++) {
+            shiftedList.Add(list[(startIndex + i) % length]);
+        }
+
+        return shiftedList;
     }
 
     public ColouredSymbol GetExpectedSubmission(ColouredSymbol[] displayedSequence) {
