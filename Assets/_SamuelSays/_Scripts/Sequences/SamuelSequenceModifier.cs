@@ -31,6 +31,7 @@ public class SamuelSequenceModifier {
         {24, "-.--"},
         {25, "--.."}
     };
+    private Dictionary<ButtonColour, ButtonColour> _redAction4ColourSwaps;
 
     private SamuelSaysModule _module;
 
@@ -51,22 +52,24 @@ public class SamuelSequenceModifier {
     private bool _moreThanOneYellowInCurrentDisplay = false;
     private bool _redHasFailedToAppearInDisplay = false;
 
+    private Func<bool>[][] _conditions;
     private Func<bool>[] _redConditions;
     private Func<bool>[] _yellowConditions;
     private Func<bool>[] _greenConditions;
     private Func<bool>[] _blueConditions;
 
+    private Action[][] _actions;
     private Action[] _redActions;
     private Action[] _yellowActions;
     private Action[] _greenActions;
     private Action[] _blueActions;
 
-    private Dictionary<ButtonColour, ButtonColour> _redAction4ColourSwaps;
-
     private string _displayedSymbols;
     private string _modifiedSymbols;
     private List<ButtonColour> _displayedColours = new List<ButtonColour>();
     private List<ButtonColour> _modifiedColours = new List<ButtonColour>();
+
+    private List<int> _appliedActionsThisStage = new List<int>();
 
     public SamuelSequenceModifier(SamuelSaysModule module) {
         _module = module;
@@ -91,6 +94,7 @@ public class SamuelSequenceModifier {
     }
 
     private void SetConditions() {
+        // * Conditions are in reading order in the corresponding table.
         _redConditions = new Func<bool>[] {
             delegate() {return _displayedSymbols == ".-.";},
             delegate() {return !_redHasFailedToAppearInDisplay;},
@@ -119,9 +123,11 @@ public class SamuelSequenceModifier {
             delegate() {return _displayedSymbols == "-...";},
             delegate() {return _blueHasBeenInPositionThreeThisStage;},
             delegate() {return !MorseLetters.ContainsValue(_displayedSymbols);},
-            delegate() {return !AllColoursAppear();},
+            delegate() {return _displayedColours.Concat(_modifiedColours).Distinct().Count() == 4;},
             delegate() {return true;}
         };
+
+        _conditions = new Func<bool>[][] { _redConditions, _yellowConditions, _greenConditions, _blueConditions };
     }
 
     private void SetActions() {
@@ -132,44 +138,40 @@ public class SamuelSequenceModifier {
             {ButtonColour.Green, ButtonColour.Yellow}
         };
 
+        // * Actions are in reading order in the corresponding table.
         _redActions = new Action[] {
-            delegate() {
-                _modifiedSymbols = _modifiedSymbols.Replace('-', '1').Replace('.', '-').Replace('1', '.');
-            },
-            delegate() {
-                _modifiedColours = _modifiedColours.Select(colour => ButtonColour.Red).ToList();
-            },
-            delegate() {
-                int shiftIndex = _litIndicatorCount - _unlitIndicatorCount;
-                _modifiedSymbols = ShiftRight(_modifiedSymbols, shiftIndex);
-                _modifiedColours = ShiftRight<ButtonColour>(_modifiedColours, shiftIndex);
-            },
-            delegate() {
-                _modifiedColours = _modifiedColours.Select(colour => _redAction4ColourSwaps[colour]).ToList();
-            },
-            delegate() {
-                _modifiedSymbols = _modifiedSymbols.Remove(0, 1).Insert(0, _modifiedSymbols[1].ToString());
-                _modifiedColours.RemoveAt(0);
-                _modifiedColours.Insert(0, _modifiedColours[1]);
-                if (_modifiedSymbols.Length == 4) {
-                    _modifiedSymbols = _modifiedSymbols.Remove(1, 1).Insert(0, _modifiedSymbols[2].ToString());
-                    _modifiedColours.RemoveAt(1);
-                    _modifiedColours.Insert(1, _modifiedColours[2]);
-                }
-            }
+            delegate() {_modifiedSymbols = _modifiedSymbols.Replace('-', '1').Replace('.', '-').Replace('1', '.');},
+            delegate() {_modifiedColours = _modifiedColours.Select(colour => ButtonColour.Red).ToList();},
+            delegate() {ShiftByLitMinusUnlitIndicators();},
+            delegate() {_modifiedColours = _modifiedColours.Select(colour => _redAction4ColourSwaps[colour]).ToList();},
+            delegate() {SetPositionsOneTwoToThreeFour();}
         };
 
         _yellowActions = new Action[] {
-
+            delegate() {_modifiedSymbols.Reverse(); _modifiedColours.Reverse();},
+            delegate() {if (_modifiedSymbols.Length == 4) RemovePositionN(); else InsertYellowDashAtPositionM();},
+            delegate() {_modifiedColours[0] = ButtonColour.Yellow; _modifiedColours[1] = ButtonColour.Yellow;},
+            delegate() {_modifiedColours = _modifiedColours.Select((colour, index) => index == 2 ? colour : ButtonColour.Red).ToList();},
+            delegate() {_modifiedColours = ShiftRight(_modifiedColours, 2);}
         };
 
         _greenActions = new Action[] {
-
+            delegate() {DashesGreenDotsToDashes();},
+            delegate() {SetColoursRbygOrder();},
+            delegate() {_greenHasAppearedBefore = true; _modifiedColours = _modifiedColours.Select((c, i) => i == 2 ? c : ButtonColour.Red).ToList();},
+            delegate() {MoveDotsToFront();},
+            delegate() {RemovePositionTwoAndAppendGreenDot();}
         };
 
         _blueActions = new Action[] {
-
+            delegate() {_modifiedSymbols.Reverse();},
+            delegate() {_modifiedSymbols = ShiftRight(_modifiedSymbols, 1); _modifiedColours = ShiftRight(_modifiedColours, 1);},
+            delegate() {SetSymbolsToFirstValidMorseLetter();},
+            delegate() {/* Do nothing <3 */},
+            delegate() {_modifiedColours = _modifiedColours.Select((colour, index) => index < 2 ? ButtonColour.Blue : ButtonColour.Red).ToList();},
         };
+
+        _actions = new Action[][] { _redActions, _yellowActions, _greenActions, _blueActions };
     }
 
     private string ShiftRight(string text, int offset) {
@@ -193,10 +195,87 @@ public class SamuelSequenceModifier {
         return shiftedList;
     }
 
+    private void ShiftByLitMinusUnlitIndicators() {
+        int shiftIndex = _litIndicatorCount - _unlitIndicatorCount;
+        _modifiedSymbols = ShiftRight(_modifiedSymbols, shiftIndex);
+        _modifiedColours = ShiftRight(_modifiedColours, shiftIndex);
+    }
+
+    private void SetPositionsOneTwoToThreeFour() {
+        _modifiedSymbols = _modifiedSymbols.Remove(0, 1).Insert(0, _modifiedSymbols[1].ToString());
+        _modifiedColours.RemoveAt(0);
+        _modifiedColours.Insert(0, _modifiedColours[1]);
+        if (_modifiedSymbols.Length == 4) {
+            _modifiedSymbols = _modifiedSymbols.Remove(1, 1).Insert(0, _modifiedSymbols[2].ToString());
+            _modifiedColours.RemoveAt(1);
+            _modifiedColours.Insert(1, _modifiedColours[2]);
+        }
+    }
+
+    private void RemovePositionN() {
+        int n = 4 - (_batteryCount % 4);
+        _modifiedColours.RemoveAt(n - 1);
+        _modifiedSymbols = _modifiedSymbols.Remove(startIndex: n - 1, count: 1);
+    }
+
+    private void InsertYellowDashAtPositionM() {
+        int m = _serialNumberDigitSum % 10 % 3;
+        _modifiedColours.Insert(m, ButtonColour.Yellow);
+        _modifiedSymbols = _modifiedSymbols.Insert(m, "-");
+    }
+
+    private void DashesGreenDotsToDashes() {
+        for (int i = 0; i < _modifiedSymbols.Length; i++) {
+            if (_modifiedSymbols[i] == '-') {
+                _modifiedColours[i] = ButtonColour.Green;
+            }
+            else {
+                _modifiedSymbols = _modifiedSymbols.Remove(startIndex: i, count: 0);
+                _modifiedSymbols = _modifiedSymbols.Insert(startIndex: i, value: "-");
+            }
+        }
+    }
+
+    private void SetColoursRbygOrder() {
+        _modifiedColours = new List<ButtonColour> {
+            ButtonColour.Red,
+            ButtonColour.Blue,
+            ButtonColour.Yellow
+        };
+        if (_modifiedSymbols.Length == 4) {
+            _modifiedColours.Add(ButtonColour.Green);
+        }
+    }
+
+    private void MoveDotsToFront() {
+        _modifiedSymbols = new string('.', _uniquePortTypeCount);
+        while (_modifiedSymbols.Length < _modifiedColours.Count()) {
+            _modifiedSymbols += "-";
+        }
+    }
+
+    private void RemovePositionTwoAndAppendGreenDot() {
+        _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 1, count: 1);
+        _modifiedSymbols += ".";
+        _modifiedColours.RemoveAt(1);
+        _modifiedColours.Add(ButtonColour.Green);
+    }
+
+    private void SetSymbolsToFirstValidMorseLetter() {
+        int tryNumber = _serialNumberDigitSum % 26;
+        while (!MorseLetters.ContainsKey(tryNumber) || MorseLetters[tryNumber].Length != _modifiedSymbols.Length) {
+            tryNumber++;
+            tryNumber %= 26;
+        }
+        _modifiedSymbols = MorseLetters[tryNumber];
+    }
+
+
     public ColouredSymbol GetExpectedSubmission(ColouredSymbol[] displayedSequence) {
         DeconstructDisplayedSequence(displayedSequence);
         _modifiedSymbols = _displayedSymbols;
         _modifiedColours = _displayedColours.ToList();
+        _appliedActionsThisStage.Clear();
 
         foreach (ButtonColour colour in _displayedColours) {
             ModifySequence(colour);
@@ -205,6 +284,42 @@ public class SamuelSequenceModifier {
         ColouredSymbol[] modifiedSequence = ConstructModifiedSequence(_modifiedSymbols, _modifiedColours);
 
         return modifiedSequence[GetCorrectPosition()];
+    }
+
+    private void ModifySequence(ButtonColour currentSymbolColour) {
+        CheckBlueInPositionThree();
+        Func<bool>[] conditions = _conditions[(int)currentSymbolColour];
+        Action[] actions = _actions[(int)currentSymbolColour];
+
+        // ! Continue from here.
+
+        for (int i = 0; i < conditions.Length; i++) {
+            if (conditions[i]()) {
+                _module.Log("Condition " + i + " applies for " + currentSymbolColour.ToString().ToLower());
+            }
+        }
+    }
+
+    private void CheckBlueInPositionThree() {
+        if (!_blueHasBeenInPositionThreeThisStage) {
+            if (_modifiedColours.Count() >= 3 && _modifiedColours[2] == ButtonColour.Blue) {
+                _blueHasBeenInPositionThreeThisStage = true;
+            }
+        }
+    }
+
+    private int GetCorrectPosition() {
+        int quantityToUse;
+
+        switch (_module.StageNumber) {
+            case 1: quantityToUse = _batteryCount; break;
+            case 2: quantityToUse = _totalPorts; break;
+            case 3: quantityToUse = _litIndicatorCount + _unlitIndicatorCount; break;
+            case 4: quantityToUse = _moduleCount; break;
+            default: throw new ArgumentOutOfRangeException("WTF STAGE NUMBER ARE WE ON :(");
+        }
+
+        return quantityToUse % _modifiedSymbols.Length;
     }
 
     private void DeconstructDisplayedSequence(ColouredSymbol[] sequence) {
@@ -237,238 +352,5 @@ public class SamuelSequenceModifier {
         }
 
         return newSequence;
-    }
-
-    private void ModifySequence(ButtonColour currentSymbolColour) {
-        if (!_blueHasBeenInPositionThreeThisStage) {
-            if (_modifiedColours.Count() >= 3 && _modifiedColours[2] == ButtonColour.Blue) {
-                _blueHasBeenInPositionThreeThisStage = true;
-            }
-        }
-
-        switch (currentSymbolColour) {
-            case ButtonColour.Red: ModifyWithRed(); break;
-            case ButtonColour.Yellow: ModifyWithYellow(); break;
-            case ButtonColour.Green: ModifyWithGreen(); break;
-            case ButtonColour.Blue: ModifyWithBlue(); break;
-        }
-    }
-
-    private void ModifyWithRed() {
-        if (_displayedSymbols == ".-.") {
-            // Swap dots and dashes.
-            string newSymbols = string.Empty;
-
-            for (int i = 0; i < _modifiedSymbols.Length; i++) {
-                if (_modifiedSymbols[i] == '.') {
-                    newSymbols += "-";
-                }
-                else {
-                    newSymbols += ".";
-                }
-            }
-            _modifiedSymbols = newSymbols;
-        }
-        else if (!_redHasFailedToAppearInDisplay) {
-            // Make all symbols red.
-            int currentLength = _modifiedColours.Count();
-
-            _modifiedColours.Clear();
-            for (int i = 0; i < currentLength; i++) {
-                _modifiedColours.Add(ButtonColour.Red);
-            }
-        }
-        else if (_modifiedSymbols.Count(symbol => symbol == '-') == _litIndicatorCount + _unlitIndicatorCount) {
-            // Shift right by (lit indicators - unlit indicators).
-            int rightShiftCount = _litIndicatorCount - _unlitIndicatorCount;
-            int length = _modifiedSymbols.Length;
-            string newSymbols = string.Empty;
-            var newColours = new List<ButtonColour>();
-
-            for (int start = length - (rightShiftCount % length), offset = 0; offset < length; offset++) {
-                newSymbols += _modifiedSymbols[(start + offset) % length];
-                newColours.Add(_modifiedColours[(start + offset) % length]);
-            }
-            _modifiedSymbols = newSymbols;
-            _modifiedColours = newColours;
-        }
-        else if (_moduleWithRedInName) {
-            // Swap red with blue, and green with yellow.
-            var newColours = new List<ButtonColour>();
-            foreach (ButtonColour colour in _modifiedColours) {
-                switch (colour) {
-                    case ButtonColour.Red: newColours.Add(ButtonColour.Blue); break;
-                    case ButtonColour.Yellow: newColours.Add(ButtonColour.Green); break;
-                    case ButtonColour.Green: newColours.Add(ButtonColour.Yellow); break;
-                    case ButtonColour.Blue: newColours.Add(ButtonColour.Red); break;
-                }
-            }
-            _modifiedColours = newColours;
-        }
-        else {
-            // Replace position 1 with position 3.
-            _modifiedSymbols = _modifiedSymbols.Insert(startIndex: 1, value: _modifiedSymbols[2].ToString());
-            _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 0, count: 1);
-            _modifiedColours.Insert(index: 1, item: _modifiedColours[2]);
-            _modifiedColours.RemoveAt(0);
-
-            if (_modifiedSymbols.Length == 4) {
-                // Replace position 2 with position 4.
-                _modifiedSymbols = _modifiedSymbols.Insert(startIndex: 2, value: _modifiedSymbols[3].ToString());
-                _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 1, count: 1);
-                _modifiedColours.Insert(index: 2, item: _modifiedColours[3]);
-                _modifiedColours.RemoveAt(1);
-            }
-        }
-    }
-
-    private void ModifyWithYellow() {
-        if (_displayedSymbols == "-.--") {
-            _modifiedSymbols.Reverse();
-            _modifiedColours.Reverse();
-        }
-        else if (_module.StageNumber == _batteryCount) {
-            if (_modifiedSymbols.Length == 4) {
-                int n = 4 - (_batteryCount % 4);
-                _modifiedColours.RemoveAt(n - 1);
-                _modifiedSymbols = _modifiedSymbols.Remove(startIndex: n - 1, count: 1);
-            }
-            else {
-                int m = _serialNumberDigitSum % 10 % 3;
-                _modifiedColours.Insert(m, ButtonColour.Yellow);
-                _modifiedSymbols = _modifiedSymbols.Insert(m, "-");
-            }
-        }
-        else if (_shoutsOrSendsPresent) {
-            _modifiedColours[0] = ButtonColour.Yellow;
-            _modifiedColours[1] = ButtonColour.Yellow;
-        }
-        else if (_moreThanOneYellowInCurrentDisplay) {
-            // Change all except position 3 to blue.
-            for (int i = 0; i < _modifiedColours.Count(); i++) {
-                if (i != 2) {
-                    _modifiedColours[i] = ButtonColour.Blue;
-                }
-            }
-        }
-        else {
-            // Shift colours right twice.
-            int rightShiftCount = 2;
-            int length = _modifiedColours.Count();
-            var newColours = new List<ButtonColour>();
-
-            for (int start = length - (rightShiftCount % length), offset = 0; offset < length; offset++) {
-                newColours.Add(_modifiedColours[(start + offset) % length]);
-            }
-            _modifiedColours = newColours;
-        }
-    }
-
-    private void ModifyWithGreen() {
-        if (_displayedSymbols == "--.") {
-            // Make dashes green THEN change dots to dashes.
-            for (int i = 0; i < _modifiedSymbols.Length; i++) {
-                if (_modifiedSymbols[i] == '-') {
-                    _modifiedColours[i] = ButtonColour.Green;
-                }
-                else {
-                    _modifiedSymbols = _modifiedSymbols.Remove(startIndex: i, count: 0);
-                    _modifiedSymbols = _modifiedSymbols.Insert(startIndex: i, value: "-");
-                }
-            }
-        }
-        else if (_displayedColours[1] == ButtonColour.Green) {
-            _modifiedColours.Clear();
-            _modifiedColours.Add(ButtonColour.Red);
-            _modifiedColours.Add(ButtonColour.Blue);
-            _modifiedColours.Add(ButtonColour.Yellow);
-            if (_modifiedSymbols.Length == 4) {
-                _modifiedColours.Add(ButtonColour.Green);
-            }
-        }
-        else if (!_greenHasAppearedBefore) {
-            _greenHasAppearedBefore = true;
-            for (int i = 0; i < _modifiedColours.Count(); i++) {
-                if (i == 0) {
-                    _modifiedColours[i] = ButtonColour.Green;
-                }
-                else {
-                    _modifiedColours[i] = ButtonColour.Red;
-                }
-            }
-        }
-        else if (_modifiedSymbols.Count(symbol => symbol == '.') == _uniquePortTypeCount) {
-            // Move all dots to the front.
-            _modifiedSymbols = new string('.', _uniquePortTypeCount);
-            while (_modifiedSymbols.Length < _modifiedColours.Count()) {
-                _modifiedSymbols += "-";
-            }
-        }
-        else {
-            // Remove position 2 and add a green dot to the end.
-            _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 1, count: 1);
-            _modifiedSymbols += ".";
-            _modifiedColours.RemoveAt(1);
-            _modifiedColours.Add(ButtonColour.Green);
-        }
-    }
-
-    private void ModifyWithBlue() {
-        if (_displayedSymbols == "-...") {
-            _modifiedSymbols.Reverse();
-        }
-        else if (_blueHasBeenInPositionThreeThisStage) {
-            // Shift right once.
-            int rightShiftCount = 1;
-            int length = _modifiedSymbols.Length;
-            string newSymbols = string.Empty;
-            var newColours = new List<ButtonColour>();
-
-            for (int start = length - (rightShiftCount % length), offset = 0; offset < length; offset++) {
-                newSymbols += _modifiedSymbols[(start + offset) % length];
-                newColours.Add(_modifiedColours[(start + offset) % length]);
-            }
-            _modifiedSymbols = newSymbols;
-            _modifiedColours = newColours;
-        }
-        else if (!MorseLetters.ContainsValue(_displayedSymbols)) {
-            // Find the first letter, starting from sum of serial digits with a morse representation of
-            // the same length as that of the sequence.
-            int tryNumber = _serialNumberDigitSum % 26;
-            while (!MorseLetters.ContainsKey(tryNumber) || MorseLetters[tryNumber].Length != _modifiedSymbols.Length) {
-                tryNumber++;
-                tryNumber %= 26;
-            }
-            _modifiedSymbols = MorseLetters[tryNumber];
-        }
-        else if (!AllColoursAppear()) {
-            // Set positions 1 and 2 to blue, and the rest to red.
-            for (int i = 0; i < _modifiedColours.Count(); i++) {
-                if (i < 2) {
-                    _modifiedColours[i] = ButtonColour.Blue;
-                }
-                else {
-                    _modifiedColours[i] = ButtonColour.Red;
-                }
-            }
-        }
-    }
-
-    private bool AllColoursAppear() {
-        return _displayedColours.Concat(_modifiedColours).Distinct().Count() == 4;
-    }
-
-    private int GetCorrectPosition() {
-        int quantityToUse;
-
-        switch (_module.StageNumber) {
-            case 1: quantityToUse = _batteryCount; break;
-            case 2: quantityToUse = _totalPorts; break;
-            case 3: quantityToUse = _litIndicatorCount + _unlitIndicatorCount; break;
-            case 4: quantityToUse = _moduleCount; break;
-            default: throw new ArgumentOutOfRangeException("WTF STAGE NUMBER ARE WE ON :(");
-        }
-
-        return quantityToUse % _modifiedSymbols.Length;
     }
 }

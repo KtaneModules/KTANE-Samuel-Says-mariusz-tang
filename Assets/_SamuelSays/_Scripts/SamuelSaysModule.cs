@@ -8,6 +8,10 @@ using Rnd = UnityEngine.Random;
 
 public class SamuelSaysModule : MonoBehaviour {
 
+    // ! If looking through the source for a potential bug or manual clarification, your best bet is
+    // ! probably SamuelSequenceModifier.cs as this is where correct responses are calculated.
+    // ! Remember to contact me at Kuro#2011 on Discord for any bugs or questions!
+
     // TODO: Add quirks.
     // TODO: Deal with stage 5.
     // TODO: Test everything.
