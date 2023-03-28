@@ -87,24 +87,27 @@ public class SamuelSaysModule : MonoBehaviour {
         AssignInputHandlers();
 
         Log("Samuel says hi!");
+        Log("Press the grey button to start.");
 
         StageNumber = 0;
-        AdvanceStage();
+        _state = new InitialState(this);
     }
 
     private void AssignInputHandlers() {
         int count = 0;
 
         foreach (ColouredButton button in _buttons) {
-            button.Selectable.OnInteract += delegate() { StartCoroutine(_state.HandlePress(button)); return false; };
-            button.Selectable.OnInteractEnded += delegate() { StartCoroutine(_state.HandleRelease(button)); };
+            button.Selectable.OnInteract += delegate () { StartCoroutine(_state.HandlePress(button)); return false; };
+            button.Selectable.OnInteractEnded += delegate () { StartCoroutine(_state.HandleRelease(button)); };
             button.SetColour((ButtonColour)count++);
         }
 
-        _submitButton.OnInteract += delegate() { StartCoroutine(_state.HandleSubmitPress()); return false; };
+        _submitButton.OnInteract += delegate () { StartCoroutine(_state.HandleSubmitPress()); return false; };
     }
 
     public void ChangeState(State newState) {
+        Screen.StopSequence();
+        SymbolDisplay.ClearScreen();
         _state = newState;
         StartCoroutine(_state.OnStateEnter());
     }
@@ -116,6 +119,10 @@ public class SamuelSaysModule : MonoBehaviour {
 
     public void Log(string formattedString) {
         Debug.LogFormat("[Samuel Says #{0}] {1}", _moduleId, formattedString);
+    }
+
+    public void Log(List<string> formattedStrings) {
+        formattedStrings.ForEach(str => Log(str));
     }
 
     public void AdvanceStage() {
@@ -130,11 +137,14 @@ public class SamuelSaysModule : MonoBehaviour {
         ExpectedSubmission = _sequenceModifier.GetExpectedSubmission(DisplayedSequence);
 
         if (StageNumber == 2) {
-            ChangeState(new VirusQuirk(this));
-            return;
+            ChangeState(new LeftToRightAnimation(this, new VirusQuirk(this)));
         }
-
-        ChangeState(new RegularStage(this));
+        else if (StageNumber != 1) {
+            ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));
+        }
+        else {
+            ChangeState(new RegularStage(this));
+        }
     }
 
     public void DoStageLogging() {
@@ -142,7 +152,8 @@ public class SamuelSaysModule : MonoBehaviour {
         Log("=================================================");
         Log("Stage " + StageNumber + ":");
         Log("Displayed sequence is " + sequenceAsString + ".");
-        Log("Expected sequence is " + ExpectedSubmission.ToString() + ".");
+        Log(_sequenceModifier.SequenceGenerationLogging);
+        Log("Expected response is " + ExpectedSubmission.ToString() + ".");
     }
 
 #pragma warning disable 414

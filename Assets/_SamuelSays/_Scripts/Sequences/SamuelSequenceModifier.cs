@@ -70,6 +70,7 @@ public class SamuelSequenceModifier {
     private List<ButtonColour> _modifiedColours = new List<ButtonColour>();
 
     private List<int> _appliedActionsThisStage = new List<int>();
+    private List<string> _sequenceGenerationLogging = new List<string>();
 
     public SamuelSequenceModifier(SamuelSaysModule module) {
         _module = module;
@@ -77,6 +78,8 @@ public class SamuelSequenceModifier {
         SetConditions();
         SetActions();
     }
+
+    public List<string> SequenceGenerationLogging { get { return _sequenceGenerationLogging; } }
 
     private void SetPermanentValues() {
         KMBombInfo bomb = _module.Bomb;
@@ -174,113 +177,14 @@ public class SamuelSequenceModifier {
         _actions = new Action[][] { _redActions, _yellowActions, _greenActions, _blueActions };
     }
 
-    private string ShiftRight(string text, int offset) {
-        offset %= text.Length;
-        if (offset == 0) {
-            return text;
-        }
-
-        return text.Substring(text.Length - offset) + text.Substring(0, text.Length - offset);
-    }
-
-    private List<T> ShiftRight<T>(List<T> list, int offset) {
-        int length = list.Count();
-        int startIndex = (length - offset % length) % length;
-        var shiftedList = new List<T>();
-
-        for (int i = 0; i < length; i++) {
-            shiftedList.Add(list[(startIndex + i) % length]);
-        }
-
-        return shiftedList;
-    }
-
-    private void ShiftByLitMinusUnlitIndicators() {
-        int shiftIndex = _litIndicatorCount - _unlitIndicatorCount;
-        _modifiedSymbols = ShiftRight(_modifiedSymbols, shiftIndex);
-        _modifiedColours = ShiftRight(_modifiedColours, shiftIndex);
-    }
-
-    private void SetPositionsOneTwoToThreeFour() {
-        _modifiedSymbols = _modifiedSymbols.Remove(0, 1).Insert(0, _modifiedSymbols[1].ToString());
-        _modifiedColours.RemoveAt(0);
-        _modifiedColours.Insert(0, _modifiedColours[1]);
-        if (_modifiedSymbols.Length == 4) {
-            _modifiedSymbols = _modifiedSymbols.Remove(1, 1).Insert(0, _modifiedSymbols[2].ToString());
-            _modifiedColours.RemoveAt(1);
-            _modifiedColours.Insert(1, _modifiedColours[2]);
-        }
-    }
-
-    private void RemovePositionN() {
-        int n = 4 - (_batteryCount % 4);
-        _modifiedColours.RemoveAt(n - 1);
-        _modifiedSymbols = _modifiedSymbols.Remove(startIndex: n - 1, count: 1);
-    }
-
-    private void InsertYellowDashAtPositionM() {
-        int m = _serialNumberDigitSum % 10 % 3;
-        _modifiedColours.Insert(m, ButtonColour.Yellow);
-        _modifiedSymbols = _modifiedSymbols.Insert(m, "-");
-    }
-
-    private void DashesGreenDotsToDashes() {
-        for (int i = 0; i < _modifiedSymbols.Length; i++) {
-            if (_modifiedSymbols[i] == '-') {
-                _modifiedColours[i] = ButtonColour.Green;
-            }
-            else {
-                _modifiedSymbols = _modifiedSymbols.Remove(startIndex: i, count: 0);
-                _modifiedSymbols = _modifiedSymbols.Insert(startIndex: i, value: "-");
-            }
-        }
-    }
-
-    private void SetColoursRbygOrder() {
-        _modifiedColours = new List<ButtonColour> {
-            ButtonColour.Red,
-            ButtonColour.Blue,
-            ButtonColour.Yellow
-        };
-        if (_modifiedSymbols.Length == 4) {
-            _modifiedColours.Add(ButtonColour.Green);
-        }
-    }
-
-    private void MoveDotsToFront() {
-        _modifiedSymbols = new string('.', _uniquePortTypeCount);
-        while (_modifiedSymbols.Length < _modifiedColours.Count()) {
-            _modifiedSymbols += "-";
-        }
-    }
-
-    private void RemovePositionTwoAndAppendGreenDot() {
-        _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 1, count: 1);
-        _modifiedSymbols += ".";
-        _modifiedColours.RemoveAt(1);
-        _modifiedColours.Add(ButtonColour.Green);
-    }
-
-    private void SetSymbolsToFirstValidMorseLetter() {
-        int tryNumber = _serialNumberDigitSum % 26;
-        while (!MorseLetters.ContainsKey(tryNumber) || MorseLetters[tryNumber].Length != _modifiedSymbols.Length) {
-            tryNumber++;
-            tryNumber %= 26;
-        }
-        _modifiedSymbols = MorseLetters[tryNumber];
-    }
-
-
     public ColouredSymbol GetExpectedSubmission(ColouredSymbol[] displayedSequence) {
         DeconstructDisplayedSequence(displayedSequence);
         _modifiedSymbols = _displayedSymbols;
         _modifiedColours = _displayedColours.ToList();
         _appliedActionsThisStage.Clear();
+        _sequenceGenerationLogging.Clear();
 
-        foreach (ButtonColour colour in _displayedColours) {
-            ModifySequence(colour);
-        }
-
+        _displayedColours.ForEach(colour => ModifySequence(colour));
         ColouredSymbol[] modifiedSequence = ConstructModifiedSequence(_modifiedSymbols, _modifiedColours);
 
         return modifiedSequence[GetCorrectPosition()];
@@ -290,14 +194,26 @@ public class SamuelSequenceModifier {
         CheckBlueInPositionThree();
         Func<bool>[] conditions = _conditions[(int)currentSymbolColour];
         Action[] actions = _actions[(int)currentSymbolColour];
+        int activeCondition = 0;
+        int activeAction;
 
-        // ! Continue from here.
-
-        for (int i = 0; i < conditions.Length; i++) {
-            if (conditions[i]()) {
-                _module.Log("Condition " + i + " applies for " + currentSymbolColour.ToString().ToLower());
-            }
+        while (!conditions[activeCondition]()) {
+            activeCondition++;
         }
+        _sequenceGenerationLogging.Add(currentSymbolColour + ": Condition " + (activeCondition + 1) + " applies.");
+
+        // If you reach a rule that you have already applied, use the previous rule instead.
+        activeAction = activeCondition;
+        while (_appliedActionsThisStage.Contains((int)currentSymbolColour * 5 + activeAction)) {
+            _sequenceGenerationLogging.Add("Action " + (activeAction + 1) + " has already been applied.");
+            // Add 4 instead of subtracting 1 to avoid negative result after modulo.
+            activeAction += 4;
+            activeAction %= 5;
+        }
+        _sequenceGenerationLogging.Add("Applying action " + (activeAction + 1) + ".");
+        _appliedActionsThisStage.Add((int)currentSymbolColour * 5 + activeAction);
+
+        actions[activeAction]();
     }
 
     private void CheckBlueInPositionThree() {
@@ -352,5 +268,107 @@ public class SamuelSequenceModifier {
         }
 
         return newSequence;
+    }
+
+    // Methods used for actions:
+
+    private string ShiftRight(string text, int offset) {
+        offset %= text.Length;
+
+        if (offset == 0) {
+            return text;
+        }
+        else if (offset < 0) {
+            offset += text.Length;
+        }
+
+        return text.Substring(text.Length - offset) + text.Substring(0, text.Length - offset);
+    }
+
+    private List<T> ShiftRight<T>(List<T> list, int offset) {
+        int length = list.Count();
+        int startIndex = (length - offset % length) % length;
+        var shiftedList = new List<T>();
+
+        for (int i = 0; i < length; i++) {
+            shiftedList.Add(list[(startIndex + i) % length]);
+        }
+
+        return shiftedList;
+    }
+
+    private void ShiftByLitMinusUnlitIndicators() {
+        int shiftIndex = _litIndicatorCount - _unlitIndicatorCount;
+        _modifiedSymbols = ShiftRight(_modifiedSymbols, shiftIndex);
+        _modifiedColours = ShiftRight(_modifiedColours, shiftIndex);
+    }
+
+    private void SetPositionsOneTwoToThreeFour() {
+        _modifiedSymbols = _modifiedSymbols.Remove(0, 1).Insert(0, _modifiedSymbols[1].ToString());
+        _modifiedColours.RemoveAt(0);
+        _modifiedColours.Insert(0, _modifiedColours[1]);
+        if (_modifiedSymbols.Length == 4) {
+            _modifiedSymbols = _modifiedSymbols.Remove(1, 1).Insert(0, _modifiedSymbols[2].ToString());
+            _modifiedColours.RemoveAt(1);
+            _modifiedColours.Insert(1, _modifiedColours[2]);
+        }
+    }
+
+    private void RemovePositionN() {
+        int n = 4 - (_batteryCount % 4);
+        _modifiedColours.RemoveAt(n - 1);
+        _modifiedSymbols = _modifiedSymbols.Remove(startIndex: n - 1, count: 1);
+    }
+
+    private void InsertYellowDashAtPositionM() {
+        int m = _serialNumberDigitSum % 10 % 3;
+        _modifiedColours.Insert(m, ButtonColour.Yellow);
+        _modifiedSymbols = _modifiedSymbols.Insert(m, "-");
+    }
+
+    private void DashesGreenDotsToDashes() {
+        for (int i = 0; i < _modifiedSymbols.Length; i++) {
+            if (_modifiedSymbols[i] == '-') {
+                _modifiedColours[i] = ButtonColour.Green;
+            }
+            else {
+                _modifiedSymbols = _modifiedSymbols.Remove(startIndex: i, count: 1);
+                _modifiedSymbols = _modifiedSymbols.Insert(startIndex: i, value: "-");
+            }
+        }
+    }
+
+    private void SetColoursRbygOrder() {
+        _modifiedColours = new List<ButtonColour> {
+            ButtonColour.Red,
+            ButtonColour.Blue,
+            ButtonColour.Yellow
+        };
+        if (_modifiedSymbols.Length == 4) {
+            _modifiedColours.Add(ButtonColour.Green);
+        }
+    }
+
+    private void MoveDotsToFront() {
+        _modifiedSymbols = new string('.', _uniquePortTypeCount);
+        while (_modifiedSymbols.Length < _modifiedColours.Count()) {
+            _modifiedSymbols += "-";
+        }
+    }
+
+    private void RemovePositionTwoAndAppendGreenDot() {
+        _modifiedSymbols = _modifiedSymbols.Remove(startIndex: 1, count: 1);
+        _modifiedSymbols += ".";
+        _modifiedColours.RemoveAt(1);
+        _modifiedColours.Add(ButtonColour.Green);
+    }
+
+    private void SetSymbolsToFirstValidMorseLetter() {
+        int tryNumber = _serialNumberDigitSum % 26;
+        while (!MorseLetters.ContainsKey(tryNumber) || MorseLetters[tryNumber].Length != _modifiedSymbols.Length) {
+            tryNumber++;
+            tryNumber %= 26;
+        }
+        _modifiedSymbols = MorseLetters[tryNumber];
     }
 }
