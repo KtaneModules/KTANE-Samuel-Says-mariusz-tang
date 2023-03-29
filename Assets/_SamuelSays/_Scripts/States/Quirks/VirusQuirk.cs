@@ -54,7 +54,8 @@ public class VirusQuirk : State {
             default: throw new ArgumentOutOfRangeException("WTF STAGE NUMBER ARE WE ON :(");
         }
         _module.Log("-+-+-+-+-+-+-+-+- Quirk: Virus! -+-+-+-+-+-+-+-+-");
-        _module.Log("There have been" + (_module.StageNumber - 1) + "Submissions so far. Expecting sequence: " + _expectedSequence + ".");
+        _module.Log("There have been" + (_module.StageNumber - 1) + "Submissions so far. Expecting sequence: " + _expectedSequence
+             + " (reading order).");
 
         yield return null;
     }
@@ -73,7 +74,7 @@ public class VirusQuirk : State {
         button.PlayReleaseAnimation();
 
         if (_inputtedSequence[_inputtedSequence.Length - 1] != _expectedSequence[_inputtedSequence.Length - 1]) {
-            _module.Strike("Incorrectly inputted " + _inputtedSequence + "! Strike!");
+            _module.Strike("Incorrectly inputted " + _inputtedSequence + "! Input has been reset.");
             _inputtedSequence = string.Empty;
         }
         else if (_inputtedSequence == _expectedSequence) {

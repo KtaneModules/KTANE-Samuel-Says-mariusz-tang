@@ -68,7 +68,7 @@ public class RegularStage : State {
             _module.AdvanceStage();
         }
         else {
-            _module.Strike("Incorrectly submitted a " + submittedSymbol.ToString() + "! Strike!");
+            _module.Strike("Incorrectly submitted a " + submittedSymbol.ToString() + "!");
         }
     }
 }

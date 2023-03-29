@@ -14,6 +14,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
     // TODO: Add quirks.
     // TODO: Deal with stage 5.
+    // TODO: Animate the submit button, and add other visuals eg faces for quirk transitions.
     // TODO: Test everything.
     // TODO: Make manual.
     // TODO: Add TP.
@@ -115,7 +116,7 @@ public class SamuelSaysModule : MonoBehaviour {
     }
 
     public void Strike(string loggingMessage) {
-        Log(loggingMessage);
+        Log("✕ " + loggingMessage);
         Module.HandleStrike();
     }
 
@@ -139,7 +140,7 @@ public class SamuelSaysModule : MonoBehaviour {
         ExpectedSubmission = _sequenceModifier.GetExpectedSubmission(DisplayedSequence);
 
         if (StageNumber == 2) {
-            ChangeState(new LeftToRightAnimation(this, new VirusQuirk(this)));
+            ChangeState(new LeftToRightAnimation(this, new GhostQuirk(this)));
         }
         else if (StageNumber != 1) {
             ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));
