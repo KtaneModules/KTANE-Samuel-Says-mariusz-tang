@@ -39,6 +39,7 @@ public class ColouredButton : MonoBehaviour {
     public void SetVirusColourActive() {
         _buttonBacking.material.color = Color.magenta * 88f / 255f;
         _buttonCover.material.color = Color.magenta * 88f / 255f;
+        _light.color = Color.magenta;
     }
 
     public void SetVirusColourInactive() {

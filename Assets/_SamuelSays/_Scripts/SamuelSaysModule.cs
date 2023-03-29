@@ -17,8 +17,10 @@ public class SamuelSaysModule : MonoBehaviour {
     // TODO: Test everything.
     // TODO: Make manual.
     // TODO: Add TP.
+    // TODO: Make sure logging meets my standards.
     // TODO: Beta-testing.
     // TODO: Complete(?).
+    // TODO: Go clean up Coloured Cubes.
 
     [SerializeField] private ColouredButton[] _buttons;
     [SerializeField] private KMSelectable _submitButton;
@@ -129,7 +131,7 @@ public class SamuelSaysModule : MonoBehaviour {
         StageNumber++;
 
         if (StageNumber == 5) {
-            Module.HandlePass();
+            ChangeState(new SolvedState(this));
             return;
         }
 
@@ -149,8 +151,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
     public void DoStageLogging() {
         string sequenceAsString = string.Join(", ", DisplayedSequence.Select(c => c.ToString()).ToArray());
-        Log("=================================================");
-        Log("Stage " + StageNumber + ":");
+        Log("================== Stage " + StageNumber + " ==================");
         Log("Displayed sequence is " + sequenceAsString + ".");
         Log(_sequenceModifier.SequenceGenerationLogging);
         Log("Expected response is " + ExpectedSubmission.ToString() + ".");

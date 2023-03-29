@@ -46,6 +46,10 @@ public class RegularStage : State {
     }
 
     public override IEnumerator HandleRelease(ColouredButton button) {
+        if (!_isHolding) {
+            yield break;
+        }
+
         _isHolding = false;
         button.PlayReleaseAnimation();
         _module.SymbolDisplay.ClearScreen();

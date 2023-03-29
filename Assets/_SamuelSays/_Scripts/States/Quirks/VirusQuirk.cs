@@ -53,8 +53,8 @@ public class VirusQuirk : State {
             case 4: _expectedSequence = "2413"; break;
             default: throw new ArgumentOutOfRangeException("WTF STAGE NUMBER ARE WE ON :(");
         }
-        _module.Log("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
-        _module.Log("Quirk: Virus! Expecting sequence: " + _expectedSequence + ".");
+        _module.Log("-+-+-+-+-+-+-+-+- Quirk: Virus! -+-+-+-+-+-+-+-+-");
+        _module.Log("There have been" + (_module.StageNumber - 1) + "Submissions so far. Expecting sequence: " + _expectedSequence + ".");
 
         yield return null;
     }
@@ -64,7 +64,14 @@ public class VirusQuirk : State {
             yield break;
         }
 
+        button.PlayPressAnimation();
         _inputtedSequence += (int)button.Colour + 1;
+        yield return null;
+    }
+
+    public override IEnumerator HandleRelease(ColouredButton button) {
+        button.PlayReleaseAnimation();
+
         if (_inputtedSequence[_inputtedSequence.Length - 1] != _expectedSequence[_inputtedSequence.Length - 1]) {
             _module.Strike("Incorrectly inputted " + _inputtedSequence + "! Strike!");
             _inputtedSequence = string.Empty;
@@ -74,6 +81,7 @@ public class VirusQuirk : State {
             _isFlashingFace = false;
             _module.StartCoroutine(OnStateExitAnimation());
         }
+
         yield return null;
     }
 
