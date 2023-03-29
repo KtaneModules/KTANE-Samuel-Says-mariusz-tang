@@ -53,7 +53,7 @@ public class VirusQuirk : State {
             case 4: _expectedSequence = "2413"; break;
             default: throw new ArgumentOutOfRangeException("WTF STAGE NUMBER ARE WE ON :(");
         }
-        _module.Log("-+-+-+-+-+-+-+-+- Quirk: Virus! -+-+-+-+-+-+-+-+-");
+        _module.LogQuirk("Virus");
         _module.Log("There have been" + (_module.StageNumber - 1) + "Submissions so far. Expecting sequence: " + _expectedSequence
              + " (reading order).");
 

@@ -19,7 +19,7 @@ public class GhostQuirk : State {
         GenerateRandomSequence();
         GhostPresses = _module.StartCoroutine(DoGhostPresses());
 
-        _module.Log("-+-+-+-+-+-+-+-+- Quirk: Ghost! -+-+-+-+-+-+-+-+-");
+        _module.LogQuirk("Ghost");
         _module.Log("The flashing sequence is " + _expectedSequence + " (reading order).");
         yield return null;
     }

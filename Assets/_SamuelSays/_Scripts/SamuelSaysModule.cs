@@ -13,8 +13,10 @@ public class SamuelSaysModule : MonoBehaviour {
     // ! Remember to contact me at Kuro#2011 on Discord for any bugs or questions!
 
     // TODO: Add quirks.
+    // ! Fix restarting of sequence after exiting quirks.
     // TODO: Deal with stage 5.
     // TODO: Animate the submit button, and add other visuals eg faces for quirk transitions.
+    // TODO: Sounds.
     // TODO: Test everything.
     // TODO: Make manual.
     // TODO: Add TP.
@@ -128,6 +130,7 @@ public class SamuelSaysModule : MonoBehaviour {
         formattedStrings.ForEach(str => Log(str));
     }
 
+
     public void AdvanceStage() {
         StageNumber++;
 
@@ -156,6 +159,10 @@ public class SamuelSaysModule : MonoBehaviour {
         Log("Displayed sequence is " + sequenceAsString + ".");
         Log(_sequenceModifier.SequenceGenerationLogging);
         Log("Expected response is " + ExpectedSubmission.ToString() + ".");
+    }
+
+    public void LogQuirk(string quirkName) {
+        Log("!! Quirk: " + quirkName + " !!");
     }
 
 #pragma warning disable 414
