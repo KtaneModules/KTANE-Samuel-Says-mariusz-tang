@@ -8,13 +8,11 @@ using Rnd = UnityEngine.Random;
 
 public class SamuelSaysModule : MonoBehaviour {
 
-    // ! If looking through the source for a potential bug or manual clarification, your best bet is
-    // ! probably SamuelSequenceModifier.cs as this is where correct responses are calculated.
-    // ! Remember to contact me at Kuro#2011 on Discord for any bugs or questions!
+    // ! Look at the README for information on where to look first for bugs.
 
     // TODO: Add quirks.
     // TODO: Deal with stage 5.
-    // TODO: Animate the submit button, and add other visuals eg faces for quirk transitions.
+    // TODO: Animate the submit button, and add other visuals eg faces for quirk transitions + interaction punches.
     // TODO: Sounds.
     // TODO: Test everything.
     // TODO: Make manual.
@@ -144,7 +142,7 @@ public class SamuelSaysModule : MonoBehaviour {
         ExpectedSubmission = _sequenceModifier.GetExpectedSubmission(DisplayedSequence);
 
         if (StageNumber == 2) {
-            ChangeState(new LeftToRightAnimation(this, new StutterQuirk(this)));
+            ChangeState(new LeftToRightAnimation(this, new OverclockedQuirk(this)));
         }
         else if (StageNumber != 1) {
             ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));

@@ -41,6 +41,8 @@ public class VirusQuirk : State {
     private bool _isFlashingFace = true;
     private bool _isTransitioning = true;
 
+    private Coroutine _flashFace;
+
     public VirusQuirk(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator OnStateEnter() {
@@ -76,6 +78,14 @@ public class VirusQuirk : State {
         if (_inputtedSequence[_inputtedSequence.Length - 1] != _expectedSequence[_inputtedSequence.Length - 1]) {
             _module.Strike("Incorrectly inputted " + _inputtedSequence + "! Input has been reset.");
             _inputtedSequence = string.Empty;
+
+            if (_flashFace != null) {
+                _module.StopCoroutine(_flashFace);
+            }
+
+            _module.SymbolDisplay.DisplayLetter((_module.StageNumber - 1).ToString());
+            yield return new WaitForSeconds(1);
+            _flashFace = _module.StartCoroutine(FlashFace());
         }
         else if (_inputtedSequence == _expectedSequence) {
             _module.Log("Inputted the correct sequence!");
@@ -119,7 +129,7 @@ public class VirusQuirk : State {
             button.SetVirusColourActive();
         }
         _module.SymbolDisplay.DisplayEmoticon(_hackedFaces[Rnd.Range(0, _hackedFaces.Length)], Color.magenta);
-        _module.StartCoroutine(FlashFace());
+        _flashFace = _module.StartCoroutine(FlashFace());
         _isTransitioning = false;
     }
 

@@ -25,8 +25,12 @@ public class MiniScreen : MonoBehaviour {
     }
 
     public void DisplayLetter(char letter) {
+        DisplayLetter(letter.ToString());
+    }
+
+    public void DisplayLetter(string letter) {
         ClearScreen();
-        LetterDisplay.text = letter.ToString();
+        LetterDisplay.text = letter;
     }
 
     public void DisplayColour(Color colour) {

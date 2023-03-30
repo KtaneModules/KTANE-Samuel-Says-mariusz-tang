@@ -152,6 +152,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114504487643367590, guid: c9d960ef6b357a448afc322f4955d080,
+        type: 2}
+      propertyPath: RequiresTimerVisibility
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9d960ef6b357a448afc322f4955d080, type: 2}
   m_IsPrefabParent: 0

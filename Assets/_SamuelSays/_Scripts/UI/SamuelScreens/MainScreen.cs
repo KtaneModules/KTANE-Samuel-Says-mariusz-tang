@@ -8,6 +8,8 @@ public class MainScreen : MonoBehaviour {
     private const float MorseTimeUnit = 0.2f;
     private const float ColourBrightness = 0.9f;
 
+    private bool _skipPause = false;
+
     [SerializeField] private MeshRenderer _display;
     [SerializeField] private AudioSource _beep;
 
@@ -39,14 +41,15 @@ public class MainScreen : MonoBehaviour {
         _beep.Stop();
     }
 
-    public void PlaySequence(ColouredSymbol[] sequence) {
-        PlaySequences(new List<ColouredSymbol[]>() { sequence });
+    public void PlaySequence(ColouredSymbol[] sequence, bool skipPause = false) {
+        PlaySequences(new List<ColouredSymbol[]>() { sequence }, skipPause);
     }
 
-    public void PlaySequences(List<ColouredSymbol[]> sequences) {
+    public void PlaySequences(List<ColouredSymbol[]> sequences, bool skipPause = false) {
         if (_displaySequence != null) {
             StopCoroutine(_displaySequence);
         }
+        _skipPause = skipPause;
         _displaySequence = StartCoroutine(DisplaySequences(sequences));
     }
 
@@ -80,9 +83,11 @@ public class MainScreen : MonoBehaviour {
             }
         }
 
-        waitTime = 2 * MorseTimeUnit;
-        for (elapsedTime = 0; elapsedTime < waitTime; elapsedTime += Time.deltaTime) {
-            yield return null;
+        if (!_skipPause) {
+            waitTime = 2 * MorseTimeUnit;
+            for (elapsedTime = 0; elapsedTime < waitTime; elapsedTime += Time.deltaTime) {
+                yield return null;
+            }
         }
 
         yield return null;

@@ -47,6 +47,7 @@ public class StutterQuirk : State {
         if (_colourCounts[(int)button.Colour] == _colourCounts.Max()) {
             _module.Log("Pressed a valid colour!");
             _module.Screen.StopSequence();
+            // ! Play a sound here.
             yield return new WaitForSeconds(0.2f);
             _module.ChangeState(new RegularStage(_module));
         }

@@ -58,4 +58,8 @@ public class ColouredButton : MonoBehaviour {
     public void SetLightState(int state) {
         _light.enabled = state == 1;
     }
+
+    public void AddInteractionPunch(float intensityModifier = 1.0f) {
+        _selectable.AddInteractionPunch(intensityModifier);
+    }
 }

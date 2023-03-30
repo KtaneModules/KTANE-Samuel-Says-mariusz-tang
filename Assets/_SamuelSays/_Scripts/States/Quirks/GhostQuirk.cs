@@ -9,7 +9,7 @@ public class GhostQuirk : State {
 
     private string _inputtedSequence = string.Empty;
     private string _expectedSequence = string.Empty;
-    private Coroutine GhostPresses;
+    private Coroutine _ghostPresses;
 
     public GhostQuirk(SamuelSaysModule module) : base(module) { }
 
@@ -17,7 +17,7 @@ public class GhostQuirk : State {
         _module.Screen.PlaySequence(_module.DisplayedSequence);
 
         GenerateRandomSequence();
-        GhostPresses = _module.StartCoroutine(DoGhostPresses());
+        _ghostPresses = _module.StartCoroutine(DoGhostPresses());
 
         _module.LogQuirk("Ghost");
         _module.Log("The flashing sequence is " + _expectedSequence + " (reading order).");
@@ -33,7 +33,7 @@ public class GhostQuirk : State {
         }
 
         yield return new WaitForSeconds(1);
-        GhostPresses = _module.StartCoroutine(DoGhostPresses());
+        _ghostPresses = _module.StartCoroutine(DoGhostPresses());
     }
 
     private void GenerateRandomSequence() {
@@ -44,8 +44,8 @@ public class GhostQuirk : State {
     }
 
     public override IEnumerator HandlePress(ColouredButton pressedButton) {
-        if (GhostPresses != null) {
-            _module.StopCoroutine(GhostPresses);
+        if (_ghostPresses != null) {
+            _module.StopCoroutine(_ghostPresses);
             foreach (ColouredButton button in _module.Buttons) {
                 button.PlayReleaseAnimation();
             }
@@ -62,7 +62,7 @@ public class GhostQuirk : State {
         if (_inputtedSequence[_inputtedSequence.Length - 1] != _expectedSequence[_inputtedSequence.Length - 1]) {
             _module.Strike("Incorrectly inputted " + _inputtedSequence + "! Input has been reset.");
             _inputtedSequence = string.Empty;
-            GhostPresses = _module.StartCoroutine(DoGhostPresses());
+            _ghostPresses = _module.StartCoroutine(DoGhostPresses());
         }
         else if (_inputtedSequence == _expectedSequence) {
             _module.Log("Inputted the correct sequence!");
@@ -92,7 +92,7 @@ public class GhostQuirk : State {
     public override IEnumerator HandleSubmitPress() {
         _inputtedSequence = string.Empty;
         yield return new WaitForSeconds(1);
-        GhostPresses = _module.StartCoroutine(DoGhostPresses());
+        _ghostPresses = _module.StartCoroutine(DoGhostPresses());
         yield return null;
     }
 }
