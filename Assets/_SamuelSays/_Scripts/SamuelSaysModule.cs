@@ -13,7 +13,6 @@ public class SamuelSaysModule : MonoBehaviour {
     // ! Remember to contact me at Kuro#2011 on Discord for any bugs or questions!
 
     // TODO: Add quirks.
-    // ! Fix restarting of sequence after exiting quirks.
     // TODO: Deal with stage 5.
     // TODO: Animate the submit button, and add other visuals eg faces for quirk transitions.
     // TODO: Sounds.

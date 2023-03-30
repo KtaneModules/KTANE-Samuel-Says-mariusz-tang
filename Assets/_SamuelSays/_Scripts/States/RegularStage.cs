@@ -11,15 +11,24 @@ public class RegularStage : State {
     private ButtonColour _heldButtonColour;
     private float _timeHeld;
     private bool _isHolding;
+    private bool _startDisplaySequence;
 
     private ColouredSymbol[] _currentDisplaySequence;
 
-    public RegularStage(SamuelSaysModule module) : base(module) { }
+    public RegularStage(SamuelSaysModule module) : this(module, false) { }
+
+    public RegularStage(SamuelSaysModule module, bool sequenceAlreadyPlaying) : base(module) {
+        _startDisplaySequence = !sequenceAlreadyPlaying;
+    }
 
     public override IEnumerator OnStateEnter() {
         _currentDisplaySequence = _module.DisplayedSequence;
-        _module.Screen.PlaySequence(_currentDisplaySequence);
+
+        if (_startDisplaySequence) {
+            _module.Screen.PlaySequence(_currentDisplaySequence);
+        }
         _module.DoStageLogging();
+
         yield return null;
     }
 
