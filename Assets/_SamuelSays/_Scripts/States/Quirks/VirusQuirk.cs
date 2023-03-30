@@ -168,7 +168,7 @@ public class VirusQuirk : State {
         _module.SymbolDisplay.DisplayEmoticon(_happyFaces[Rnd.Range(0, _happyFaces.Length)], Color.green);
         yield return new WaitForSeconds(1);
         _module.SymbolDisplay.ClearScreen();
-        _module.ChangeState(new RegularStage(_module, true));
+        _module.ChangeState(new RegularStage(_module));
         _isTransitioning = false;
     }
 }

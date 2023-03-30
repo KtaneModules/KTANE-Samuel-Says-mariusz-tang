@@ -109,8 +109,10 @@ public class SamuelSaysModule : MonoBehaviour {
         _submitButton.OnInteract += delegate () { StartCoroutine(_state.HandleSubmitPress()); return false; };
     }
 
-    public void ChangeState(State newState) {
-        Screen.StopSequence();
+    public void ChangeState(State newState, bool haltSequence = true) {
+        if (haltSequence) {
+            Screen.StopSequence();
+        }
         SymbolDisplay.ClearScreen();
         _state = newState;
         StartCoroutine(_state.OnStateEnter());
@@ -142,7 +144,7 @@ public class SamuelSaysModule : MonoBehaviour {
         ExpectedSubmission = _sequenceModifier.GetExpectedSubmission(DisplayedSequence);
 
         if (StageNumber == 2) {
-            ChangeState(new LeftToRightAnimation(this, new GhostQuirk(this)));
+            ChangeState(new LeftToRightAnimation(this, new StutterQuirk(this)));
         }
         else if (StageNumber != 1) {
             ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));

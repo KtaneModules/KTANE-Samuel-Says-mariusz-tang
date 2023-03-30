@@ -85,7 +85,7 @@ public class GhostQuirk : State {
             yield return new WaitForSeconds(0.1f);
         }
 
-        _module.ChangeState(new RegularStage(_module));
+        _module.ChangeState(new RegularStage(_module, true), false);
         yield return null;
     }
 

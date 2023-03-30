@@ -67,7 +67,6 @@ public class RegularStage : State {
         var submittedSymbol = new ColouredSymbol(_heldButtonColour, inputtedSymbol);
 
         CheckSubmission(submittedSymbol);
-
         yield return null;
     }
 
