@@ -6,3 +6,5 @@ To get started making modules, join the [Keep Talking and Nobody Explodes](https
 
 If you are looking through the source for a potential bug or manual clarification, your best bet is probably SamuelSequenceModifier.cs as this is where correct responses are calculated. Problems with quirks are likely located in their respective <Name>Quirk.cs files.
 If it is not immediately urgent (ie. you're not currently defusing a bomb with this module on it), it's probably better to just let me know on Discord as above.
+
+I have unfortunately been forced to spell the word "colour" incorrectly in the manual and logging, but you'd best believe I have spelt it correctly in my variable and class names <3

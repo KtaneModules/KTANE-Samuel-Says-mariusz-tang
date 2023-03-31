@@ -142,7 +142,7 @@ public class SamuelSaysModule : MonoBehaviour {
         ExpectedSubmission = _sequenceModifier.GetExpectedSubmission(DisplayedSequence);
 
         if (StageNumber == 2) {
-            ChangeState(new LeftToRightAnimation(this, new OverclockedQuirk(this)));
+            ChangeState(new LeftToRightAnimation(this, new DiscoloredQuirk(this)));
         }
         else if (StageNumber != 1) {
             ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));
