@@ -151,7 +151,7 @@ public class SamuelSequenceModifier {
         };
 
         _yellowActions = new Action[] {
-            delegate() {_modifiedSymbols.Reverse(); _modifiedColours.Reverse();},
+            delegate() {_modifiedSymbols = new string(_modifiedSymbols.Reverse().ToArray()); _modifiedColours.Reverse();},
             delegate() {if (_modifiedSymbols.Length == 4) RemovePositionN(); else InsertYellowDashAtPositionM();},
             delegate() {_modifiedColours[0] = ButtonColour.Yellow; _modifiedColours[1] = ButtonColour.Yellow;},
             delegate() {_modifiedColours = _modifiedColours.Select((colour, index) => index == 2 ? colour : ButtonColour.Red).ToList();},
@@ -167,7 +167,7 @@ public class SamuelSequenceModifier {
         };
 
         _blueActions = new Action[] {
-            delegate() {_modifiedSymbols.Reverse();},
+            delegate() {_modifiedSymbols = new string(_modifiedSymbols.Reverse().ToArray());},
             delegate() {_modifiedSymbols = ShiftRight(_modifiedSymbols, 1); _modifiedColours = ShiftRight(_modifiedColours, 1);},
             delegate() {SetSymbolsToFirstValidMorseLetter();},
             delegate() {/* Do nothing <3 */},
@@ -258,6 +258,11 @@ public class SamuelSequenceModifier {
 
     private ColouredSymbol[] ConstructModifiedSequence(string symbols, List<ButtonColour> colours) {
         if (symbols.Length != colours.Count()) {
+            Debug.Log("Symbol count is " + symbols.Length + ". Colour count is " + colours.Count());
+            Debug.Log("Displayed sequence is are: ");
+            foreach (ColouredSymbol symbol in _module.DisplayedSequence) {
+                Debug.Log(symbol.Colour + " " + symbol.Symbol);
+            }
             throw new RankException("Number of symbols and number of colours must match to construct new sequence.");
         }
 
@@ -271,7 +276,6 @@ public class SamuelSequenceModifier {
     }
 
     // Methods used for actions:
-
     private string ShiftRight(string text, int offset) {
         offset %= text.Length;
 
@@ -304,11 +308,11 @@ public class SamuelSequenceModifier {
     }
 
     private void SetPositionsOneTwoToThreeFour() {
-        _modifiedSymbols = _modifiedSymbols.Remove(0, 1).Insert(0, _modifiedSymbols[1].ToString());
+        _modifiedSymbols = _modifiedSymbols.Insert(0, _modifiedSymbols[2].ToString()).Remove(1, 1);
         _modifiedColours.RemoveAt(0);
         _modifiedColours.Insert(0, _modifiedColours[1]);
         if (_modifiedSymbols.Length == 4) {
-            _modifiedSymbols = _modifiedSymbols.Remove(1, 1).Insert(0, _modifiedSymbols[2].ToString());
+            _modifiedSymbols = _modifiedSymbols.Insert(1, _modifiedSymbols[3].ToString()).Remove(2, 1);
             _modifiedColours.RemoveAt(1);
             _modifiedColours.Insert(1, _modifiedColours[2]);
         }
