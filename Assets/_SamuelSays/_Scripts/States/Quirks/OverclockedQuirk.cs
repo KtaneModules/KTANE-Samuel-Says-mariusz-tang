@@ -29,18 +29,24 @@ public class OverclockedQuirk : State {
     }
 
     public override IEnumerator HandlePress(ColouredButton button) {
+        if (_hitLimit) {
+            yield break;
+        }
+
         button.PlayPressAnimation();
         _spamTotal = Math.Min(1, _spamTotal + INCREMENT_SIZE);
         if (_spamTotal == 1 && !_hitLimit) {
             _hitLimit = true;
-            button.AddInteractionPunch(10);
-            _module.Log("Limit reached");
+            button.AddInteractionPunch();
+            LightAllButtons();
         }
         yield return null;
     }
 
     public override IEnumerator HandleRelease(ColouredButton button) {
-        button.PlayReleaseAnimation();
+        if (!_hitLimit) {
+            button.PlayReleaseAnimation();
+        }
         yield return null;
     }
 
@@ -48,7 +54,26 @@ public class OverclockedQuirk : State {
         while (true) {
             _spamTotal = Math.Max(0, _spamTotal - Time.deltaTime * DECREASE_RATE);
             _module.SymbolDisplay.DisplayColour(Color.white * _spamTotal);
+
+            if (_hitLimit && _spamTotal == 0) {
+                yield return new WaitForSeconds(0.2f);
+                TransitionToNextState();
+                _module.StopCoroutine(_trackSpam);
+            }
             yield return null;
         }
+    }
+
+    private void LightAllButtons() {
+        foreach (ColouredButton button in _module.Buttons) {
+            button.PlayPressAnimation();
+        }
+    }
+
+    private void TransitionToNextState() {
+        foreach (ColouredButton button in _module.Buttons) {
+            button.PlayReleaseAnimation();
+        }
+        _module.ChangeState(new RegularStage(_module));
     }
 }

@@ -3057,7 +3057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ModuleType: SamuelSays
   ModuleDisplayName: Samuel Says
-  RequiresTimerVisibility: 0
+  RequiresTimerVisibility: 1
 --- !u!114 &114532985052852192
 MonoBehaviour:
   m_ObjectHideFlags: 1
