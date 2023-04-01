@@ -65,12 +65,16 @@ public class SamuelSaysModule : MonoBehaviour {
     private SamuelSequenceModifier _sequenceModifier;
     private State _state;
 
+    private State[] _quirkStates;
+
     public ColouredButton[] Buttons { get { return _buttons; } }
     public MainScreen Screen { get; private set; }
     public MiniScreen SymbolDisplay { get; private set; }
 
     public ColouredSymbol[] DisplayedSequence { get; private set; }
     public ColouredSymbol ExpectedSubmission { get; private set; }
+    public List<ButtonColour> SubmittedColours { get; private set; }
+    public List<int> QuirkAppearances { get; private set; }
     public int StageNumber { get; private set; }
 
     private void Awake() {
@@ -86,10 +90,22 @@ public class SamuelSaysModule : MonoBehaviour {
     private void Start() {
         _sequenceGenerator = new SamuelSequenceGenerator();
         _sequenceModifier = new SamuelSequenceModifier(this);
+        SubmittedColours = new List<ButtonColour>();
+        QuirkAppearances = new List<int>();
         AssignInputHandlers();
 
         Log("Samuel says hi!");
         Log("Press the grey button to start.");
+
+        _quirkStates = new State[] {
+            new DiscoloredQuirk(this),
+            new GhostQuirk(this),
+            new OverclockedQuirk(this),
+            new StuckQuirk(this),
+            new StutterQuirk(this),
+            new UnstableQuirk(this),
+            new VirusQuirk(this)
+        };
 
         StageNumber = 0;
         _state = new InitialState(this);
@@ -133,22 +149,23 @@ public class SamuelSaysModule : MonoBehaviour {
     public void AdvanceStage() {
         StageNumber++;
 
-        if (StageNumber == 5) {
-            ChangeState(new SolvedState(this));
-            return;
-        }
-
         DisplayedSequence = _sequenceGenerator.GenerateRandomSequence(3 + Rnd.Range(0, 2));
         ExpectedSubmission = _sequenceModifier.GetExpectedSubmission(DisplayedSequence);
+        SubmittedColours.Add(ExpectedSubmission.Colour);
 
-        if (StageNumber == 2) {
-            ChangeState(new LeftToRightAnimation(this, new UnstableQuirk(this)));
+        if (StageNumber == 1) {
+            ChangeState(new RegularStage(this));
         }
-        else if (StageNumber != 1) {
+        else if (StageNumber <= 4 && Rnd.Range(0, 2) == 1) {
+            int quirkNumber = Rnd.Range(0, _quirkStates.Length);
+            QuirkAppearances.Add(quirkNumber);
+            ChangeState(new LeftToRightAnimation(this, _quirkStates[quirkNumber]));
+        }
+        else if (StageNumber <= 4) {
             ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));
         }
         else {
-            ChangeState(new RegularStage(this));
+            ChangeState(new FinalStage(this));
         }
     }
 
