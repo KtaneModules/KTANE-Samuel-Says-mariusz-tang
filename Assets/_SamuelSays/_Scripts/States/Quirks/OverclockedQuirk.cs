@@ -7,8 +7,6 @@ using Rnd = UnityEngine.Random;
 
 public class OverclockedQuirk : State {
 
-    // ! Continue with dealing with what happens after limit is reached.
-
     private const float DECREASE_RATE = 1f;
     private const float INCREMENT_SIZE = 0.25f;
 

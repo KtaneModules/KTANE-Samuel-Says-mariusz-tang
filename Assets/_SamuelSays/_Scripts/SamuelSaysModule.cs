@@ -10,8 +10,6 @@ public class SamuelSaysModule : MonoBehaviour {
 
     // ! Look at the README for information on where to look first for bugs.
 
-    // TODO: Add quirks.
-    // TODO: Deal with stage 5.
     // TODO: Animate the submit button, and add other visuals eg faces for quirk transitions + interaction punches.
     // TODO: Sounds.
     // TODO: Test everything.
@@ -149,6 +147,11 @@ public class SamuelSaysModule : MonoBehaviour {
     public void AdvanceStage() {
         StageNumber++;
 
+        if (StageNumber == 5) {
+            ChangeState(new FinalStage(this));
+            return;
+        }
+
         DisplayedSequence = _sequenceGenerator.GenerateRandomSequence(3 + Rnd.Range(0, 2));
         ExpectedSubmission = _sequenceModifier.GetExpectedSubmission(DisplayedSequence);
         SubmittedColours.Add(ExpectedSubmission.Colour);
@@ -156,16 +159,13 @@ public class SamuelSaysModule : MonoBehaviour {
         if (StageNumber == 1) {
             ChangeState(new RegularStage(this));
         }
-        else if (StageNumber <= 4 && Rnd.Range(0, 2) == 1) {
+        else if (Rnd.Range(0, 2) == 1) {
             int quirkNumber = Rnd.Range(0, _quirkStates.Length);
             QuirkAppearances.Add(quirkNumber);
             ChangeState(new LeftToRightAnimation(this, _quirkStates[quirkNumber]));
         }
-        else if (StageNumber <= 4) {
-            ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));
-        }
         else {
-            ChangeState(new FinalStage(this));
+            ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));
         }
     }
 

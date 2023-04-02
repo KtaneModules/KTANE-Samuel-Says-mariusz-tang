@@ -56,7 +56,7 @@ public class VirusQuirk : State {
             default: throw new ArgumentOutOfRangeException("WTF STAGE NUMBER ARE WE ON :(");
         }
         _module.LogQuirk("Virus");
-        _module.Log("There have been" + (_module.StageNumber - 1) + "Submissions so far. Expecting sequence: " + _expectedSequence
+        _module.Log("There have been " + (_module.StageNumber - 1) + " Submissions so far. Expecting sequence: " + _expectedSequence
              + " (reading order).");
 
         yield return null;
@@ -92,7 +92,6 @@ public class VirusQuirk : State {
             _isFlashingFace = false;
             _module.StartCoroutine(OnStateExitAnimation());
         }
-
         yield return null;
     }
 
