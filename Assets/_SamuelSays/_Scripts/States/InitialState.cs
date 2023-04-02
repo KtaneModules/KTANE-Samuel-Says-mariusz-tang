@@ -10,6 +10,7 @@ public class InitialState : State {
     public InitialState(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator HandleSubmitPress() {
+        _module.SubmitButtonAnimator.SetBool("IsPressed", true);
         _module.Log("=================== Start ===================");
         _module.Log("Conditions and actions are labelled 1-5, top-to-bottom within the given colour table.");
 

@@ -22,6 +22,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
     [SerializeField] private ColouredButton[] _buttons;
     [SerializeField] private KMSelectable _submitButton;
+    [SerializeField] private Animator _submitButtonAnimator;
 
     [HideInInspector] public KMBombInfo Bomb;
     [HideInInspector] public KMAudio Audio;
@@ -68,6 +69,7 @@ public class SamuelSaysModule : MonoBehaviour {
     public ColouredButton[] Buttons { get { return _buttons; } }
     public MainScreen Screen { get; private set; }
     public MiniScreen SymbolDisplay { get; private set; }
+    public Animator SubmitButtonAnimator { get { return _submitButtonAnimator; } }
 
     public ColouredSymbol[] DisplayedSequence { get; private set; }
     public ColouredSymbol ExpectedSubmission { get; private set; }
@@ -119,6 +121,7 @@ public class SamuelSaysModule : MonoBehaviour {
         }
 
         _submitButton.OnInteract += delegate () { StartCoroutine(_state.HandleSubmitPress()); return false; };
+        _submitButton.OnInteractEnded += delegate () { StartCoroutine(_state.HandleSubmitRelease()); };
     }
 
     public void ChangeState(State newState, bool haltSequence = true) {

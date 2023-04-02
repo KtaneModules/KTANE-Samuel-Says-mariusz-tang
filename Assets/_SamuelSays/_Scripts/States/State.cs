@@ -25,7 +25,13 @@ public abstract class State {
     }
 
     public virtual IEnumerator HandleSubmitPress() {
+        _module.SubmitButtonAnimator.SetBool("IsPressed", true);
         _module.Screen.ToggleMute();
+        yield return null;
+    }
+
+    public virtual IEnumerator HandleSubmitRelease() {
+        _module.SubmitButtonAnimator.SetBool("IsPressed", false);
         yield return null;
     }
 }
