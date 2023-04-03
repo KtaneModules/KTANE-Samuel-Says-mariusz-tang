@@ -10,8 +10,8 @@ public class OverclockedQuirk : State {
     private const float DECREASE_RATE = 1f;
     private const float INCREMENT_SIZE = 0.25f;
 
-    private float _spamTotal = 0;
-    private bool _hitLimit = false;
+    private float _spamTotal;
+    private bool _hitLimit;
 
     private Coroutine _trackSpam;
 
@@ -19,6 +19,8 @@ public class OverclockedQuirk : State {
 
     public override IEnumerator OnStateEnter() {
         _module.Screen.PlaySequence(_module.DisplayedSequence, true);
+        _spamTotal = 0;
+        _hitLimit = false;
 
         _module.LogQuirk("Overclocked");
         _module.Log("Press buttons rapidly until Samuel calms down.");

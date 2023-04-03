@@ -45,6 +45,7 @@ public class UnstableQuirk : State {
 
         if ((int)button.Colour == _expectedPress) {
             _module.Log("Pressed the correct button!");
+            button.AddInteractionPunch();
             _module.ChangeState(new RegularStage(_module));
         }
         else {

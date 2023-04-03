@@ -35,7 +35,7 @@ public class VirusQuirk : State {
         "=-]"
     };
 
-    private string _inputtedSequence = string.Empty;
+    private string _inputtedSequence;
     private string _expectedSequence;
 
     private bool _isFlashingFace = true;
@@ -46,6 +46,7 @@ public class VirusQuirk : State {
     public VirusQuirk(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator OnStateEnter() {
+        _inputtedSequence = string.Empty;
         _module.Screen.StopSequence();
         _module.StartCoroutine(OnStateEnterAnimation());
 

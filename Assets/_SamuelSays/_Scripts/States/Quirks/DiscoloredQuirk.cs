@@ -17,12 +17,13 @@ public class DiscoloredQuirk : State {
     private string _displayedColour;
     private string _expectedSequenceWords;
     private string _expectedSequenceNumbers;
-    private string _inputtedSequence = string.Empty;
+    private string _inputtedSequence;
 
     public DiscoloredQuirk(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator OnStateEnter() {
         GenerateResponse();
+        _inputtedSequence = string.Empty;
 
         _module.Screen.PlaySequence(_module.DisplayedSequence);
         _module.LogQuirk("Discolored");
@@ -47,6 +48,7 @@ public class DiscoloredQuirk : State {
         else if (_inputtedSequence == _expectedSequenceNumbers) {
             _module.Log("Pressed the correct sequence!");
             _module.ChangeState(new RegularStage(_module, true), false);
+            button.AddInteractionPunch();
         }
         yield return null;
     }

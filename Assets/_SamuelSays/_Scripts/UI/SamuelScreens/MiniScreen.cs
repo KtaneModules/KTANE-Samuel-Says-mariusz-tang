@@ -38,4 +38,11 @@ public class MiniScreen : MonoBehaviour {
         _displayMaterial.color = colour;
         _colourDisplay.enabled = true;
     }
+
+    public void DisplaySolveSmile() {
+        ClearScreen();
+        LetterDisplay.characterSize = 0.045f;
+        LetterDisplay.text = "Ü";
+        LetterDisplay.color = Color.green;
+    }
 }

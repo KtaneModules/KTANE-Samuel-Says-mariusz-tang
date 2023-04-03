@@ -7,14 +7,19 @@ using Rnd = UnityEngine.Random;
 
 public class GhostQuirk : State {
 
-    private string _inputtedSequence = string.Empty;
-    private string _expectedSequence = string.Empty;
+    private bool _done;
+
+    private string _inputtedSequence;
+    private string _expectedSequence;
     private Coroutine _ghostPresses;
 
     public GhostQuirk(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator OnStateEnter() {
         _module.Screen.PlaySequence(_module.DisplayedSequence);
+        _inputtedSequence = string.Empty;
+        _expectedSequence = string.Empty;
+        _done = false;
 
         GenerateRandomSequence();
         _ghostPresses = _module.StartCoroutine(DoGhostPresses());
@@ -44,6 +49,10 @@ public class GhostQuirk : State {
     }
 
     public override IEnumerator HandlePress(ColouredButton pressedButton) {
+        if (_done) {
+            yield break;
+        }
+
         if (_ghostPresses != null) {
             _module.StopCoroutine(_ghostPresses);
             foreach (ColouredButton button in _module.Buttons) {
@@ -67,6 +76,7 @@ public class GhostQuirk : State {
         else if (_inputtedSequence == _expectedSequence) {
             _module.Log("Inputted the correct sequence!");
             _module.StartCoroutine(FlashAllButtons());
+            _done = true;
         }
 
         yield return null;
