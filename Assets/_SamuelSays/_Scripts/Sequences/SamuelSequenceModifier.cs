@@ -226,16 +226,20 @@ public class SamuelSequenceModifier {
 
     private int GetCorrectPosition() {
         int quantityToUse;
+        int position;
+        string usingQuantity;
 
         switch (_module.StageNumber) {
-            case 1: quantityToUse = _batteryCount; break;
-            case 2: quantityToUse = _totalPorts; break;
-            case 3: quantityToUse = _litIndicatorCount + _unlitIndicatorCount; break;
-            case 4: quantityToUse = _moduleCount; break;
+            case 1: quantityToUse = _batteryCount; usingQuantity = "battery"; break;
+            case 2: quantityToUse = _totalPorts; usingQuantity = "port"; break;
+            case 3: quantityToUse = _litIndicatorCount + _unlitIndicatorCount; usingQuantity = "indicator"; break;
+            case 4: quantityToUse = _moduleCount; usingQuantity = "module"; break;
             default: throw new ArgumentOutOfRangeException("WTF STAGE NUMBER ARE WE ON :(");
         }
 
-        return quantityToUse % _modifiedSymbols.Length;
+        position = quantityToUse % _modifiedSymbols.Length;
+        _sequenceGenerationLogging.Add("Using " + usingQuantity + " count, the correct position to submit is " + position + ".");
+        return position;
     }
 
     private void DeconstructDisplayedSequence(ColouredSymbol[] sequence) {

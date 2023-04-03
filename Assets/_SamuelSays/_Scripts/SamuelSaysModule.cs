@@ -10,7 +10,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
     // ! Look at the README for information on where to look first for bugs.
 
-    // TODO: Animate the submit button, and add other visuals eg faces for quirk transitions + interaction punches.
+    // TODO: Add visual things eg faces for quirk transitions.
     // TODO: Sounds.
     // TODO: Test everything.
     // TODO: Make manual.
@@ -46,25 +46,27 @@ public class SamuelSaysModule : MonoBehaviour {
     //     "= ]",
     //     "=-]"
     // };
-    // private readonly string[] _strikeFaces = new string[] {
-    //     ">:(",
-    //     ">:[",
-    //     ">:<",
-    //     ":'(",
-    //     ">:x",
-    //     ":|",
-    //     ">:|",
-    //     ":s",
-    //     ":o",
-    //     ":0",
-    //     ":O"
-    // };
+
+    private readonly string[] _strikeFaces = new string[] {
+        ">:(",
+        ">:[",
+        ">:<",
+        ":'(",
+        ">:x",
+        ":|",
+        ">:|",
+        ":s",
+        ":o",
+        ":0",
+        ":O"
+    };
+    private State[] _quirkStates;
 
     private SamuelSequenceGenerator _sequenceGenerator;
     private SamuelSequenceModifier _sequenceModifier;
     private State _state;
 
-    private State[] _quirkStates;
+    private bool _stateChanged;
 
     public ColouredButton[] Buttons { get { return _buttons; } }
     public MainScreen Screen { get; private set; }
@@ -125,6 +127,7 @@ public class SamuelSaysModule : MonoBehaviour {
     }
 
     public void ChangeState(State newState, bool haltSequence = true) {
+        _stateChanged = true;
         if (haltSequence) {
             Screen.StopSequence();
         }
@@ -135,7 +138,17 @@ public class SamuelSaysModule : MonoBehaviour {
 
     public void Strike(string loggingMessage) {
         Log("✕ " + loggingMessage);
+        StartCoroutine(FlashStrikeFace());
         Module.HandleStrike();
+    }
+
+    private IEnumerator FlashStrikeFace() {
+        SymbolDisplay.DisplayEmoticon(_strikeFaces[Rnd.Range(0, _strikeFaces.Length)], Color.red);
+        _stateChanged = false;
+        yield return new WaitForSeconds(2f);
+        if (!_stateChanged) {
+            SymbolDisplay.ClearScreen();
+        }
     }
 
     public void Log(string formattedString) {

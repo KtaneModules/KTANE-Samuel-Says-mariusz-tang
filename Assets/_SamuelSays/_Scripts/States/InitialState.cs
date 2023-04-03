@@ -14,6 +14,7 @@ public class InitialState : State {
         _module.Log("=================== Start ===================");
         _module.Log("Conditions and actions are labelled 1-5, top-to-bottom within the given colour table.");
 
+        _module.Buttons[3].AddInteractionPunch();
         _module.AdvanceStage();
         yield return null;
     }

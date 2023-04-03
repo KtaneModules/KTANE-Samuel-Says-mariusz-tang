@@ -32,7 +32,7 @@ public class StuckQuirk : State {
         else {
             _module.Log("Touched the correct button!");
             _module.Buttons[_stuckButton].PlayReleaseAnimation();
-            // ! Add a sound and interaction punch.
+            button.AddInteractionPunch();
             _module.ChangeState(new RegularStage(_module, true), false);
         }
 

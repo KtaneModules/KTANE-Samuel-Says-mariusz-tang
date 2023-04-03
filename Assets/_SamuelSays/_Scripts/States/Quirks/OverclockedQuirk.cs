@@ -28,6 +28,7 @@ public class OverclockedQuirk : State {
 
     public override IEnumerator HandlePress(ColouredButton button) {
         if (_hitLimit) {
+            button.AddInteractionPunch();
             yield break;
         }
 
