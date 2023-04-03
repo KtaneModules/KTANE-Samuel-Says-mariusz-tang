@@ -49,10 +49,6 @@ public class GhostQuirk : State {
     }
 
     public override IEnumerator HandlePress(ColouredButton pressedButton) {
-        if (_done) {
-            yield break;
-        }
-
         if (_ghostPresses != null) {
             _module.StopCoroutine(_ghostPresses);
             foreach (ColouredButton button in _module.Buttons) {
@@ -67,6 +63,9 @@ public class GhostQuirk : State {
 
     public override IEnumerator HandleRelease(ColouredButton button) {
         button.PlayReleaseAnimation();
+        if (_done) {
+            yield break;
+        }
 
         if (_inputtedSequence[_inputtedSequence.Length - 1] != _expectedSequence[_inputtedSequence.Length - 1]) {
             _module.Strike("Incorrectly inputted " + _inputtedSequence + "! Input has been reset.");

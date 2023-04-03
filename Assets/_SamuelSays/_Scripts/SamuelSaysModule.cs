@@ -10,7 +10,6 @@ public class SamuelSaysModule : MonoBehaviour {
 
     // ! Look at the README for information on where to look first for bugs.
 
-    // TODO: Add visual things eg faces for quirk transitions.
     // TODO: Sounds.
     // TODO: Test everything.
     // TODO: Make manual.
@@ -31,22 +30,21 @@ public class SamuelSaysModule : MonoBehaviour {
     private static int _moduleIdCounter = 1;
     private int _moduleId;
 
-    // ! Move to relevant class.
-    // private readonly string[] _happyFaces = new string[] {
-    //     ":)",
-    //     ": )",
-    //     ":-)",
-    //     "=)",
-    //     "= )",
-    //     "=-)",
-    //     ":]" ,
-    //     ": ]",
-    //     ":-]",
-    //     "=]",
-    //     "= ]",
-    //     "=-]"
-    // };
-
+    // Display happy face should really be a method in MiniScreen.cs but oh well.
+    public readonly string[] HappyFaces = new string[] {
+        ":)",
+        ": )",
+        ":-)",
+        "=)",
+        "= )",
+        "=-)",
+        ":]" ,
+        ": ]",
+        ":-]",
+        "=]",
+        "= ]",
+        "=-]"
+    };
     private readonly string[] _strikeFaces = new string[] {
         ">:(",
         ">:[",

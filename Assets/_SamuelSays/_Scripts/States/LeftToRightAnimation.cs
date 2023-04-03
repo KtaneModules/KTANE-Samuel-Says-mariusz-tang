@@ -7,20 +7,6 @@ public class LeftToRightAnimation : State {
     private const float FLASH_TIME = 0.1f;
     private const int CYCLE_COUNT = 3;
 
-    private readonly string[] _happyFaces = new string[] {
-        ":)",
-        ": )",
-        ":-)",
-        "=)",
-        "= )",
-        "=-)",
-        ":]" ,
-        ": ]",
-        ":-]",
-        "=]",
-        "= ]",
-        "=-]"
-    };
     private readonly State _nextState;
 
     private bool _faceOn = false;
@@ -47,7 +33,7 @@ public class LeftToRightAnimation : State {
             _module.SymbolDisplay.ClearScreen();
         }
         else {
-            _module.SymbolDisplay.DisplayEmoticon(_happyFaces[Rnd.Range(0, _happyFaces.Length)], Color.green);
+            _module.SymbolDisplay.DisplayEmoticon(_module.HappyFaces[Rnd.Range(0, _module.HappyFaces.Length)], Color.green);
         }
         _faceOn = !_faceOn;
     }

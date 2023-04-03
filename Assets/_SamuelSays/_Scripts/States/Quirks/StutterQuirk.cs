@@ -10,9 +10,12 @@ public class StutterQuirk : State {
     private List<ColouredSymbol> _stutterSequence = new List<ColouredSymbol>();
     private int[] _colourCounts;
 
+    private bool _done;
+
     public StutterQuirk(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator OnStateEnter() {
+        _done = false;
         _colourCounts = new int[4];
         GenerateStutterSequence();
         _module.Screen.PlaySequence(_stutterSequence.ToArray());
@@ -44,11 +47,16 @@ public class StutterQuirk : State {
 
     public override IEnumerator HandleRelease(ColouredButton button) {
         button.PlayReleaseAnimation();
+        if (_done) {
+            yield break;
+        }
 
         if (_colourCounts[(int)button.Colour] == _colourCounts.Max()) {
             _module.Log("Pressed a valid colour!");
+            _done = true;
             _module.Screen.StopSequence();
             button.AddInteractionPunch();
+            _module.SymbolDisplay.DisplayEmoticon(_module.HappyFaces[Rnd.Range(0, _module.HappyFaces.Length)], Color.green);
             yield return new WaitForSeconds(0.2f);
             _module.ChangeState(new RegularStage(_module));
         }

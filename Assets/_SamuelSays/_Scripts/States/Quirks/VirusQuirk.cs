@@ -20,20 +20,6 @@ public class VirusQuirk : State {
         ":0",
         ":O"
     };
-    private readonly string[] _happyFaces = new string[] {
-        ":)",
-        ": )",
-        ":-)",
-        "=)",
-        "= )",
-        "=-)",
-        ":]" ,
-        ": ]",
-        ":-]",
-        "=]",
-        "= ]",
-        "=-]"
-    };
 
     private string _inputtedSequence;
     private string _expectedSequence;
@@ -117,7 +103,7 @@ public class VirusQuirk : State {
             foreach (ColouredButton button in _module.Buttons) {
                 button.SetVirusColourInactive();
             }
-            _module.SymbolDisplay.DisplayEmoticon(_happyFaces[Rnd.Range(0, _happyFaces.Length)], Color.green);
+            _module.SymbolDisplay.DisplayEmoticon(_module.HappyFaces[Rnd.Range(0, _module.HappyFaces.Length)], Color.green);
 
             while (elapsedTime < (i + 1f) / flashCount * transitionTime) {
                 elapsedTime += Time.deltaTime;
@@ -154,7 +140,7 @@ public class VirusQuirk : State {
             foreach (ColouredButton button in _module.Buttons) {
                 button.SetVirusColourInactive();
             }
-            _module.SymbolDisplay.DisplayEmoticon(_happyFaces[Rnd.Range(0, _happyFaces.Length)], Color.green);
+            _module.SymbolDisplay.DisplayEmoticon(_module.HappyFaces[Rnd.Range(0, _module.HappyFaces.Length)], Color.green);
 
             while (elapsedTime < (2 * i + 1f) / (2f * flashCount) * transitionTime) {
                 elapsedTime += Time.deltaTime;
@@ -175,7 +161,7 @@ public class VirusQuirk : State {
         foreach (ColouredButton button in _module.Buttons) {
             button.SetVirusColourInactive();
         }
-        _module.SymbolDisplay.DisplayEmoticon(_happyFaces[Rnd.Range(0, _happyFaces.Length)], Color.green);
+        _module.SymbolDisplay.DisplayEmoticon(_module.HappyFaces[Rnd.Range(0, _module.HappyFaces.Length)], Color.green);
         yield return new WaitForSeconds(1);
         _module.SymbolDisplay.ClearScreen();
         _module.ChangeState(new RegularStage(_module));

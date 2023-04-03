@@ -14,6 +14,8 @@ public class DiscoloredQuirk : State {
             "blue"
         };
 
+    private bool _done;
+
     private string _displayedColour;
     private string _expectedSequenceWords;
     private string _expectedSequenceNumbers;
@@ -22,6 +24,7 @@ public class DiscoloredQuirk : State {
     public DiscoloredQuirk(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator OnStateEnter() {
+        _done = false;
         GenerateResponse();
         _inputtedSequence = string.Empty;
 
@@ -38,6 +41,10 @@ public class DiscoloredQuirk : State {
 
     public override IEnumerator HandleRelease(ColouredButton button) {
         button.PlayReleaseAnimation();
+        if (_done) {
+            yield break;
+        }
+
         _inputtedSequence += (int)button.Colour;
 
         if (_inputtedSequence[_inputtedSequence.Length - 1] != _expectedSequenceNumbers[_inputtedSequence.Length - 1]) {
@@ -47,6 +54,9 @@ public class DiscoloredQuirk : State {
         }
         else if (_inputtedSequence == _expectedSequenceNumbers) {
             _module.Log("Pressed the correct sequence!");
+            _done = true;
+            _module.SymbolDisplay.DisplayEmoticon(_module.HappyFaces[Rnd.Range(0, _module.HappyFaces.Length)], Color.green);
+            yield return new WaitForSeconds(0.5f);
             _module.ChangeState(new RegularStage(_module, true), false);
             button.AddInteractionPunch();
         }
