@@ -106,6 +106,9 @@ public class GhostQuirk : State {
 
         if (_ghostPresses != null) {
             _module.StopCoroutine(_ghostPresses);
+            foreach (ColouredButton button in _module.Buttons) {
+                button.PlayReleaseAnimation();
+            }
         }
         _inputtedSequence = string.Empty;
         yield return new WaitForSeconds(1);
