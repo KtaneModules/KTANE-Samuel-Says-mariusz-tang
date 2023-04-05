@@ -1031,9 +1031,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4946476774789840}
-  - {fileID: 4626316524716840}
   - {fileID: 4889736178533186}
+  - {fileID: 4626316524716840}
+  - {fileID: 4946476774789840}
   - {fileID: 4559694603721512}
   m_Father: {fileID: 4354522522948440}
   m_RootOrder: 3
@@ -1619,7 +1619,7 @@ Transform:
   m_LocalScale: {x: 0.99999803, y: 0.9909199, z: 0.99996525}
   m_Children: []
   m_Father: {fileID: 4105703519005952}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4940859202279346
 Transform:
@@ -1645,7 +1645,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4105703519005952}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4950743042579888
 Transform:
@@ -2583,9 +2583,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8a566d2acdf9a0749a8b260ea23cbc35, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2663,9 +2663,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a7f3b487f525cb14c9bf6d0947599c14, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2743,9 +2743,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c32a265bd58738d40830d7ab09ec1f40, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2823,9 +2823,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: bff97ff883ad8fa4c9829aefd8bca451, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2903,9 +2903,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 63daca4d87efca647bad66d2e757eb0d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2983,9 +2983,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8a912190af73e37418b50088cbe51126, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3063,9 +3063,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e18ca51049164ef47a8f5f835f8c7623, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3143,9 +3143,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1b2c7bd0cf3ce534e8f822e09163ea52, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3545,6 +3545,7 @@ MonoBehaviour:
   _buttonBacking: {fileID: 23551098311253684}
   _buttonCover: {fileID: 23788786919895686}
   _light: {fileID: 108661297941422828}
+  _beep: {fileID: 82391586904410016}
 --- !u!114 &114047825049864474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3717,6 +3718,7 @@ MonoBehaviour:
   _buttonBacking: {fileID: 23482384032918764}
   _buttonCover: {fileID: 23701352055689302}
   _light: {fileID: 108154795372787760}
+  _beep: {fileID: 82895756603475944}
 --- !u!114 &114307660559458898
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3873,6 +3875,7 @@ MonoBehaviour:
   _buttonBacking: {fileID: 23279772789224506}
   _buttonCover: {fileID: 23778063515022120}
   _light: {fileID: 108343740010275556}
+  _beep: {fileID: 82705111944256706}
 --- !u!114 &114584092811598618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3921,6 +3924,7 @@ MonoBehaviour:
   _buttonBacking: {fileID: 23104036466585496}
   _buttonCover: {fileID: 23993099708881680}
   _light: {fileID: 108316196844465256}
+  _beep: {fileID: 82283588298862610}
 --- !u!114 &114640789583254048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4072,7 +4076,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _display: {fileID: 23637675979976174}
-  _beep: {fileID: 82144357903298990}
+  _beeps:
+  - {fileID: 82047561393536236}
+  - {fileID: 82135320857814868}
+  - {fileID: 82144357903298990}
+  - {fileID: 82228451819789262}
 --- !u!114 &114946448312463772
 MonoBehaviour:
   m_ObjectHideFlags: 1

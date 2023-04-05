@@ -100,6 +100,13 @@ public class GhostQuirk : State {
 
     public override IEnumerator HandleSubmitPress() {
         _module.SubmitButtonAnimator.SetBool("IsPressed", true);
+        if (_done) {
+            yield break;
+        }
+
+        if (_ghostPresses != null) {
+            _module.StopCoroutine(_ghostPresses);
+        }
         _inputtedSequence = string.Empty;
         yield return new WaitForSeconds(1);
         _ghostPresses = _module.StartCoroutine(DoGhostPresses());

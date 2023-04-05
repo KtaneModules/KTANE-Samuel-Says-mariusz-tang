@@ -13,7 +13,7 @@ public class StuckQuirk : State {
 
     public override IEnumerator OnStateEnter() {
         _stuckButton = Rnd.Range(0, 4);
-        _module.Buttons[_stuckButton].PlayPressAnimation();
+        _module.Buttons[_stuckButton].PlayPressAnimation(false);
         _module.Screen.PlaySequence(_module.DisplayedSequence);
 
         _module.LogQuirk("Stuck");
@@ -27,11 +27,12 @@ public class StuckQuirk : State {
         }
         else if ((Math.Floor(_module.Bomb.GetTime()) - _module.Bomb.GetSolvedModuleNames().Count()) % 10 != 0) {
             _module.Strike("Incorrectly touched the button at " + _module.Bomb.GetFormattedTime()
-                 + " with " + _module.Bomb.GetSolvedModuleNames().Count() + " solved modules!");
+                 + " with " + _module.Bomb.GetSolvedModuleNames().Count() + " solved modules!", "StuckQuirk Zap");
         }
         else {
             _module.Log("Touched the correct button!");
             _module.Buttons[_stuckButton].PlayReleaseAnimation();
+            _module.Audio.PlaySoundAtTransform("StuckQuirk Zap", _module.transform);
             button.AddInteractionPunch();
             _module.ChangeState(new RegularStage(_module, true), false);
         }

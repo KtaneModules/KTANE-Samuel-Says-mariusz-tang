@@ -63,7 +63,7 @@ public class VirusQuirk : State {
         button.PlayReleaseAnimation();
 
         if (_inputtedSequence[_inputtedSequence.Length - 1] != _expectedSequence[_inputtedSequence.Length - 1]) {
-            _module.Strike("Incorrectly inputted " + _inputtedSequence + "! Input has been reset.");
+            _module.Strike("Incorrectly inputted " + _inputtedSequence + "! Input has been reset.", "Virus Strike");
             _inputtedSequence = string.Empty;
 
             if (_flashFace != null) {
@@ -87,6 +87,7 @@ public class VirusQuirk : State {
         float transitionTime = 1;
         int flashCount = 4;
 
+        _module.Audio.PlaySoundAtTransform("VirusQuirk Transition", _module.transform);
         _isTransitioning = true;
 
         for (int i = 0; i < flashCount; i++) {

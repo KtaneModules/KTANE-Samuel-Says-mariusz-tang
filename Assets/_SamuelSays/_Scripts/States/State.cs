@@ -27,6 +27,9 @@ public abstract class State {
     public virtual IEnumerator HandleSubmitPress() {
         _module.SubmitButtonAnimator.SetBool("IsPressed", true);
         _module.Screen.ToggleMute();
+        foreach (ColouredButton button in _module.Buttons) {
+            button.ToggleMute();
+        }
         yield return null;
     }
 

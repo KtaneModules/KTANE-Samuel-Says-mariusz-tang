@@ -11,7 +11,7 @@ public class MainScreen : MonoBehaviour {
     private bool _skipPause = false;
 
     [SerializeField] private MeshRenderer _display;
-    [SerializeField] private AudioSource _beep;
+    [SerializeField] private AudioSource[] _beeps;
 
     private readonly Color[] _colourList = new Color[] {
         Color.red,
@@ -26,19 +26,23 @@ public class MainScreen : MonoBehaviour {
     }
 
     public void ToggleMute() {
-        // Toggle between 0 and 1.
-        _beep.volume = 1 - Math.Abs(_beep.volume);
+        // Toggle between 0 and 0.5.
+        foreach (AudioSource beep in _beeps) {
+            beep.volume = 0.5f - beep.volume;
+        }
     }
 
     private void DisplayColour(ButtonColour colour) {
         _display.enabled = true;
         _display.material.color = _colourList[(int)colour] * ColourBrightness;
-        _beep.Play();
+        _beeps[(int)colour].Play();
     }
 
     private void StopDisplayingColour() {
         _display.enabled = false;
-        _beep.Stop();
+        foreach (AudioSource beep in _beeps) {
+            beep.Stop();
+        }
     }
 
     public void PlaySequence(ColouredSymbol[] sequence, bool skipPause = false) {

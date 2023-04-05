@@ -10,7 +10,6 @@ public class SamuelSaysModule : MonoBehaviour {
 
     // ! Look at the README for information on where to look first for bugs.
 
-    // TODO: Sounds.
     // TODO: Test everything.
     // TODO: Make manual.
     // TODO: Add TP.
@@ -58,6 +57,12 @@ public class SamuelSaysModule : MonoBehaviour {
         ":0",
         ":O"
     };
+    private readonly string[] _strikeSounds = new string[] {
+        "Strike 1",
+        "Strike 2",
+        "Strike 3"
+    };
+
     private State[] _quirkStates;
 
     private SamuelSequenceGenerator _sequenceGenerator;
@@ -134,9 +139,15 @@ public class SamuelSaysModule : MonoBehaviour {
         StartCoroutine(_state.OnStateEnter());
     }
 
-    public void Strike(string loggingMessage) {
+    public void Strike(string loggingMessage, string strikeSound = "") {
         Log("✕ " + loggingMessage);
         StartCoroutine(FlashStrikeFace());
+        if (strikeSound == ""){
+            Audio.PlaySoundAtTransform(_strikeSounds[Rnd.Range(0, _strikeSounds.Length)], transform);
+        }
+        else {
+            Audio.PlaySoundAtTransform(strikeSound, transform);
+        }
         Module.HandleStrike();
     }
 
@@ -164,7 +175,7 @@ public class SamuelSaysModule : MonoBehaviour {
         StageNumber++;
 
         if (StageNumber == 5) {
-            ChangeState(new FinalStage(this));
+            ChangeState(new LeftToRightAnimation(this, new FinalStage(this)));
             return;
         }
 

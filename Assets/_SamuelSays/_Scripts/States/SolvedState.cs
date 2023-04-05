@@ -8,21 +8,25 @@ using Rnd = UnityEngine.Random;
 public class SolvedState : State {
 
     private readonly int[][] _buttonPressSequence = new int[][] {
-            new int[] { 0, 1, 2, 3 },
-            new int[] { 0, 1, 2, 3 },
-            new int[] { 0, 1 },
-            new int[] { 2, 3 },
-            new int[] { 0, 1 },
-            new int[] { 2, 3 },
-            new int[] { 0, 2 },
-            new int[] { 1, 3 },
-            new int[] { 0, 2 },
-            new int[] { 1, 3 },
-            new int[] { 0 },
-            new int[] { 1 },
-            new int[] { 2 },
-            new int[] { 3 },
-        };
+        new int[] { 0, 1, 2, 3 },
+        new int[] { 0, 1, 2, 3 },
+        new int[] { 0, 1 },
+        new int[] { 2, 3 },
+        new int[] { 0, 1 },
+        new int[] { 2, 3 },
+        new int[] { 0, 2 },
+        new int[] { 1, 3 },
+        new int[] { 0, 2 },
+        new int[] { 1, 3 },
+        new int[] { 0 },
+        new int[] { 1 },
+        new int[] { 2 },
+        new int[] { 3 }
+    };
+    private readonly string[] _solveSounds = new string[] {
+        "Solve 1",
+        "Solve 2"
+    };
 
     public SolvedState(SamuelSaysModule module) : base(module) { }
 
@@ -36,7 +40,7 @@ public class SolvedState : State {
     }
 
     private IEnumerator EnterSolveStateAnimation() {
-
+        _module.Audio.PlaySoundAtTransform(_solveSounds[Rnd.Range(0, _solveSounds.Length)], _module.transform);
 
         foreach (int[] pressSet in _buttonPressSequence) {
             foreach (int press in pressSet) {
@@ -53,6 +57,9 @@ public class SolvedState : State {
             yield return new WaitForSeconds(0.05f);
         }
 
+        foreach (ColouredButton button in _module.Buttons) {
+            button.SetMute(true);
+        }
         _module.StartCoroutine(ContinuousSolveAnimation());
     }
 

@@ -6,6 +6,7 @@ public class ColouredButton : MonoBehaviour {
     [SerializeField] private MeshRenderer _buttonBacking;
     [SerializeField] private MeshRenderer _buttonCover;
     [SerializeField] private Light _light;
+    [SerializeField] private AudioSource _beep;
 
     private Animator _animator;
     private KMSelectable _selectable;
@@ -46,12 +47,25 @@ public class ColouredButton : MonoBehaviour {
         SetColour(Colour);
     }
 
-    public void PlayPressAnimation() {
+    public void PlayPressAnimation(bool playSound = true) {
         _animator.SetBool("IsPressed", true);
+        if (playSound) {
+            _beep.Play();
+        }
     }
 
     public void PlayReleaseAnimation() {
         _animator.SetBool("IsPressed", false);
+        _beep.Stop();
+    }
+
+    public void ToggleMute() {
+        // Toggle between 0 and 0.25.
+        _beep.volume = 0.25f - _beep.volume;
+    }
+
+    public void SetMute(bool isEnabled) {
+        _beep.volume = isEnabled ? 0 : 0.25f;
     }
 
     // Animator event.
