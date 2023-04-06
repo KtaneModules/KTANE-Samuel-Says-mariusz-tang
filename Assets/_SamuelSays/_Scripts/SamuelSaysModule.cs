@@ -12,6 +12,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
     // TODO: Make manual.
     // TODO: Add TP.
+    // TODO: Colourblind support.
     // TODO: Make sure logging meets my standards.
     // TODO: Beta-testing.
     // TODO: Complete(?).

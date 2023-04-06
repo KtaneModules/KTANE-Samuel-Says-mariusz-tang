@@ -18,6 +18,13 @@
             color:#7A868D;
         }
 
+        a {
+            color: black;
+        }
+        .dark a {
+            color: #d0d0d0;
+        }
+
         .page-footer::before { content: 'Page '; }
         .page-footer::after { content: ' of 3'; }
     </style>
@@ -41,7 +48,7 @@
                 </p>
 
                 <p>
-                    <a href="https://en.wikipedia.org/wiki/Samuel_Morse" style="color: black;text-decoration: none;">Samuel Finley Breese Morse</a>
+                    <a href="https://en.wikipedia.org/wiki/Samuel_Morse" style="text-decoration: none;">Samuel Finley Breese Morse</a>
                     has been trapped in this device and needs your help to escape! Fortunately, he is also the creator of the device and knows how to
                     get out. Unfortunately however, his only means of communication is through morse and colors. Your job is to transmit different
                     parts of sequences to help him disarm the module.
@@ -64,11 +71,48 @@
                 </p>
 
                 <p>
-                    If this action has not been applied yet <i>this stage</i>, apply it. Otherwise, move <i>up</i> through the table, wrapping back
-                    to the bottom row if needed, until you reach an action that has not yet been applied, and apply it.
+                    If this action has not been applied yet <i>this stage</i>, apply it to the modified sequence, or the displayed sequence if this is
+                    the first action. Otherwise, move <i>up</i> through the table, wrapping back to the bottom row if needed, until you reach an action
+                    that has not yet been applied, and apply it.
                 </p>
 
-                
+                <table style="width: 100%;font-size: 13px;">
+                    <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                    </colgroup>
+                    <tr>
+                        <th colspan="2" style="background-color: red;color: white;">Red</th>
+                    </tr>
+                    <tr>
+                        <th>Condition</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>The displayed sequence is •ー•</td>
+                        <td>Swap dots with dashes</td>
+                    </tr>
+                    <tr>
+                        <td>The color red has appeared in every displayed sequence so far</td>
+                        <td>Make EVERYTHING red</td>
+                    </tr>
+                    <tr>
+                        <td>The number of dashes in the modified sequence so far is equal to the number of indicators</td>
+                        <td>Shift to the right by the number of lit indicators, and to the left by the number of unlit indicators</td>
+                    </tr>
+                    <tr>
+                        <td>There is a module on the bomb with "red" in the name, either as a word or as part of one</td>
+                        <td>Swap red with blue, and green with yellow</td>
+                    </tr>
+                    <tr>
+                        <td>No other conditions were applied</td>
+                        <td>
+                            Replace the symbol and color in position one with those which are in position three.
+                            If the sequence is four symbols long, replace position two with position four in the same way
+                        </td>
+                    </tr>
+                </table>
+
             </div>
             <div class="page-footer relative-footer">1</div>
         </div>
