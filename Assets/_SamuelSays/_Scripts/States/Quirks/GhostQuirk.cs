@@ -110,6 +110,13 @@ public class GhostQuirk : State {
                 button.PlayReleaseAnimation();
             }
         }
+        else {
+            _module.Screen.ToggleMute();
+            foreach (ColouredButton button in _module.Buttons) {
+                button.ToggleMute();
+            }
+        }
+
         _inputtedSequence = string.Empty;
         yield return new WaitForSeconds(1);
         _ghostPresses = _module.StartCoroutine(DoGhostPresses());

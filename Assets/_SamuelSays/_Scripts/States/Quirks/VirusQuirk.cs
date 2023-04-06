@@ -135,6 +135,7 @@ public class VirusQuirk : State {
         float transitionTime = 1;
         int flashCount = 4;
 
+        _module.Audio.PlaySoundAtTransform("VirusQuirk Transition", _module.transform);
         _isTransitioning = true;
 
         for (int i = 0; i < flashCount; i++) {

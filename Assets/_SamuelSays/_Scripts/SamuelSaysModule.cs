@@ -10,7 +10,6 @@ public class SamuelSaysModule : MonoBehaviour {
 
     // ! Look at the README for information on where to look first for bugs.
 
-    // TODO: Test everything.
     // TODO: Make manual.
     // TODO: Add TP.
     // TODO: Make sure logging meets my standards.
@@ -142,7 +141,7 @@ public class SamuelSaysModule : MonoBehaviour {
     public void Strike(string loggingMessage, string strikeSound = "") {
         Log("✕ " + loggingMessage);
         StartCoroutine(FlashStrikeFace());
-        if (strikeSound == ""){
+        if (strikeSound == "") {
             Audio.PlaySoundAtTransform(_strikeSounds[Rnd.Range(0, _strikeSounds.Length)], transform);
         }
         else {

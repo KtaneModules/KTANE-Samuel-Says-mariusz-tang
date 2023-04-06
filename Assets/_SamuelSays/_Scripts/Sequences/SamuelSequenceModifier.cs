@@ -238,7 +238,7 @@ public class SamuelSequenceModifier {
         }
 
         position = quantityToUse % _modifiedSymbols.Length;
-        _sequenceGenerationLogging.Add("Using " + usingQuantity + " count, the correct position to submit is " + position + ".");
+        _sequenceGenerationLogging.Add("Using " + usingQuantity + " count, the correct position to submit is " + (position + 1) + ".");
         return position;
     }
 
