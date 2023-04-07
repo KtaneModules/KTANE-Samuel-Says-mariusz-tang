@@ -54,32 +54,35 @@
                 <p class="flavour-text">“Samuel? Are you there? SAMUEL!”</p>
 
                 <p>
-                    This modules houses a device with a large color display above four colored buttons, with a
-                    smaller
-                    display and gray button to the right.
+                    This module houses a device with a large color display above four colored buttons, with a
+                    smaller display and a gray button to the right.
                 </p>
 
                 <p>
-                    <a href="https://en.wikipedia.org/wiki/Samuel_Morse" target="_blank"
-                        style="text-decoration: none;">Samuel Finley Breese Morse</a>
+                    <a href="https://en.wikipedia.org/wiki/Samuel_Morse" target="_blank" style="text-decoration: none;">
+                        Samuel Finley Breese Morse
+                    </a>
                     has been trapped in this device and needs your help to escape! Fortunately, he is also the creator
-                    of the device and knows how to
-                    get out. Unfortunately however, his only means of communication is through colored morse. Your
-                    job is to transmit different
-                    parts of sequences to help him disarm the module.
+                    of the device and knows how to get out. Unfortunately however, his only means of communication is
+                    through colored morse. Your job is to transmit different colored symbols to help him disarm the
+                    module.
                 </p>
 
                 <p>
                     Good luck! Press the gray button to start.
                 </p>
 
+                <p>
+                    From now on, unless stated otherwise, the gray button will mute/unmute the device.
+                    Pressing the small display will toggle colorblind mode.
+                </p>
+
                 <h3>Stages 1-4</h3>
 
                 <p>
                     In these first four stages, take Samuel's transmitted messages and modify them to
-                    produce one colored symbol (per stage),
-                    which you then transmit back to him. Remember the colors of these symbols; you'll need them for
-                    the final stage.
+                    produce one colored symbol (per stage), which you then transmit back to him. Remember the colors of
+                    these symbols; you'll need them for the final stage.
                 </p>
 
                 <h4>Sequence Modification</h4>
@@ -87,15 +90,14 @@
                 <p>
                     Each stage, go through the colors in the <b>displayed sequence</b>, in the flashed order, and go to
                     the corresponding table below. Find the first true <b>condition</b> in the table and look at the
-                    corresponding <b>action</b>. Press the small display to enable colorblind mode.
+                    corresponding <b>action</b>.
                 </p>
 
                 <p>
                     If this action has not been applied yet <i>this stage</i>, apply it to the modified sequence, or the
                     displayed sequence if this is the first action. Otherwise, move <i>up</i> through the table,
-                    wrapping
-                    back to the bottom row if needed, until you reach an action that has not yet been applied, and apply
-                    it.
+                    wrapping back to the bottom row if needed, until you reach an action that has not yet been applied,
+                    and apply it.
                 </p>
 
                 <table>
@@ -110,16 +112,17 @@
                         <th>Action</th>
                     </tr>
                     <tr>
-                        <td>The displayed sequence is <code>.-.</code> (✲)</td>
+                        <td>The <i>displayed</i> sequence is <code>.-.</code> (✲)</td>
                         <td>Swap dots with dashes.</td>
                     </tr>
                     <tr>
-                        <td>The color red has appeared in every displayed sequence so far.</td>
-                        <td>Make EVERYTHING red.</td>
+                        <td>The color red has appeared in every <i>displayed</i> sequence so far.</td>
+                        <td>Make everything red.</td>
                     </tr>
                     <tr>
                         <td>
-                            The number of dashes in the modified sequence so far is equal to the number of indicators.
+                            The number of dashes in the <i>modified</i> sequence so far is equal to the number of
+                            indicators.
                         </td>
                         <td>
                             Shift to the right by the number of lit indicators, and to the left by the number of unlit
@@ -142,7 +145,8 @@
                     </tr>
                 </table>
 
-                <p class="footnote">✲ There are no periods in each table's first condition.</p>
+                <p class="footnote">✲ There are no periods in each table's first condition. A dot is the same length as
+                    the short pause between symbols.</p>
             </div>
             <div class="page-footer relative-footer">1</div>
         </div>
@@ -166,16 +170,15 @@
                         <th>Action</th>
                     </tr>
                     <tr>
-                        <td>The displayed sequence is <code>-.--</code> (✲)</td>
+                        <td>The <i>displayed</i> sequence is <code>-.--</code> (✲)</td>
                         <td>Reverse the sequence.</td>
                     </tr>
                     <tr>
                         <td>The stage number is equal to the number of batteries.</td>
                         <td>
                             If the current modified sequence is four symbols long, remove position N, where N is 4 minus
-                            the number of batteries, modulo 4.<br> Otherwise, insert a yellow dash at position M,
-                            where
-                            M is the sum of the serial number digits, modulo 10, then modulo 3, plus one. (✲✲)
+                            (the number of batteries, modulo 4).<br> Otherwise, insert a yellow dash at position M,
+                            where M is the sum of the serial number digits, modulo 10, then modulo 3, plus one. (✲✲)
                         </td>
                     </tr>
                     <tr>
@@ -204,7 +207,7 @@
                         <th>Action</th>
                     </tr>
                     <tr>
-                        <td>The displayed sequence is <code>--.</code> (✲)</td>
+                        <td>The <i>displayed</i> sequence is <code>--.</code> (✲)</td>
                         <td>Make all dashes green, <i>then</i> change dots to dashes.</td>
                     </tr>
                     <tr>
@@ -215,15 +218,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>This is the first green displayed symbol so far.</td>
+                        <td>This is the first green <i>displayed</i> symbol so far.</td>
                         <td>Change position one to green, and the rest to red.</td>
                     </tr>
                     <tr>
                         <td>
-                            The number of dots in the modified sequence so far is the same as the
+                            The number of dots in the <i>modified</i> sequence so far is the same as the
                             number of unique port types.
                         </td>
-                        <td>Move all dots to the front of the sequence, keeping the colors as they are.</td>
+                        <td>Move all dots to the start of the sequence, keeping the colors as they are.</td>
                     </tr>
                     <tr>
                         <td>No other conditions applied.</td>
@@ -243,7 +246,7 @@
                         <th>Action</th>
                     </tr>
                     <tr>
-                        <td>The displayed sequence is <code>-...</code> (✲)</td>
+                        <td>The <i>displayed</i> sequence is <code>-...</code> (✲)</td>
                         <td>Reverse the symbols, keeping colors as they are.</td>
                     </tr>
                     <tr>
@@ -255,12 +258,12 @@
                     </tr>
                     <tr>
                         <td>
-                            The displayed sequence does <i>not</i> form a valid morse letter. (✲✲✲)
+                            The <i>displayed</i> sequence does <i>not</i> form a valid morse letter. (✲✲✲)
                         </td>
-                        <td>Take the sum of the serial number digits, modulo 26, and add one. Convert the
+                        <td>Take the sum of the serial number digits, modulo 26, add one, and convert the
                             result into a letter (A1Z26). Find the first letter in the alphabet, starting
                             from this letter and wrapping back to A from Z if needed, whose morse representation
-                            matches the length of the modified sequence. Set the sequence to this
+                            matches the length of the <i>modified</i> sequence. Set the sequence to this
                             representation. (✲✲)
                         </td>
                     </tr>
@@ -278,7 +281,8 @@
                 </table>
 
                 <p class="footnote">
-                    ✲ There are no periods in each table's first condition.<br>
+                    ✲ There are no periods in each table's first condition. A dot is the same length as the short pause
+                    between symbols.<br>
                     ✲✲ To modulo a number Y by a number X is to repeatedly add or subtract X from Y until the result is
                     between 0 and (X-1), inclusive.
                     ✲✲✲ See <b><u>Appendix-MORSE-NATO</u></b> for more information.
@@ -305,7 +309,7 @@
                     <li>In stage 1, X is the number of batteries.</li>
                     <li>In stage 2, X is the number of ports.</li>
                     <li>In stage 3, X is the number of indicators.</li>
-                    <li>In stage 4, X is the total number of modules.</li>
+                    <li>In stage 4, X is the number of modules on the bomb.</li>
                 </ul>
 
                 <p class="footnote">
