@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1">
@@ -9,26 +10,37 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="js/ktane-utils.js"></script>
     <style>
-        .dark table, table {
+        .dark table,
+        table {
             margin: 1em auto;
             border: none;
+            font-size: 12px;
+            width: 100%;
         }
+
         .footnote {
-            font-size:13px;
-            color:#7A868D;
+            font-size: 13px;
+            color: #7A868D;
         }
 
         a {
             color: black;
         }
+
         .dark a {
             color: #d0d0d0;
         }
 
-        .page-footer::before { content: 'Page '; }
-        .page-footer::after { content: ' of 3'; }
+        .page-footer::before {
+            content: 'Page ';
+        }
+
+        .page-footer::after {
+            content: ' of 5';
+        }
     </style>
 </head>
+
 <body>
     <div class="section">
         <div class="page page-bg-01">
@@ -40,17 +52,20 @@
                 <img src="img/Component/Samuel Says.svg" class="diagram">
                 <h2>On the Subject of Samuel Says</h2>
                 <p class="flavour-text">“Samuel? Are you there? SAMUEL!”</p>
-
+                <!-- ! Define modulo, submit is after *release*, clarify blue condition 2, 3 appendix, colourblind support -->
                 <p>
-                    This modules consists of a device with a large color display above four colored buttons, with a smaller
-                    display and gray button to the right. The colors are always red, yellow, green, and blue,
-                    left-to-right.
+                    This modules houses a device with a large color display above four colored buttons, with a
+                    smaller
+                    display and gray button to the right.
                 </p>
 
                 <p>
-                    <a href="https://en.wikipedia.org/wiki/Samuel_Morse" style="text-decoration: none;">Samuel Finley Breese Morse</a>
-                    has been trapped in this device and needs your help to escape! Fortunately, he is also the creator of the device and knows how to
-                    get out. Unfortunately however, his only means of communication is through morse and colors. Your job is to transmit different
+                    <a href="https://en.wikipedia.org/wiki/Samuel_Morse" target="_blank"
+                        style="text-decoration: none;">Samuel Finley Breese Morse</a>
+                    has been trapped in this device and needs your help to escape! Fortunately, he is also the creator
+                    of the device and knows how to
+                    get out. Unfortunately however, his only means of communication is through colored morse. Your
+                    job is to transmit different
                     parts of sequences to help him disarm the module.
                 </p>
 
@@ -61,25 +76,31 @@
                 <h3>Stages 1-4</h3>
 
                 <p>
-                    In these first four stages, you need to take Samuel's transmitted messages and modify them to produce one colored symbol (per stage),
-                    which you then transmit back to him. Remember the colors of these symbols, as you will need them for the final stage.
+                    In these first four stages, take Samuel's transmitted messages and modify them to
+                    produce one colored symbol (per stage),
+                    which you then transmit back to him. Remember the colors of these symbols; you'll need them for
+                    the final stage.
                 </p>
 
+                <h4>Sequence Modification</h4>
+
                 <p>
-                    Each stage, go through the colors in the <b>displayed sequence</b>, in the flashed order, and go to the corresponding table below.
+                    Each stage, go through the colors in the <b>displayed sequence</b>, in the flashed order, and go to
+                    the corresponding table below.
                     Find the first true <b>condition</b> in the table and look at the corresponding <b>action</b>.
                 </p>
 
                 <p>
-                    If this action has not been applied yet <i>this stage</i>, apply it to the modified sequence, or the displayed sequence if this is
-                    the first action. Otherwise, move <i>up</i> through the table, wrapping back to the bottom row if needed, until you reach an action
+                    If this action has not been applied yet <i>this stage</i>, apply it to the modified sequence, or the
+                    displayed sequence if this is
+                    the first action. Otherwise, move <i>up</i> through the table, wrapping back to the bottom row if
+                    needed, until you reach an action
                     that has not yet been applied, and apply it.
                 </p>
 
-                <table style="width: 100%;font-size: 13px;">
+                <table>
                     <colgroup>
-                        <col width="50%">
-                        <col width="50%">
+                        <col width="50%" span="2">
                     </colgroup>
                     <tr>
                         <th colspan="2" style="background-color: red;color: white;">Red</th>
@@ -89,26 +110,34 @@
                         <th>Action</th>
                     </tr>
                     <tr>
-                        <td>The displayed sequence is •ー•</td>
-                        <td>Swap dots with dashes</td>
+                        <td>The displayed sequence is <code>•ー•</code></td>
+                        <td>Swap dots with dashes.</td>
                     </tr>
                     <tr>
-                        <td>The color red has appeared in every displayed sequence so far</td>
-                        <td>Make EVERYTHING red</td>
+                        <td>The color red has appeared in every displayed sequence so far.</td>
+                        <td>Make EVERYTHING red.</td>
                     </tr>
                     <tr>
-                        <td>The number of dashes in the modified sequence so far is equal to the number of indicators</td>
-                        <td>Shift to the right by the number of lit indicators, and to the left by the number of unlit indicators</td>
-                    </tr>
-                    <tr>
-                        <td>There is a module on the bomb with "red" in the name, either as a word or as part of one</td>
-                        <td>Swap red with blue, and green with yellow</td>
-                    </tr>
-                    <tr>
-                        <td>No other conditions were applied</td>
                         <td>
-                            Replace the symbol and color in position one with those which are in position three.
-                            If the sequence is four symbols long, replace position two with position four in the same way
+                            The number of dashes in the modified sequence so far is equal to the number of indicators.
+                        </td>
+                        <td>
+                            Shift to the right by the number of lit indicators, and to the left by the number of unlit
+                            indicators.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            There is a module on the bomb with "red" in the name, either as a word or as part of one.
+                        </td>
+                        <td>Swap red with blue, and green with yellow.</td>
+                    </tr>
+                    <tr>
+                        <td>No other conditions applied.</td>
+                        <td>
+                            Replace the color and symbol in position one with those which are in position three.
+                            If the sequence is four symbols long, replace position two with position four in the same
+                            way.
                         </td>
                     </tr>
                 </table>
@@ -124,6 +153,126 @@
             </div>
             <div class="page-content">
 
+                <table>
+                    <colgroup>
+                        <col width="50%" span="2">
+                    </colgroup>
+                    <tr>
+                        <th colspan="2" style="background-color: yellow;color: black;">Yellow</th>
+                    </tr>
+                    <tr>
+                        <th>Condition</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>The displayed sequence is <code>ー•ーー</code></td>
+                        <td>Reverse the sequence.</td>
+                    </tr>
+                    <tr>
+                        <td>The stage number is equal to the number of batteries.</td>
+                        <td>
+                            If the current modified sequence is four symbols long, remove position N, where N is 4 minus
+                            the number of batteries, modulo 4. <br> Otherwise, insert a yellow dash at position M, where
+                            M is the sum of the serial number digits, modulo 10, then modulo 3, plus one.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Simon Shouts or Simon Sends are present on the bomb.</td>
+                        <td>Make positions one and two yellow.</td>
+                    </tr>
+                    <tr>
+                        <td>There is more than one yellow in the <i>displayed</i> sequence.</td>
+                        <td>Change all but position three to blue.</td>
+                    </tr>
+                    <tr>
+                        <td>No other conditions applied.</td>
+                        <td>Shift the colours to the right twice, keeping the symbols as they are.</td>
+                    </tr>
+                </table>
+
+                <table>
+                    <colgroup>
+                        <col width="50%" span="2">
+                    </colgroup>
+                    <tr>
+                        <th colspan="2" style="background-color: #00ff00;color: black;">Green</th>
+                    </tr>
+                    <tr>
+                        <th>Condition</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>The displayed sequence is <code>ーー•</code></td>
+                        <td>Make all dashes green, <i>then</i> change dots to dashes.</td>
+                    </tr>
+                    <tr>
+                        <td>Green is in position two in the <i>displayed</i> sequence.</td>
+                        <td>
+                            Change the colors to red, blue, yellow, green, but stop early if you run
+                            out of symbols to change.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>This is the first green to appear in <i>any</i> displayed sequence so far.</td>
+                        <td>Change position one to green, and the rest to red.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            The number of dots in the modified sequence so far is the same as the
+                            number of unique port types.
+                        </td>
+                        <td>Move all dots to the front of the sequence, keeping the colors as they are.</td>
+                    </tr>
+                    <tr>
+                        <td>No other conditions applied.</td>
+                        <td>Remove position two and append a green dot.</td>
+                    </tr>
+                </table>
+
+                <table>
+                    <colgroup>
+                        <col width="50%" span="2">
+                    </colgroup>
+                    <tr>
+                        <th colspan="2" style="background-color: blue;color: white;">Blue</th>
+                    </tr>
+                    <tr>
+                        <th>Condition</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>The displayed sequence is <code>ー•••</code></td>
+                        <td>Reverse the symbols, keeping the colors as they are.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            There has been a blue in position three at any point during the modification
+                            process this stage.
+                        </td>
+                        <td>Shift everything to the right by one.</td>
+                    </tr>
+                    <tr>
+                        <td>The displayed sequence does <i>not</i> form a valid morse letter.</td>
+                        <td>Take the sum of the serial number digits, modulo 26, and add one. Convert the
+                            result into a letter (A1Z26). Find the first letter in the alphabet, starting
+                            from this letter and wrapping back to A from Z if needed, whose morse representation
+                            matches the length of the current modified sequence. Set the sequence to this
+                            representation.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Every color appears at least once across the displayed sequence and current modified
+                            sequence.
+                        </td>
+                        <td>Leave the sequence as is.</td>
+                    </tr>
+                    <tr>
+                        <td>No other conditions applied.</td>
+                        <td>Change the first two positions to blue, and the rest to red.</td>
+                    </tr>
+                </table>
+
             </div>
             <div class="page-footer relative-footer">2</div>
         </div>
@@ -135,9 +284,259 @@
             </div>
             <div class="page-content">
 
+                <h4>Determining Position</h4>
+
+                <p>
+                    The correct position to submit is X, modulo the length of the modified sequence,
+                    plus one, where the value of X depends on the current stage:
+                </p>
+
+                <ul>
+                    <li>In stage 1, X is the number of batteries.</li>
+                    <li>In stage 2, X is the number of ports.</li>
+                    <li>In stage 3, X is the number of indicators.</li>
+                    <li>In stage 4, X is the total number of modules.</li>
+                </ul>
+
+                <h4>Submission</h4>
+
+                <p>
+                    To submit a colored symbol, press the button of the relevant color. To submit a
+                    dash, hold the button until the small display on the right shows a <code>ー</code>;
+                    to submit a dot, release the button before this happens.
+                </p>
+
+                <p>
+                    If the submission is correct, Samuel will accept the response and attempt to transmit
+                    a new sequence. However, the device is riddled with oddities, so a <b>quirk</b> may show
+                    up after each stage. Read the next subsection for more information.
+                </p>
+
+                <p>
+                    If the submission is incorrect, Samuel will not accept the response, and the module will strike.
+                    The displayed sequence and correct response will remain the same.
+                </p>
+
+                <h4>Quirks</h4>
+
+                <p>
+                    If a quirk appears after a correct submission, Samuel will exhibit some visual indicator
+                    of the quirk. Respond in the correct way to nullify the quirk and move on to the next stage.
+                    Remember which quirks show up, as you'll need them for the final stage.
+                </p>
+
+                <p>An incorrect respinse will cause a strike and reset input.</p>
+
+                <table>
+                    <tr>
+                        <th>Quirk</th>
+                        <th>Visual Indicator</th>
+                        <th>Correct Response</th>
+                    </tr>
+                    <tr>
+                        <td>Ghost</td>
+                        <td>A sequence of buttons is pressed by a ghost in the machine.</td>
+                        <td>
+                            Press the buttons in the same order as the ghost. If you have started to input a sequence,
+                            pressing the gray button will clear the sequence.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Stutter</td>
+                        <td>Each symbol flashes multiple times before moving to the next.</td>
+                        <td>
+                            Press the button with the color that flashes the most. If more than one color flashes
+                            the most, press a button with any such color.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Unstable</td>
+                        <td>
+                            One position in the displayed sequence alternates between being a dot and being a
+                            dash.
+                        </td>
+                        <td>
+                            Press the button whose position, in reading order, matches that of the 'unstable'
+                            symbol in the sequence.
+                        </td>
+                    </tr>
+                </table>
+
             </div>
             <div class="page-footer relative-footer">3</div>
         </div>
+
+        <div class="page page-bg-04">
+            <div class="page-header">
+                <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                <span class="page-header-section-title">Samuel Says</span>
+            </div>
+            <div class="page-content">
+
+                <table>
+                    <tr>
+                        <th>Quirk</th>
+                        <th>Visual Indicator</th>
+                        <th>Correct Response</th>
+                    </tr>
+                    <tr>
+                        <td>Overclocked</td>
+                        <td>There is no pause between repeats of the sequence.</td>
+                        <td>
+                            Repeatedly press the colored buttons until Samuel calms down. Stop pressing once all
+                            the buttons light up.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Virus</td>
+                        <td>Every button becomes purple and the display does not flash.</td>
+                        <td>
+                            Press buttons according to the number of regular submissions so far:
+                            <table>
+                                <tr>
+                                    <th>Number of Submissions</th>
+                                    <th>Sequence (Reading Order)</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1234</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>3412</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>2413</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Discolored</td>
+                        <td>The small screen lights up to show a color.</td>
+                        <td>
+                            Press buttons with colors according to the color of the display.
+                            <table>
+                                <tr>
+                                    <td class="corner"></td>
+                                    <th>Color of Display</th>
+                                    <th>Sequence</th>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: red;"></td>
+                                    <td><u>R</u>ed</td>
+                                    <td>RRYG</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: yellow;"></td>
+                                    <td><u>Y</u>ellow</td>
+                                    <td>GGBB</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #00ff00;"></td>
+                                    <td><u>G</u>reen</td>
+                                    <td>RYBG</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: blue;"></td>
+                                    <td><u>B</u>lue</td>
+                                    <td>GBBR</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: magenta;"></td>
+                                    <td>Magenta</td>
+                                    <td>RBRB</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: cyan;"></td>
+                                    <td>Cyan</td>
+                                    <td>BYYG</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Stuck</td>
+                        <td>One of the buttons is pushed in.</td>
+                        <td>Touch the stuck button when the last seconds digit of the timer is N, where N
+                            is the number of solved modules, modulo 10.
+                        </td>
+                    </tr>
+                </table>
+
+                <h3>Stage 5</h3>
+
+                <p>
+                    After four correct submissions, Samuel needs an entire word to be transmitted, so he
+                    use it to finally escape the device and disarm the module.
+                </p>
+
+                <h4>Determining the Word</h4>
+
+                <p>
+                    Take only the symbols in the displayed sequence, ignoring the colors. If this sequence
+                    does not form a valid morse letter, the correct word is <code>SAMUEL</code>.
+                </p>
+
+                <p>
+                    Otherwise, based on the quirk(s) that appeared earlier,modify this sequence, and convert it into a
+                    letter.
+                    Take this letter's spelling in the NATO Phonetic Alphabet to use as the word.
+                </p>
+                <ul>
+                    <li>If no quirks appeared, leave the sequence as is.</li>
+                    <li>If only one quirk appeared, remove the first position.</li>
+                    <li>
+                        If only two quirks appeared, and they were different, shift the sequence to the
+                        right by two.
+                    </li>
+                </ul>
+
+            </div>
+            <div class="page-footer relative-footer">4</div>
+        </div>
+
+        <div class="page page-bg-05">
+            <div class="page-header">
+                <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                <span class="page-header-section-title">Samuel Says</span>
+            </div>
+            <div class="page-content">
+
+                <ul>
+                    <li>If only two of the same quirk appeared, reverse the sequence.</li>
+                    <li>If three distinct quirks appeared, remove the first three positions.</li>
+                    <li>If three quirks appeared, and only two were the same, remove the third position.</li>
+                    <li>If three of the same quirk appeared, remove the first two positions.</li>
+                </ul>
+
+                <p>
+                    If the sequence is now empty, or does not form a valid morse letter, use
+                    <code>MORSE</code> as the word.
+                </p>
+
+                <h4>Submission</h4>
+
+                <p>
+                    Convert the entire word into morse code, without any breaks between letters.
+                    Input these symbols into the module, using the color of the first regular submission
+                    for the first symbol, the color of the second regular submission for the second symbol,
+                    and so on. Wrap back around to the first submitted color upon running out of colors.
+                </p>
+
+                <p>When reaching the end of a letter, the small symbol will display the submitted letter.</p>
+
+                <p>
+                    Correctly submitting the entire word will release Samuel from his prison and solve the module.
+                    Upon submitting an incorrect symbol, the module will strike and The buttons will flash the
+                    expected color order one time. Input will be reset but the displayed sequence and answer will
+                    not change.
+                </p>
+            </div>
+            <div class="page-footer relative-footer">5</div>
+        </div>
     </div>
 </body>
+
 </html>
