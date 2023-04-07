@@ -2360,7 +2360,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1464198784618682}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 0
@@ -3511,7 +3511,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1182528599789028}
-  m_Text: Red
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 0.01
   m_LineSpacing: 1
@@ -3532,7 +3532,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1470973059595496}
-  m_Text: Red
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 0.015
   m_LineSpacing: 1
@@ -4302,7 +4302,7 @@ MonoBehaviour:
   _displayMaterial: {fileID: 2100000, guid: 8fa7f598bb72a24428ab933ca3da22ba, type: 2}
   LetterDisplay: {fileID: 102615920729353504}
   EmoticonDisplay: {fileID: 102676468563522882}
-  _colourblindText: {fileID: 0}
+  _colourblindText: {fileID: 102333475304887950}
   _colourDisplay: {fileID: 23598162666037988}
 --- !u!114 &114727817107576578
 MonoBehaviour:

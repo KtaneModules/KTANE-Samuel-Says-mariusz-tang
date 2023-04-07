@@ -10,9 +10,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
     // ! Look at the README for information on where to look first for bugs.
 
-    // TODO: Make manual.
     // TODO: Add TP.
-    // TODO: Colourblind support.
     // TODO: Make sure logging meets my standards.
     // TODO: Beta-testing.
     // TODO: Complete(?).
