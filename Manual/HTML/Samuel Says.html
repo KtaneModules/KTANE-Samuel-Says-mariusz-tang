@@ -74,7 +74,8 @@
 
                 <p>
                     From now on, unless stated otherwise, the gray button will mute/unmute the device.
-                    Pressing the small display will toggle colorblind mode.
+                    Pressing the small display will toggle colorblind mode. The buttons are always red, yellow, green
+                    blue, left-to-right.
                 </p>
 
                 <h3>Stages 1-4</h3>
@@ -94,10 +95,10 @@
                 </p>
 
                 <p>
-                    If this action has not been applied yet <i>this stage</i>, apply it to the modified sequence, or the
-                    displayed sequence if this is the first action. Otherwise, move <i>up</i> through the table,
-                    wrapping back to the bottom row if needed, until you reach an action that has not yet been applied,
-                    and apply it.
+                    Actions must only be applied once <i>per stage</i>; if this action has not been applied yet, apply
+                    it to the <b>modified sequence</b>, or the displayed sequence if this is the first action this
+                    stage. Otherwise, move <i>up</i> through the table, wrapping back to the bottom row if needed, until
+                    you reach an action that has not yet been applied, and apply it.
                 </p>
 
                 <table>
@@ -258,7 +259,7 @@
                     </tr>
                     <tr>
                         <td>
-                            The <i>displayed</i> sequence does <i>not</i> form a valid morse letter. (✲✲✲)
+                            The <i>displayed</i> sequence does <u>not</u> form a valid morse letter. (✲✲✲)
                         </td>
                         <td>Take the sum of the serial number digits, modulo 26, add one, and convert the
                             result into a letter (A1Z26). Find the first letter in the alphabet, starting
@@ -496,7 +497,7 @@
                 <p>
                     After four correct submissions, Samuel needs an entire word to be transmitted, so he
                     can use it to finally escape the device and disarm the module. Note that, visually,
-                    there is no different between this stage and the previous four.
+                    there is no difference between this stage and the previous four.
                 </p>
 
                 <h4>Determining the Word</h4>
@@ -555,13 +556,13 @@
 
                 <p>
                     Convert the entire word into morse code, without any breaks between letters.
-                    Input these symbols into the module, using the color of the first regular submission
-                    for the first symbol, the color of the second regular submission for the second symbol,
-                    and so on. Wrap back around to the first submitted color upon running out of colors.
+                    Input these symbols into the module, using the color submitted in stage 1
+                    for the first symbol, the color submitted in stage 2 for the second symbol,
+                    and so on. Wrap back around to stage 1 upon running out of stages.
                 </p>
 
                 <p>
-                    For example, if the final word is <code>QUEBEC</code>, and the submitted colors for the
+                    For example, if the final word is <code>QUEBEC</code>, and the colors submitted in the
                     previous stages were red, green, blue, blue, the correct response for this stage would be
                 </p>
 
@@ -571,7 +572,10 @@
 
                 <p>(note that the spaces are only for clarity, and should be ignored during input).</p>
 
-                <p>When reaching the end of a letter, the small symbol will display the submitted letter.</p>
+                <p>
+                    After submitting each complete letter, Samuel will display the letter on the small screen to confirm
+                    he has received it.
+                </p>
 
                 <p>
                     Correctly submitting the entire word will release Samuel from his prison and solve the module.
