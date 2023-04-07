@@ -6,15 +6,21 @@ public class MiniScreen : MonoBehaviour {
     [SerializeField] private Material _displayMaterial;
     [SerializeField] private TextMesh LetterDisplay;
     [SerializeField] private TextMesh EmoticonDisplay;
+    [SerializeField] private TextMesh _colourblindText;
     [SerializeField] private MeshRenderer _colourDisplay;
+
+    private MeshRenderer _colourblindRenderer;
 
     private void Awake() {
         ClearScreen();
+        _colourblindRenderer = _colourblindText.GetComponent<MeshRenderer>();
+        _colourblindRenderer.enabled = false;
     }
 
     public void ClearScreen() {
-        LetterDisplay.text = "";
-        EmoticonDisplay.text = "";
+        LetterDisplay.text = string.Empty;
+        EmoticonDisplay.text = string.Empty;
+        _colourblindText.text = string.Empty;
         _colourDisplay.enabled = false;
     }
 
@@ -33,10 +39,11 @@ public class MiniScreen : MonoBehaviour {
         LetterDisplay.text = letter;
     }
 
-    public void DisplayColour(Color colour) {
+    public void DisplayColour(Color colour, string colourName) {
         ClearScreen();
         _displayMaterial.color = colour;
         _colourDisplay.enabled = true;
+        _colourblindText.text = colourName;
     }
 
     public void DisplaySolveSmile() {
@@ -44,5 +51,9 @@ public class MiniScreen : MonoBehaviour {
         LetterDisplay.characterSize = 0.045f;
         LetterDisplay.text = "Ü";
         LetterDisplay.color = Color.green;
+    }
+
+    public void ToggleColourblindMode() {
+        _colourblindRenderer.enabled = !_colourblindRenderer.enabled;
     }
 }

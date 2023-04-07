@@ -20,6 +20,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
     [SerializeField] private ColouredButton[] _buttons;
     [SerializeField] private KMSelectable _submitButton;
+    [SerializeField] private KMSelectable _symbolDisplaySelectable;
     [SerializeField] private Animator _submitButtonAnimator;
 
     [HideInInspector] public KMBombInfo Bomb;
@@ -127,6 +128,7 @@ public class SamuelSaysModule : MonoBehaviour {
 
         _submitButton.OnInteract += delegate () { StartCoroutine(_state.HandleSubmitPress()); return false; };
         _submitButton.OnInteractEnded += delegate () { StartCoroutine(_state.HandleSubmitRelease()); };
+        _symbolDisplaySelectable.OnInteract += delegate () { Screen.ToggleColourblindMode(); SymbolDisplay.ToggleColourblindMode(); return false; };
     }
 
     public void ChangeState(State newState, bool haltSequence = true) {
@@ -189,7 +191,8 @@ public class SamuelSaysModule : MonoBehaviour {
         else if (Rnd.Range(0, 2) == 1) {
             int quirkNumber = Rnd.Range(0, _quirkStates.Length);
             QuirkAppearances.Add(quirkNumber);
-            ChangeState(new LeftToRightAnimation(this, _quirkStates[quirkNumber]));
+            // ChangeState(new LeftToRightAnimation(this, _quirkStates[quirkNumber]));
+            ChangeState(new LeftToRightAnimation(this, new DiscoloredQuirk(this)));
         }
         else {
             ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));

@@ -10,9 +10,18 @@ public class MainScreen : MonoBehaviour {
 
     private bool _skipPause = false;
 
+    [SerializeField] private TextMesh _colourblindText;
     [SerializeField] private MeshRenderer _display;
     [SerializeField] private AudioSource[] _beeps;
 
+    private MeshRenderer _colourblindRenderer;
+
+    private readonly string[] _colourNames = new string[] {
+        "Red",
+        "Yellow",
+        "Green",
+        "Blue"
+    };
     private readonly Color[] _colourList = new Color[] {
         Color.red,
         Color.yellow,
@@ -23,6 +32,8 @@ public class MainScreen : MonoBehaviour {
 
     private void Awake() {
         _display.enabled = false;
+        _colourblindRenderer = _colourblindText.GetComponent<MeshRenderer>();
+        _colourblindRenderer.enabled = false;
     }
 
     public void ToggleMute() {
@@ -32,14 +43,20 @@ public class MainScreen : MonoBehaviour {
         }
     }
 
+    public void ToggleColourblindMode() {
+        _colourblindRenderer.enabled = !_colourblindRenderer.enabled;
+    }
+
     private void DisplayColour(ButtonColour colour) {
         _display.enabled = true;
         _display.material.color = _colourList[(int)colour] * ColourBrightness;
+        _colourblindText.text = _colourNames[(int)colour];
         _beeps[(int)colour].Play();
     }
 
     private void StopDisplayingColour() {
         _display.enabled = false;
+        _colourblindText.text = string.Empty;
         foreach (AudioSource beep in _beeps) {
             beep.Stop();
         }

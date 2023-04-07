@@ -54,7 +54,7 @@ public class OverclockedQuirk : State {
     private IEnumerator TrackSpam() {
         while (true) {
             _spamTotal = Math.Max(0, _spamTotal - Time.deltaTime * DECREASE_RATE);
-            _module.SymbolDisplay.DisplayColour(Color.white * _spamTotal);
+            _module.SymbolDisplay.DisplayColour(Color.white * _spamTotal, string.Empty);
 
             if (_hitLimit && _spamTotal == 0) {
                 yield return new WaitForSeconds(0.2f);

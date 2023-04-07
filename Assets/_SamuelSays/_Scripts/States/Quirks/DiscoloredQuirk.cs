@@ -74,16 +74,18 @@ public class DiscoloredQuirk : State {
         };
         int colourIndex = Rnd.Range(0, 6);
 
-        _module.SymbolDisplay.DisplayColour(colours[colourIndex]);
         switch (colourIndex) {
-            case 0: _displayedColour = "red"; _expectedSequenceNumbers = "0012"; break;
-            case 1: _displayedColour = "yellow"; _expectedSequenceNumbers = "2233"; break;
-            case 2: _displayedColour = "green"; _expectedSequenceNumbers = "0132"; break;
-            case 3: _displayedColour = "blue"; _expectedSequenceNumbers = "2330"; break;
-            case 4: _displayedColour = "magenta"; _expectedSequenceNumbers = "0303"; break;
-            case 5: _displayedColour = "cyan"; _expectedSequenceNumbers = "3112"; break;
+            case 0: _displayedColour = "Red"; _expectedSequenceNumbers = "0012"; break;
+            case 1: _displayedColour = "Yellow"; _expectedSequenceNumbers = "2233"; break;
+            case 2: _displayedColour = "Green"; _expectedSequenceNumbers = "0132"; break;
+            case 3: _displayedColour = "Blue"; _expectedSequenceNumbers = "2330"; break;
+            case 4: _displayedColour = "Magenta"; _expectedSequenceNumbers = "0303"; break;
+            case 5: _displayedColour = "Cyan"; _expectedSequenceNumbers = "3112"; break;
             default: throw new ArgumentException("How the fuck has that happened then.");
         }
+
+        _module.SymbolDisplay.DisplayColour(colours[colourIndex], _displayedColour);
+        _displayedColour = _displayedColour.ToLower();
 
         _expectedSequenceWords = string.Join(" ", _expectedSequenceNumbers.Select(num => _colourNames[num - '0']).ToArray());
     }
