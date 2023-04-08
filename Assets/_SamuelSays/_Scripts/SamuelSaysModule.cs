@@ -224,6 +224,7 @@ public class SamuelSaysModule : MonoBehaviour {
         }
 
         command = command.Trim().ToLower();
+        yield return null;
 
         if (command == "start" || command == "mute" || command == "gray") {
             _submitButton.OnInteract();
@@ -233,15 +234,14 @@ public class SamuelSaysModule : MonoBehaviour {
         }
         else if (command == "colorblind" || command == "cb") {
             _symbolDisplaySelectable.OnInteract();
-            yield return null;
             yield break;
         }
         else if (command == string.Empty) {
             yield return "sendtochaterror That's an empty command...";
+            yield break;
         }
 
         string[] commandList = command.Split(' ');
-        yield return null;
 
         if (commandList.Length == 3 && (commandList[0] == "transmit" || commandList[0] == "tx")) {
             if (colourAbbreviations.Contains(commandList[1])) {
