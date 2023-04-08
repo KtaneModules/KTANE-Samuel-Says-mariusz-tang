@@ -209,15 +209,75 @@ public class SamuelSaysModule : MonoBehaviour {
     }
 
 #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"Use !{0} 0-8 in reading order to select/deselect cubes. Use !{0} s1/2/3 to press stage lights. " +
-                                                    "Use !{0} screen to press the screen button. Chain commands together with spaces.";
+    private readonly string TwitchHelpMessage = @"Use '!{0} start/mute/gray' to press the gray button; '!{0} <colorblind/cb>' | "
+        + "Stages 1-4: '!{0} <transmit/tx> <color/position> <./->' to transmit a colored symbol | "
+        + "Quirks: '!{0} press <colors/positions>'; '!{0} touch <color/position> <last seconds digit> | "
+        + "Stage 5: '!{0} <transmit/tx> <morse> <colors>' (eg '!{0} tx ....---..-..-.. RY' submits 'SAMUEL', alternating red and yellow) | "
+        + "Colors are R/Y/G/B; Positions are 1-4 in reading order.";
 #pragma warning restore 414
 
-    IEnumerator ProcessTwitchCommand(string command) {
-        yield return null;
+    string[] colourAbbreviations = new string[] { "r", "y", "g", "b" };
+
+    private IEnumerator ProcessTwitchCommand(string command) {
+        if (_state.GetType() == typeof(LeftToRightAnimation)) {
+            yield return "sendtochaterror Wait for the animation to finish, then try again.";
+        }
+
+        command = command.Trim().ToLower();
+
+        if (command == "start" || command == "mute" || command == "gray") {
+            _submitButton.OnInteract();
+            yield return new WaitForSeconds(0.1f);
+            _submitButton.OnInteractEnded();
+            yield break;
+        }
+        else if (command == "colorblind" || command == "cb") {
+            _symbolDisplaySelectable.OnInteract();
+            yield return null;
+            yield break;
+        }
+        else if (command == string.Empty) {
+            yield return "sendtochaterror That's an empty command...";
+        }
+
+        string[] commandList = command.Split(' ');
+
+        if (commandList.Length == 3 && (commandList[0] == "transmit" || commandList[0] == "tx")) {
+            if (colourAbbreviations.Contains(commandList[1])) {
+                if (commandList[2] == ".") {
+                    Buttons[Array.IndexOf(colourAbbreviations, commandList[1])].Selectable.OnInteract();
+                    yield return new WaitForSeconds(0.1f);
+                    Buttons[Array.IndexOf(colourAbbreviations, commandList[1])].Selectable.OnInteractEnded();
+                }
+                else if (commandList[2] == "-") {
+                    Buttons[Array.IndexOf(colourAbbreviations, commandList[1])].Selectable.OnInteract();
+                    yield return new WaitForSeconds(0.31f);
+                    Buttons[Array.IndexOf(colourAbbreviations, commandList[1])].Selectable.OnInteractEnded();
+                }
+            }
+            else if (!commandList[1].Any(symbol => symbol != '.' && symbol != '-')) {
+                if (!commandList[2].Any(color => !colourAbbreviations.Contains(color.ToString()))) {
+                    int counter = 0;
+                    int loopLength = commandList[2].Length;
+
+                    foreach (char symbol in commandList[1]) {
+                        Buttons[Array.IndexOf(colourAbbreviations, commandList[2][counter % loopLength].ToString())].Selectable.OnInteract();
+                        if (symbol == '.') {
+                            yield return new WaitForSeconds(0.1f);
+                        }
+                        else {
+                            yield return new WaitForSeconds(0.31f);
+                        }
+                        Buttons[Array.IndexOf(colourAbbreviations, commandList[2][counter % loopLength].ToString())].Selectable.OnInteractEnded();
+                        counter++;
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                }
+            }
+        }
     }
 
-    IEnumerator TwitchHandleForcedSolve() {
+    private IEnumerator TwitchHandleForcedSolve() {
         yield return null;
     }
 }
