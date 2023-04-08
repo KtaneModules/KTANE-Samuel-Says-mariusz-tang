@@ -63,7 +63,7 @@ public class VirusQuirk : State {
         button.PlayReleaseAnimation();
 
         if (_inputtedSequence[_inputtedSequence.Length - 1] != _expectedSequence[_inputtedSequence.Length - 1]) {
-            _module.Strike("Incorrectly inputted " + _inputtedSequence + "! Input has been reset.", "Virus Strike");
+            _module.Strike("Incorrectly pressed " + _inputtedSequence + "! Input has been reset.", "Virus Strike");
             _inputtedSequence = string.Empty;
 
             if (_flashFace != null) {
@@ -75,7 +75,7 @@ public class VirusQuirk : State {
             _flashFace = _module.StartCoroutine(FlashFace());
         }
         else if (_inputtedSequence == _expectedSequence) {
-            _module.Log("Inputted the correct sequence!");
+            _module.Log("Pressed the correct sequence!");
             _isFlashingFace = false;
             _module.StartCoroutine(OnStateExitAnimation());
         }

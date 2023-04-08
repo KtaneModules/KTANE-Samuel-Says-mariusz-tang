@@ -200,13 +200,13 @@ public class SamuelSaysModule : MonoBehaviour {
     public void DoStageLogging() {
         string sequenceAsString = string.Join(", ", DisplayedSequence.Select(c => c.ToString()).ToArray());
         Log("================== Stage " + StageNumber + " ==================");
-        Log("Displayed sequence is " + sequenceAsString + ".");
+        Log("The displayed sequence is " + sequenceAsString + ".");
         Log(_sequenceModifier.SequenceGenerationLogging);
-        Log("Expected response is " + ExpectedSubmission.ToString() + ".");
+        Log("The expected response is " + ExpectedSubmission.ToString() + ".");
     }
 
     public void LogQuirk(string quirkName) {
-        Log("!! Quirk: " + quirkName + " !!");
+        Log(">>>>> Quirk: " + quirkName + " <<<<<");
     }
 
 #pragma warning disable 414

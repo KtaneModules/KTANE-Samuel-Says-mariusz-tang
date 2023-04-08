@@ -16,9 +16,9 @@ public class ColouredSymbol : IEquatable<ColouredSymbol> {
 
     public override string ToString() {
         if (Symbol == '.') {
-            return Colour.ToString() + " dit";
+            return Colour.ToString().ToLower() + " dot";
         }
-        return Colour.ToString() + " dah";
+        return Colour.ToString().ToLower() + " dash";
     }
 
     public bool Equals(ColouredSymbol other) {

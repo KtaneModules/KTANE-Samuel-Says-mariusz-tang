@@ -37,6 +37,7 @@ public class OverclockedQuirk : State {
         button.PlayPressAnimation();
         _spamTotal = Math.Min(1, _spamTotal + INCREMENT_SIZE);
         if (_spamTotal == 1 && !_hitLimit) {
+            _module.Log("Samuel is calm now.");
             _hitLimit = true;
             button.AddInteractionPunch();
             LightAllButtons();

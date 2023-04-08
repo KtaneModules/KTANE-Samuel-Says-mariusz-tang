@@ -72,7 +72,7 @@ public class RegularStage : State {
 
     private void CheckSubmission(ColouredSymbol submittedSymbol) {
         if (submittedSymbol.Equals(_module.ExpectedSubmission)) {
-            _module.Log("Correct submission!");
+            _module.Log("Transmitted the correct symbol!");
             _module.AdvanceStage();
         }
         else {

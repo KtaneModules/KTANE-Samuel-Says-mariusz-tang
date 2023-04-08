@@ -68,12 +68,12 @@ public class GhostQuirk : State {
         }
 
         if (_inputtedSequence[_inputtedSequence.Length - 1] != _expectedSequence[_inputtedSequence.Length - 1]) {
-            _module.Strike("Incorrectly inputted " + _inputtedSequence + "! Input has been reset.");
+            _module.Strike("Incorrectly pressed " + _inputtedSequence + "! Input has been reset.");
             _inputtedSequence = string.Empty;
             _ghostPresses = _module.StartCoroutine(DoGhostPresses());
         }
         else if (_inputtedSequence == _expectedSequence) {
-            _module.Log("Inputted the correct sequence!");
+            _module.Log("Pressed the correct sequence!");
             _module.StartCoroutine(FlashAllButtons());
             _done = true;
         }

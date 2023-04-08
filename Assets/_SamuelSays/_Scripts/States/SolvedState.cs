@@ -31,8 +31,8 @@ public class SolvedState : State {
     public SolvedState(SamuelSaysModule module) : base(module) { }
 
     public override IEnumerator OnStateEnter() {
-        _module.Log("================== Solved ==================");
-        _module.Log("Samuel thanks you for your time.");
+        _module.Log("================== Solved ===================");
+        _module.Log("Samuel thanks you for your time!");
         _module.Module.HandlePass();
 
         _module.StartCoroutine(EnterSolveStateAnimation());

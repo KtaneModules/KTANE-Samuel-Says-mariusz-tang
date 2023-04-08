@@ -230,7 +230,7 @@ public class SamuelSequenceModifier {
         string usingQuantity;
 
         switch (_module.StageNumber) {
-            case 1: quantityToUse = _batteryCount; usingQuantity = "battery"; break;
+            case 1: quantityToUse = _batteryCount; usingQuantity = "batterie"; break;
             case 2: quantityToUse = _totalPorts; usingQuantity = "port"; break;
             case 3: quantityToUse = _litIndicatorCount + _unlitIndicatorCount; usingQuantity = "indicator"; break;
             case 4: quantityToUse = _moduleCount; usingQuantity = "module"; break;
@@ -238,7 +238,16 @@ public class SamuelSequenceModifier {
         }
 
         position = quantityToUse % _modifiedSymbols.Length;
-        _sequenceGenerationLogging.Add("Using " + usingQuantity + " count, the correct position to submit is " + (position + 1) + ".");
+        if (quantityToUse != 1) {
+            _sequenceGenerationLogging.Add("There are " + quantityToUse + " " + usingQuantity + "s, so the correct position to submit is " + (position + 1) + ".");
+        }
+        else {
+            if (usingQuantity == "batterie") {
+                usingQuantity = "battery";
+            }
+            _sequenceGenerationLogging.Add("There is " + quantityToUse + " " + usingQuantity + ", so the correct position to submit is " + (position + 1) + ".");
+        }
+
         return position;
     }
 

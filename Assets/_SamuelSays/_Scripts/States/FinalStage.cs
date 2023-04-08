@@ -90,7 +90,7 @@ public class FinalStage : State {
 
         string sequenceAsString = string.Join(", ", _module.DisplayedSequence.Select(c => c.ToString()).ToArray());
         _module.Log("================== Stage 5 ==================");
-        _module.Log("Displayed sequence is " + sequenceAsString + ".");
+        _module.Log("The displayed sequence is " + sequenceAsString + ".");
         GenerateExpectedSubmission();
 
         return base.OnStateEnter();
@@ -149,7 +149,7 @@ public class FinalStage : State {
         int submissionLength = _inputtedSubmission.Count();
 
         if (!_inputtedSubmission[submissionLength - 1].Equals(_expectedSubmission[submissionLength - 1])) {
-            _module.Strike("Incorrectly submitted a " + _inputtedSubmission[submissionLength - 1].ToString()
+            _module.Strike("Incorrectly transmitted a " + _inputtedSubmission[submissionLength - 1].ToString()
                  + " at position " + submissionLength + "! Input has been reset.");
             _inputtedSubmission.Clear();
             _module.Screen.PlaySequence(_module.DisplayedSequence);
@@ -160,7 +160,7 @@ public class FinalStage : State {
         }
 
         if (submissionLength == _expectedSubmission.Count()) {
-            _module.Log("Submitted the correct sequence!");
+            _module.Log("Transmitted the correct sequence!");
             _module.ChangeState(new SolvedState(_module));
         }
     }
