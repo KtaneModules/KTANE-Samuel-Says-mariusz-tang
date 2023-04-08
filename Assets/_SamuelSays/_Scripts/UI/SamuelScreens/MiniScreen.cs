@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MiniScreen : MonoBehaviour {
-    [SerializeField] private Material _displayMaterial;
+
     [SerializeField] private TextMesh LetterDisplay;
     [SerializeField] private TextMesh EmoticonDisplay;
     [SerializeField] private TextMesh _colourblindText;
@@ -41,8 +41,8 @@ public class MiniScreen : MonoBehaviour {
 
     public void DisplayColour(Color colour, string colourName) {
         ClearScreen();
-        _displayMaterial.color = colour;
         _colourDisplay.enabled = true;
+        _colourDisplay.material.color = colour;
         _colourblindText.text = colourName;
     }
 

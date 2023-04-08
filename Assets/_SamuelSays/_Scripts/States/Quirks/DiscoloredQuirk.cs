@@ -30,7 +30,7 @@ public class DiscoloredQuirk : State {
 
         _module.Screen.PlaySequence(_module.DisplayedSequence);
         _module.LogQuirk("Discolored");
-        _module.Log("Displayed colour is " + _displayedColour + ". Press " + _expectedSequenceWords + ".");
+        _module.Log("The displayed colour is " + _displayedColour + ". Press " + _expectedSequenceWords + ".");
         yield return null;
     }
 

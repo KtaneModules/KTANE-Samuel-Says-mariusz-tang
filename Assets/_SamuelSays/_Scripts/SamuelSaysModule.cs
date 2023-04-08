@@ -189,8 +189,7 @@ public class SamuelSaysModule : MonoBehaviour {
         else if (Rnd.Range(0, 2) == 1) {
             int quirkNumber = Rnd.Range(0, _quirkStates.Length);
             QuirkAppearances.Add(quirkNumber);
-            // ChangeState(new LeftToRightAnimation(this, _quirkStates[quirkNumber]));
-            ChangeState(new LeftToRightAnimation(this, new DiscoloredQuirk(this)));
+            ChangeState(new LeftToRightAnimation(this, _quirkStates[quirkNumber]));
         }
         else {
             ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));

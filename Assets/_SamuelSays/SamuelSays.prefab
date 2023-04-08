@@ -4299,7 +4299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f2ef82c19bcb164ba0a0a71083a1210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayMaterial: {fileID: 2100000, guid: 8fa7f598bb72a24428ab933ca3da22ba, type: 2}
   LetterDisplay: {fileID: 102615920729353504}
   EmoticonDisplay: {fileID: 102676468563522882}
   _colourblindText: {fileID: 102333475304887950}
