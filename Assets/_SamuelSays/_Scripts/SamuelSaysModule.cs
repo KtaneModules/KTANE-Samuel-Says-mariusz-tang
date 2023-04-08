@@ -241,6 +241,7 @@ public class SamuelSaysModule : MonoBehaviour {
         }
 
         string[] commandList = command.Split(' ');
+        yield return null;
 
         if (commandList.Length == 3 && (commandList[0] == "transmit" || commandList[0] == "tx")) {
             if (colourAbbreviations.Contains(commandList[1])) {
