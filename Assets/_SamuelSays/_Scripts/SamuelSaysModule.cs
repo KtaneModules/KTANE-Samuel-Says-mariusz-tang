@@ -9,11 +9,6 @@ public class SamuelSaysModule : MonoBehaviour {
 
     // ! Look at the README for information on where to look first for bugs.
 
-    // TODO: Add TP.
-    // TODO: Beta-testing.
-    // TODO: Complete(?).
-    // TODO: Go clean up Coloured Cubes.
-
     [SerializeField] private ColouredButton[] _buttons;
     [SerializeField] private KMSelectable _submitButton;
     [SerializeField] private KMSelectable _symbolDisplaySelectable;
