@@ -266,6 +266,9 @@ public class SamuelSaysModule : MonoBehaviour {
                     yield return new WaitForSeconds(0.31f);
                     Buttons[Array.IndexOf(colourAbbreviations, commandList[1])].Selectable.OnInteractEnded();
                 }
+                else {
+                    yield return "sendtochaterror Invalid symbol!";
+                }
             }
             else if (!commandList[1].Any(symbol => symbol != '.' && symbol != '-')) {
                 if (!commandList[2].Any(color => !colourAbbreviations.Contains(color.ToString()))) {
@@ -285,17 +288,29 @@ public class SamuelSaysModule : MonoBehaviour {
                         yield return new WaitForSeconds(0.1f);
                     }
                 }
+                else {
+                    yield return "sendtochaterror Invalid color sequence!";
+                }
+            }
+            else {
+                yield return "sendtocharerror Invalid command!";
             }
         }
         else if (commandList.Length == 2 && commandList[0] == "press") {
+            int counter = 0;
             foreach (char symbol in commandList[1]) {
                 int position = colourAbbreviations.Contains(symbol.ToString()) ? Array.IndexOf(colourAbbreviations, symbol.ToString()) : symbol - '1';
+                counter++;
                 if (position >= 0 && position <= 3) {
                     Buttons[position].Selectable.OnInteract();
                     yield return new WaitForSeconds(0.1f);
                     Buttons[position].Selectable.OnInteractEnded();
+                    yield return new WaitForSeconds(0.1f);
                 }
-                yield return new WaitForSeconds(0.1f);
+                else {
+                    yield return "sendtochaterror Invalid position or color! Halted just before press number " + counter + ".";
+                    yield break;
+                }
             }
         }
         else if (commandList.Length == 3 && commandList[0] == "touch") {
@@ -310,6 +325,12 @@ public class SamuelSaysModule : MonoBehaviour {
                 }
                 Buttons[position - 1].Selectable.OnInteract();
             }
+            else {
+                yield return "sendtochaterror Invalid time, position, or color!";
+            }
+        }
+        else {
+            yield return "sendtochaterror Invalid command!";
         }
     }
 
