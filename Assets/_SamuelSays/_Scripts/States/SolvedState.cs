@@ -81,4 +81,8 @@ public class SolvedState : State {
 
         _module.StartCoroutine(ContinuousSolveAnimation());
     }
+
+    public override TpAction NextTpAction() {
+        return new TpAction(TpActionType.Solved);
+    }
 }

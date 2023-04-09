@@ -39,4 +39,8 @@ public class StuckQuirk : State {
 
         yield return null;
     }
+
+    public override TpAction NextTpAction() {
+        return new TpAction(TpActionType.PressTimed, _stuckButton, _module.Bomb.GetSolvedModuleNames().Count() % 10);
+    }
 }

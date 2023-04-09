@@ -14,7 +14,11 @@ MonoBehaviour:
   id: SamuelSays
   title: Samuel Says
   author: Kuro
-  description: boink temporary description
+  description: "\u201CSamuel? Are you there? SAMUEL!\u201D\n\nConvert colored morse
+    sequences into colored symbols to progress through 4 stages, then submit a word
+    to free Samuel from the device.\n\nManual can be found at ktane.timwi.de or in
+    the manuals folder of your game.\n\nIdea by TheBigBadBull#7463 on Discord.\nReport
+    bugs to Kuro#2011 on Discord."
   version: 1
   outputFolder: build
-  previewImage: {fileID: 0}
+  previewImage: {fileID: 2800000, guid: 101c1060c41b9ac4fad4491bb1546af4, type: 3}

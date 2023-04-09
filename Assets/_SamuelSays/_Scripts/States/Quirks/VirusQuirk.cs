@@ -169,4 +169,14 @@ public class VirusQuirk : State {
         _module.ChangeState(new RegularStage(_module));
         _isTransitioning = false;
     }
+
+    public override TpAction NextTpAction() {
+        if (_isTransitioning) {
+            return new TpAction(TpActionType.Wait);
+        }
+
+        int position = _inputtedSequence.Length;
+
+        return new TpAction(TpActionType.PressShort, _expectedSequence[position] - '1');
+    }
 }

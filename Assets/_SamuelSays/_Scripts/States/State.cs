@@ -37,4 +37,6 @@ public abstract class State {
         _module.SubmitButtonAnimator.SetBool("IsPressed", false);
         yield return null;
     }
+
+    public abstract TpAction NextTpAction();
 }

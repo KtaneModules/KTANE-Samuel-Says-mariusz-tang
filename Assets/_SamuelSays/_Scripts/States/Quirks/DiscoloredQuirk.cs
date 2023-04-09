@@ -90,4 +90,13 @@ public class DiscoloredQuirk : State {
         _expectedSequenceWords = string.Join(" ", _expectedSequenceNumbers.Select(num => _colourNames[num - '0']).ToArray());
     }
 
+    public override TpAction NextTpAction() {
+        if (_done) {
+            return new TpAction(TpActionType.Wait);
+        }
+
+        int position = _inputtedSequence.Length;
+        return new TpAction(TpActionType.PressShort, _expectedSequenceNumbers[position] - '0');
+    }
+
 }

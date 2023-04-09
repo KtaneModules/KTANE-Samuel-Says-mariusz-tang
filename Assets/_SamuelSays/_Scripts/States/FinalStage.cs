@@ -244,4 +244,15 @@ public class FinalStage : State {
             _letterEndings.Add(counter);
         }
     }
+
+    public override TpAction NextTpAction() {
+        int position = _inputtedSubmission.Count();
+
+        if (_expectedSubmission[position].Symbol == '.') {
+            return new TpAction(TpActionType.PressShort, (int)_expectedSubmission[position].Colour);
+        }
+        else {
+            return new TpAction(TpActionType.PressLong, (int)_expectedSubmission[position].Colour);
+        }
+    }
 }

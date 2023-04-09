@@ -19,4 +19,8 @@ public class InitialState : State {
         yield return null;
     }
 
+    public override TpAction NextTpAction() {
+        return new TpAction(TpActionType.Start);
+    }
+
 }

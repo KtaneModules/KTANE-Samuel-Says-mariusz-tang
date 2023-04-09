@@ -65,4 +65,9 @@ public class StutterQuirk : State {
         }
         yield return null;
     }
+
+    public override TpAction NextTpAction() {
+        int position = Array.IndexOf(_colourCounts, _colourCounts.Max());
+        return new TpAction(TpActionType.PressShort, position);
+    }
 }

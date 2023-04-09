@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using KModkit;
 using UnityEngine;
 using Rnd = UnityEngine.Random;
 
@@ -11,7 +10,6 @@ public class SamuelSaysModule : MonoBehaviour {
     // ! Look at the README for information on where to look first for bugs.
 
     // TODO: Add TP.
-    // TODO: Make sure logging meets my standards.
     // TODO: Beta-testing.
     // TODO: Complete(?).
     // TODO: Go clean up Coloured Cubes.
@@ -189,8 +187,7 @@ public class SamuelSaysModule : MonoBehaviour {
         else if (Rnd.Range(0, 2) == 1) {
             int quirkNumber = Rnd.Range(0, _quirkStates.Length);
             QuirkAppearances.Add(quirkNumber);
-            ChangeState(new LeftToRightAnimation(this, new StuckQuirk(this)));
-            // ChangeState(new LeftToRightAnimation(this, _quirkStates[quirkNumber]));
+            ChangeState(new LeftToRightAnimation(this, _quirkStates[quirkNumber]));
         }
         else {
             ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));
@@ -324,6 +321,7 @@ public class SamuelSaysModule : MonoBehaviour {
                     yield return new WaitForSeconds(0.1f);
                 }
                 Buttons[position - 1].Selectable.OnInteract();
+                Buttons[position - 1].Selectable.OnInteractEnded();
             }
             else {
                 yield return "sendtochaterror Invalid time, position, or color!";
@@ -336,5 +334,38 @@ public class SamuelSaysModule : MonoBehaviour {
 
     private IEnumerator TwitchHandleForcedSolve() {
         yield return null;
+
+        TpAction nextAction = _state.NextTpAction();
+
+        while (nextAction.ActionType != TpActionType.Solved) {
+            if (nextAction.ActionType == TpActionType.Wait) {
+                yield return true;
+            }
+            else if (nextAction.ActionType == TpActionType.Start) {
+                _submitButton.OnInteract();
+                yield return new WaitForSeconds(0.1f);
+                _submitButton.OnInteractEnded();
+            }
+            else {
+                if (nextAction.ActionType == TpActionType.PressTimed) {
+                    while (Math.Floor(Bomb.GetTime() % 10) != nextAction.Time) {
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                    Buttons[nextAction.Position].Selectable.OnInteract();
+                    Buttons[nextAction.Position].Selectable.OnInteractEnded();
+                }
+                else {
+                    Buttons[nextAction.Position].Selectable.OnInteract();
+                    switch (nextAction.ActionType) {
+                        case TpActionType.PressLong: yield return new WaitForSeconds(0.31f); break;
+                        case TpActionType.PressShort: yield return new WaitForSeconds(0.1f); break;
+                        default: throw new ArgumentException("Idk how but invalid TpActionType.");
+                    }
+                    Buttons[nextAction.Position].Selectable.OnInteractEnded();
+                }
+                yield return new WaitForSeconds(0.05f);
+            }
+            nextAction = _state.NextTpAction();
+        }
     }
 }

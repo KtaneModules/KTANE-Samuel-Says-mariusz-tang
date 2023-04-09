@@ -79,4 +79,13 @@ public class RegularStage : State {
             _module.Strike("Incorrectly submitted a " + submittedSymbol.ToString() + "!");
         }
     }
+
+    public override TpAction NextTpAction() {
+        if (_module.ExpectedSubmission.Symbol == '.') {
+            return new TpAction(TpActionType.PressShort, (int)_module.ExpectedSubmission.Colour);
+        }
+        else {
+            return new TpAction(TpActionType.PressLong, (int)_module.ExpectedSubmission.Colour);
+        }
+    }
 }

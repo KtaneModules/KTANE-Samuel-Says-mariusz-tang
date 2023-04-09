@@ -38,4 +38,7 @@ public class LeftToRightAnimation : State {
         _faceOn = !_faceOn;
     }
 
+    public override TpAction NextTpAction() {
+        return new TpAction(TpActionType.Wait);
+    }
 }

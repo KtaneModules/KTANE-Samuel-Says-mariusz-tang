@@ -122,4 +122,13 @@ public class GhostQuirk : State {
         _ghostPresses = _module.StartCoroutine(DoGhostPresses());
         yield return null;
     }
+
+    public override TpAction NextTpAction() {
+        if (_done) {
+            return new TpAction(TpActionType.Wait);
+        }
+        
+        int position = _inputtedSequence.Length;
+        return new TpAction(TpActionType.PressShort, _expectedSequence[position] - '1');
+    }
 }

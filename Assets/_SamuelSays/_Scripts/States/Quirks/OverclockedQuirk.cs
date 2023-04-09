@@ -78,4 +78,8 @@ public class OverclockedQuirk : State {
         }
         _module.ChangeState(new RegularStage(_module));
     }
+
+    public override TpAction NextTpAction() {
+        return new TpAction(TpActionType.PressShort, Rnd.Range(0, 4));
+    }
 }

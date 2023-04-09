@@ -62,4 +62,8 @@ public class UnstableQuirk : State {
         yield return null;
     }
 
+    public override TpAction NextTpAction() {
+        return new TpAction(TpActionType.PressShort, _expectedPress);
+    }
+
 }
