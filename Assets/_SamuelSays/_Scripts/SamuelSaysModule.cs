@@ -189,7 +189,8 @@ public class SamuelSaysModule : MonoBehaviour {
         else if (Rnd.Range(0, 2) == 1) {
             int quirkNumber = Rnd.Range(0, _quirkStates.Length);
             QuirkAppearances.Add(quirkNumber);
-            ChangeState(new LeftToRightAnimation(this, _quirkStates[quirkNumber]));
+            ChangeState(new LeftToRightAnimation(this, new StuckQuirk(this)));
+            // ChangeState(new LeftToRightAnimation(this, _quirkStates[quirkNumber]));
         }
         else {
             ChangeState(new LeftToRightAnimation(this, new RegularStage(this)));
@@ -210,8 +211,8 @@ public class SamuelSaysModule : MonoBehaviour {
 
 #pragma warning disable 414
     private readonly string TwitchHelpMessage = @"Use '!{0} start/mute/gray' to press the gray button; '!{0} <colorblind/cb>' | "
-        + "Stages 1-4: '!{0} <transmit/tx> <color/position> <./->' to transmit a colored symbol | "
-        + "Quirks: '!{0} press <colors/positions>'; '!{0} touch <color/position> <last seconds digit> | "
+        + "Stages 1-4: '!{0} <transmit/tx> <color> <./->' to transmit a colored symbol | "
+        + "Quirks: '!{0} press <colors/positions>'; '!{0} touch <color/position> <last seconds digit>; '!{0} spam' to calm Samuel down | "
         + "Stage 5: '!{0} <transmit/tx> <morse> <colors>' (eg '!{0} tx ....---..-..-.. RY' submits 'SAMUEL', alternating red and yellow) | "
         + "Colors are R/Y/G/B; Positions are 1-4 in reading order.";
 #pragma warning restore 414
@@ -234,6 +235,16 @@ public class SamuelSaysModule : MonoBehaviour {
         }
         else if (command == "colorblind" || command == "cb") {
             _symbolDisplaySelectable.OnInteract();
+            yield break;
+        }
+        else if (command == "spam") {
+            for (int i = 0; i < 10; i++) {
+                int position = Rnd.Range(0, 4);
+                Buttons[position].Selectable.OnInteract();
+                yield return new WaitForSeconds(1 / 14f);
+                Buttons[position].Selectable.OnInteractEnded();
+                yield return new WaitForSeconds(1 / 14f);
+            }
             yield break;
         }
         else if (command == string.Empty) {
@@ -274,6 +285,30 @@ public class SamuelSaysModule : MonoBehaviour {
                         yield return new WaitForSeconds(0.1f);
                     }
                 }
+            }
+        }
+        else if (commandList.Length == 2 && commandList[0] == "press") {
+            foreach (char symbol in commandList[1]) {
+                int position = colourAbbreviations.Contains(symbol.ToString()) ? Array.IndexOf(colourAbbreviations, symbol.ToString()) : symbol - '1';
+                if (position >= 0 && position <= 3) {
+                    Buttons[position].Selectable.OnInteract();
+                    yield return new WaitForSeconds(0.1f);
+                    Buttons[position].Selectable.OnInteractEnded();
+                }
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        else if (commandList.Length == 3 && commandList[0] == "touch") {
+            int position;
+            int time;
+            if (!int.TryParse(commandList[1], out position)) {
+                position = Array.IndexOf(colourAbbreviations, commandList[1]) + 1;
+            }
+            if (int.TryParse(commandList[2], out time) && time >= 0 && time <= 9 && position >= 1 && position <= 4) {
+                while (Math.Floor(Bomb.GetTime()) % 10 != time) {
+                    yield return new WaitForSeconds(0.1f);
+                }
+                Buttons[position - 1].Selectable.OnInteract();
             }
         }
     }
