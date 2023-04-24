@@ -342,8 +342,8 @@ public class SamuelSaysModule : MonoBehaviour {
                 _submitButton.OnInteractEnded();
             }
             else {
-                if (nextAction.ActionType == TpActionType.PressTimed) {
-                    while (Math.Floor(Bomb.GetTime() % 10) != nextAction.Time) {
+                if (nextAction.ActionType == TpActionType.PressStuck) {
+                    while ((Math.Floor(Bomb.GetTime()) - Bomb.GetSolvedModuleNames().Count()) % 10 != 0) {
                         yield return new WaitForSeconds(0.1f);
                     }
                     Buttons[nextAction.Position].Selectable.OnInteract();
