@@ -82,6 +82,11 @@ public class SamuelSaysModule : MonoBehaviour {
         Module = GetComponent<KMBombModule>();
         Screen = GetComponentInChildren<MainScreen>();
         SymbolDisplay = GetComponentInChildren<MiniScreen>();
+
+        if (GetComponent<KMColorblindMode>().ColorblindModeActive) {
+            Screen.ToggleColourblindMode();
+            SymbolDisplay.ToggleColourblindMode();
+        }
     }
 
     private void Start() {
@@ -352,9 +357,14 @@ public class SamuelSaysModule : MonoBehaviour {
                 else {
                     Buttons[nextAction.Position].Selectable.OnInteract();
                     switch (nextAction.ActionType) {
-                        case TpActionType.PressLong: yield return new WaitForSeconds(0.31f); break;
-                        case TpActionType.PressShort: yield return new WaitForSeconds(0.1f); break;
-                        default: throw new ArgumentException("Idk how but invalid TpActionType.");
+                    case TpActionType.PressLong:
+                        yield return new WaitForSeconds(0.31f);
+                        break;
+                    case TpActionType.PressShort:
+                        yield return new WaitForSeconds(0.1f);
+                        break;
+                    default:
+                        throw new ArgumentException("Idk how but invalid TpActionType.");
                     }
                     Buttons[nextAction.Position].Selectable.OnInteractEnded();
                 }
