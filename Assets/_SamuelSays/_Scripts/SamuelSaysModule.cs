@@ -82,14 +82,14 @@ public class SamuelSaysModule : MonoBehaviour {
         Module = GetComponent<KMBombModule>();
         Screen = GetComponentInChildren<MainScreen>();
         SymbolDisplay = GetComponentInChildren<MiniScreen>();
+    }
 
+    private void Start() {
         if (GetComponent<KMColorblindMode>().ColorblindModeActive) {
             Screen.ToggleColourblindMode();
             SymbolDisplay.ToggleColourblindMode();
         }
-    }
 
-    private void Start() {
         _sequenceGenerator = new SamuelSequenceGenerator();
         _sequenceModifier = new SamuelSequenceModifier(this);
         SubmittedColours = new List<ButtonColour>();
