@@ -208,10 +208,10 @@ public class SamuelSaysModule : MonoBehaviour {
 
 #pragma warning disable 414
     private readonly string TwitchHelpMessage = @"Use '!{0} start/mute/gray' to press the gray button; '!{0} <colorblind/cb>' | "
-        + "Stages 1-4: '!{0} <transmit/tx> <color> <./->' to transmit a colored symbol | "
+        + "Stages 1-4: '!{0} <transmit/tx> <color> <symbol>' to transmit a colored symbol | "
         + "Quirks: '!{0} press <colors/positions>'; '!{0} touch <color/position> <last seconds digit>; '!{0} spam' to calm Samuel down | "
         + "Stage 5: '!{0} <transmit/tx> <morse> <colors>' (eg '!{0} tx ....---..-..-.. RY' submits 'SAMUEL', alternating red and yellow) | "
-        + "Colors are R/Y/G/B; Positions are 1-4 in reading order.";
+        + "Colors are R/Y/G/B; positions are 1-4 in reading order; symbols are . (dot) or - (dash).";
 #pragma warning restore 414
 
     string[] colourAbbreviations = new string[] { "r", "y", "g", "b" };
