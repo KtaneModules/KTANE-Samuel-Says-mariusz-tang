@@ -154,7 +154,7 @@ public class SamuelSequenceModifier {
             delegate() {_modifiedSymbols = new string(_modifiedSymbols.Reverse().ToArray()); _modifiedColours.Reverse();},
             delegate() {if (_modifiedSymbols.Length == 4) RemovePositionN(); else InsertYellowDashAtPositionM();},
             delegate() {_modifiedColours[0] = ButtonColour.Yellow; _modifiedColours[1] = ButtonColour.Yellow;},
-            delegate() {_modifiedColours = _modifiedColours.Select((colour, index) => index == 2 ? colour : ButtonColour.Red).ToList();},
+            delegate() {_modifiedColours = _modifiedColours.Select((colour, index) => index == 2 ? colour : ButtonColour.Blue).ToList();},
             delegate() {_modifiedColours = ShiftRight(_modifiedColours, 2);}
         };
 
