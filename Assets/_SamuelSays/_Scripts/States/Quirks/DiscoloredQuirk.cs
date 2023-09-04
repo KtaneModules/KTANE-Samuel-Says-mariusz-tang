@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
 using Rnd = UnityEngine.Random;
 
 public class DiscoloredQuirk : State {

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+
 using Rnd = UnityEngine.Random;
 
 public class LeftToRightAnimation : State {
