@@ -161,7 +161,7 @@ public class SamuelSequenceModifier {
         _greenActions = new Action[] {
             delegate() {DashesGreenDotsToDashes();},
             delegate() {SetColoursRbygOrder();},
-            delegate() {_greenHasAppearedBefore = true; _modifiedColours = _modifiedColours.Select((c, i) => i == 2 ? c : ButtonColour.Red).ToList();},
+            delegate() {_greenHasAppearedBefore = true; _modifiedColours = _modifiedColours.Select((c, i) => i == 0 ? ButtonColour.Green : ButtonColour.Red).ToList();},
             delegate() {MoveDotsToFront();},
             delegate() {RemovePositionTwoAndAppendGreenDot();}
         };
