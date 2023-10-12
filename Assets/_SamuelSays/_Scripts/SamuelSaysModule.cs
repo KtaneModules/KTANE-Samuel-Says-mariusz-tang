@@ -362,7 +362,8 @@ public class SamuelSaysModule : MonoBehaviour {
                         yield return new WaitForSeconds(0.31f);
                         break;
                     case TpActionType.PressShort:
-                        yield return new WaitForSeconds(0.1f);
+                        // yield return new WaitForSeconds(0.1f);
+                        // the big lag the big sad
                         break;
                     default:
                         throw new ArgumentException("Idk how but invalid TpActionType.");

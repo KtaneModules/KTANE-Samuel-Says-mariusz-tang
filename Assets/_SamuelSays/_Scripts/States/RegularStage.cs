@@ -74,6 +74,7 @@ public class RegularStage : State {
         }
         else {
             _module.Strike("Incorrectly submitted a " + submittedSymbol.ToString() + "!");
+            Debug.Log("<Samuel Says> _timeHeld: " + _timeHeld + " | _module.ExpectedSubmission: " + _module.ExpectedSubmission + " | submittedSymbol: " + submittedSymbol + ".");
         }
     }
 
