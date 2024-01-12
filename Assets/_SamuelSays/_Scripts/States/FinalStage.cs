@@ -148,7 +148,7 @@ public class FinalStage : State {
 
         if (!_inputtedSubmission[submissionLength - 1].Equals(_expectedSubmission[submissionLength - 1])) {
             _module.Strike("Incorrectly transmitted a " + _inputtedSubmission[submissionLength - 1].ToString()
-                 + " at position " + submissionLength + "! Input has been reset.");
+                + " at position " + submissionLength + "! Input has been reset.");
             _inputtedSubmission.Clear();
             _module.Screen.PlaySequence(_module.DisplayedSequence);
             _flashingRecoverySequence = _module.StartCoroutine(FlashRecoverySequence());
@@ -200,18 +200,15 @@ public class FinalStage : State {
         else if (quirksCount == 3) {
             if (quirksDistinct == 3) {
                 _module.Log("There were three distinct quirks. Removing the first three symbols.");
-                displayedSymbols.Remove(0, 1);
-                displayedSymbols.Remove(0, 1);
-                displayedSymbols.Remove(0, 1);
+                displayedSymbols = displayedSymbols.Remove(0, 3);
             }
             else if (quirksDistinct == 2) {
                 _module.Log("There were three quirks, two of which were the same. Removing the third symbol.");
-                displayedSymbols.Remove(2, 1);
+                displayedSymbols = displayedSymbols.Remove(2, 1);
             }
             else {
                 _module.Log("There were three of the same quirk. Removing the first two symbols.");
-                displayedSymbols.Remove(0, 1);
-                displayedSymbols.Remove(0, 1);
+                displayedSymbols = displayedSymbols.Remove(0, 2);
             }
         }
 
